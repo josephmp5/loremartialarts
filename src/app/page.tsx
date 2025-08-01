@@ -2,18 +2,12 @@
 import { useState, useEffect } from 'react';
 
 export default function Home() {
-  const [showIntro, setShowIntro] = useState(true);
   const [showContent, setShowContent] = useState(false);
-  const [introFading, setIntroFading] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIntroFading(true);
-      setTimeout(() => {
-        setShowIntro(false);
-        setShowContent(true);
-      }, 1000);
-    }, 4000);
+      setShowContent(true);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -56,6 +50,12 @@ export default function Home() {
           @keyframes introFadeIn {
             0% { opacity: 0; transform: scale(0.8) rotate(-2deg); }
             100% { opacity: 1; transform: scale(1) rotate(0deg); }
+          }
+
+          @keyframes introFadeOut {
+            0% { opacity: 1; pointer-events: auto; }
+            99% { opacity: 0; pointer-events: auto; }
+            100% { opacity: 0; pointer-events: none; visibility: hidden; }
           }
           
           @keyframes logoFloat {
@@ -154,25 +154,24 @@ export default function Home() {
       }} />
 
       {/* Intro Screen */}
-      {showIntro && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          backgroundImage: 'url(/background.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-          opacity: introFading ? 0 : 1,
-          transition: 'opacity 1s ease-in-out'
-        }}>
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundImage: 'url(/background.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000,
+        animation: 'introFadeOut 1s ease-in-out 4s forwards',
+        pointerEvents: 'none'
+      }}>
           {/* Enhanced paper texture overlay */}
           <div style={{
             position: 'absolute',
@@ -278,11 +277,11 @@ export default function Home() {
             }}>Outdoor Nomad Free Team</p>
           </div>
         </div>
-      )}
 
       {/* Main Content */}
-      {showContent && (
-        <>
+      <div style={{
+        animation: 'fadeIn 1s ease-in-out 5s both'
+      }}>
           {/* Hero Section - Full Screen */}
           <section style={{
             minHeight: '100vh',
@@ -1567,8 +1566,7 @@ export default function Home() {
               </div>
             </div>
           </section>
-        </>
-      )}
+        </div>
     </div>
   );
 }
