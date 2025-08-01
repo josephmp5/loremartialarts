@@ -348,7 +348,7 @@ export default function Home() {
                 animation: 'fadeIn 2s ease-out 0.6s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
               }}>
-                Experience the freedom of outdoor BJJ training. Join our nomadic team as we train in nature's gym - 
+                Experience the freedom of outdoor BJJ training. Join our nomadic team as we train in nature&apos;s gym - 
                 from park sessions to beach workouts, embracing the warrior spirit in the open air.
               </p>
               <div style={{
@@ -472,7 +472,7 @@ export default function Home() {
                   textShadow: '1px 1px 2px rgba(0,0,0,0.4)',
                   letterSpacing: '1px'
                 }}>
-                  We are not a traditional gym. We are Antalya's premier nomadic BJJ family that trains in nature's embrace.
+                  We are not a traditional gym. We are Antalya&apos;s premier nomadic BJJ family that trains in nature&apos;s embrace.
                 </p>
               </div>
 
@@ -529,8 +529,8 @@ export default function Home() {
                     textAlign: 'center',
                     textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                   }}>
-                    We believe in the freedom of outdoor BJJ training in Antalya. No walls, no restrictions, just pure BJJ in nature's embrace. 
-                    Our nomadic lifestyle connects us with the ancient warrior traditions while exploring Antalya's beautiful landscapes.
+                                    We believe in the freedom of outdoor BJJ training in Antalya. No walls, no restrictions, just pure BJJ in nature&apos;s embrace.
+                Our nomadic lifestyle connects us with the ancient warrior traditions while exploring Antalya&apos;s beautiful landscapes.
                   </p>
                 </div>
 
@@ -581,8 +581,8 @@ export default function Home() {
                     textAlign: 'center',
                     textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                   }}>
-                    Our BJJ training in Antalya adapts to nature's conditions. From soft grass to sandy beaches, 
-                    we learn to flow with any surface, making us more versatile and adaptable fighters in Antalya's diverse outdoor environments.
+                                    Our BJJ training in Antalya adapts to nature&apos;s conditions. From soft grass to sandy beaches,
+                we learn to flow with any surface, making us more versatile and adaptable fighters in Antalya&apos;s diverse outdoor environments.
                   </p>
                 </div>
 
@@ -634,7 +634,7 @@ export default function Home() {
                     textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                   }}>
                     We welcome all levels to our Antalya BJJ community, from beginners to advanced practitioners. 
-                    Our team supports each other's growth in a free, outdoor environment across Antalya's beautiful training locations.
+                    Our team supports each other&apos;s growth in a free, outdoor environment across Antalya&apos;s beautiful training locations.
                   </p>
                 </div>
               </div>
@@ -754,7 +754,7 @@ export default function Home() {
                       fontSize: '1rem',
                       opacity: 0.9,
                       textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
-                    }}>BJJ techniques in nature's embrace</p>
+                    }}>BJJ techniques in nature&apos;s embrace</p>
                   </div>
                 </div>
 
@@ -974,7 +974,7 @@ export default function Home() {
                       fontSize: '1rem',
                       opacity: 0.9,
                       textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
-                    }}>Training in Antalya's beautiful parks</p>
+                    }}>Training in Antalya&apos;s beautiful parks</p>
                   </div>
                 </div>
 
@@ -1132,7 +1132,7 @@ export default function Home() {
                   textShadow: '1px 1px 2px rgba(0,0,0,0.4)',
                   letterSpacing: '1px'
                 }}>
-                  Discover our outdoor training spots across Antalya's beautiful landscapes
+                  Discover our outdoor training spots across Antalya&apos;s beautiful landscapes
                 </p>
               </div>
 
@@ -1385,7 +1385,7 @@ export default function Home() {
                       margin: '0 auto',
                       lineHeight: '1.6'
                     }}>
-                      Join us on our latest outdoor BJJ adventure! Watch as we train in Antalya's beautiful landscapes, 
+                      Join us on our latest outdoor BJJ adventure! Watch as we train in Antalya&apos;s beautiful landscapes, 
                       share techniques, and build our nomadic community. Experience the freedom of outdoor martial arts.
                     </p>
                   </div>
