@@ -160,7 +160,7 @@ export default function Home() {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundImage: 'url(/background.jpg)',
+        backgroundImage: 'url(/loremartialarts/background.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
@@ -248,7 +248,7 @@ export default function Home() {
             }}></div>
             
             <img 
-              src="/logo.png" 
+              src="/loremartialarts/logo.png" 
               alt="LORE BJJ Logo" 
               style={{
                 maxWidth: '400px',
@@ -288,7 +288,7 @@ export default function Home() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundImage: 'url(/background.jpg)',
+            backgroundImage: 'url(/loremartialarts/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
@@ -422,7 +422,7 @@ export default function Home() {
           {/* About Our Team Section - Vintage Paper Style */}
           <section id="about" style={{
             padding: '140px 40px',
-            backgroundImage: 'url(/background.jpg)',
+            backgroundImage: 'url(/loremartialarts/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
@@ -643,7 +643,7 @@ export default function Home() {
           {/* Training Images Gallery Section - Vintage Paper Style */}
           <section style={{
             padding: '140px 40px',
-            backgroundImage: 'url(/background.jpg)',
+            backgroundImage: 'url(/loremartialarts/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
@@ -1082,7 +1082,7 @@ export default function Home() {
           {/* Training Locations Section - Vintage Paper Style */}
           <section id="locations" style={{
             padding: '140px 40px',
-            backgroundImage: 'url(/background.jpg)',
+            backgroundImage: 'url(/loremartialarts/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
@@ -1271,7 +1271,7 @@ export default function Home() {
           {/* Social Media Section - Vintage Paper Style */}
           <section style={{
             padding: '140px 40px',
-            backgroundImage: 'url(/background.jpg)',
+            backgroundImage: 'url(/loremartialarts/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
@@ -1458,7 +1458,7 @@ export default function Home() {
           {/* Contact & Footer - Vintage Paper Style */}
           <section style={{
             padding: '80px 40px',
-            backgroundImage: 'url(/background.jpg)',
+            backgroundImage: 'url(/loremartialarts/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
