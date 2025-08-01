@@ -289,43 +289,64 @@ export default function Home() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #1a1a2e 75%, #0f0f23 100%)',
+            backgroundImage: 'url(/background.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
             padding: '0 40px',
             position: 'relative'
           }}>
+            {/* Paper texture overlay */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: `
+                radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 78, 58, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(212, 196, 168, 0.08) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(245, 241, 232, 0.1) 0%, rgba(212, 196, 168, 0.05) 100%)
+              `,
+              pointerEvents: 'none'
+            }}></div>
+            
             <div style={{
               textAlign: 'center',
               maxWidth: '1200px',
-              animation: 'fadeInUp 1.2s ease-out'
+              animation: 'fadeInUp 1.2s ease-out',
+              position: 'relative',
+              zIndex: 1
             }}>
               <h1 style={{
                 fontSize: '6rem',
                 fontWeight: 'bold',
                 marginBottom: '35px',
-                color: '#ffd700',
-                textShadow: '4px 4px 8px rgba(0,0,0,0.9), 0 0 40px rgba(255, 215, 0, 0.3)',
+                color: '#2c1810',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                 fontFamily: 'Noto Serif JP, serif',
                 animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: '3px'
               }}>LORE BJJ</h1>
               <p style={{
                 fontSize: '2.5rem',
-                color: '#fcd34d',
+                color: '#5d4037',
                 marginBottom: '50px',
                 fontFamily: 'Crimson Text, serif',
                 animation: 'slideInUp 1.5s ease-out 0.3s both',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.4)',
                 letterSpacing: '1px'
               }}>Outdoor Nomad Free Team</p>
               <p style={{
                 fontSize: '1.5rem',
-                color: '#e5e7eb',
+                color: '#3e2723',
                 maxWidth: '900px',
                 margin: '0 auto 60px',
                 lineHeight: '1.9',
                 fontFamily: 'Crimson Text, serif',
                 animation: 'fadeIn 2s ease-out 0.6s both',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.6)'
+                textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
               }}>
                 Experience the freedom of outdoor BJJ training. Join our nomadic team as we train in nature's gym - 
                 from park sessions to beach workouts, embracing the warrior spirit in the open air.
@@ -338,64 +359,59 @@ export default function Home() {
                 animation: 'fadeIn 2.2s ease-out 0.9s both'
               }}>
                 <a href="#about" style={{
-                  background: 'linear-gradient(135deg, #ffd700 0%, #fbbf24 50%, #ffd700 100%)',
-                  backgroundSize: '200% 200%',
-                  color: '#1a1a1a',
+                  backgroundColor: '#f5f5dc',
+                  color: '#2c1810',
                   padding: '20px 40px',
                   fontSize: '1.3rem',
                   textDecoration: 'none',
-                  borderRadius: '15px',
+                  borderRadius: '0',
                   fontWeight: '700',
                   fontFamily: 'Crimson Text, serif',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 15px 35px rgba(255, 215, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.2)',
-                  border: '3px solid rgba(255, 215, 0, 0.3)',
+                  border: '2px solid #8b4513',
                   position: 'relative',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  boxShadow: 'none',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                 }}
                 onMouseEnter={(e) => {
                   const link = e.target as HTMLElement;
-                  link.style.transform = 'translateY(-8px) scale(1.05)';
-                  link.style.boxShadow = '0 25px 50px rgba(255, 215, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.3)';
-                  link.style.backgroundPosition = '100% 100%';
+                  link.style.transform = 'translateY(-3px)';
+                  link.style.backgroundColor = '#e8e8d0';
                 }}
                 onMouseLeave={(e) => {
                   const link = e.target as HTMLElement;
-                  link.style.transform = 'translateY(0) scale(1)';
-                  link.style.boxShadow = '0 15px 35px rgba(255, 215, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
-                  link.style.backgroundPosition = '0% 0%';
+                  link.style.transform = 'translateY(0)';
+                  link.style.backgroundColor = '#f5f5dc';
                 }}
                 >
                   Discover Our Team
                 </a>
                 <a href="#locations" style={{
                   backgroundColor: 'transparent',
-                  color: '#ffd700',
+                  color: '#2c1810',
                   padding: '20px 40px',
                   fontSize: '1.3rem',
                   textDecoration: 'none',
-                  borderRadius: '15px',
+                  borderRadius: '0',
                   fontWeight: '700',
                   fontFamily: 'Crimson Text, serif',
-                  border: '3px solid #ffd700',
+                  border: '2px solid #8b4513',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 15px 35px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
                   position: 'relative',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  boxShadow: 'none',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                 }}
                 onMouseEnter={(e) => {
                   const link = e.target as HTMLElement;
-                  link.style.transform = 'translateY(-8px) scale(1.05)';
-                  link.style.backgroundColor = '#ffd700';
-                  link.style.color = '#1a1a1a';
-                  link.style.boxShadow = '0 25px 50px rgba(255, 215, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.3)';
+                  link.style.transform = 'translateY(-3px)';
+                  link.style.backgroundColor = '#f5f5dc';
                 }}
                 onMouseLeave={(e) => {
                   const link = e.target as HTMLElement;
-                  link.style.transform = 'translateY(0) scale(1)';
+                  link.style.transform = 'translateY(0)';
                   link.style.backgroundColor = 'transparent';
-                  link.style.color = '#ffd700';
-                  link.style.boxShadow = '0 15px 35px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)';
                 }}
                 >
                   Training Locations
@@ -404,13 +420,32 @@ export default function Home() {
             </div>
           </section>
 
-          {/* About Our Team Section - Enhanced */}
+          {/* About Our Team Section - Vintage Paper Style */}
           <section id="about" style={{
             padding: '140px 40px',
-            background: 'linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 25%, #3d2b6e 50%, #2d1b4e 75%, #1a0f2e 100%)',
+            backgroundImage: 'url(/background.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
             position: 'relative'
           }}>
-            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            {/* Paper texture overlay */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: `
+                radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 78, 58, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(212, 196, 168, 0.08) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(245, 241, 232, 0.1) 0%, rgba(212, 196, 168, 0.05) 100%)
+              `,
+              pointerEvents: 'none'
+            }}></div>
+            
+            <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
               <div style={{
                 textAlign: 'center',
                 marginBottom: '100px',
@@ -420,21 +455,21 @@ export default function Home() {
                   fontSize: '5rem',
                   fontWeight: 'bold',
                   marginBottom: '40px',
-                  color: '#ffd700',
+                  color: '#2c1810',
                   fontFamily: 'Noto Serif JP, serif',
-                  textShadow: '4px 4px 8px rgba(0,0,0,0.9), 0 0 40px rgba(255, 215, 0, 0.3)',
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                   animation: 'slideInDown 1.5s ease-out',
                   letterSpacing: '2px'
                 }}>About Our Team</h2>
                 <p style={{
                   fontSize: '1.8rem',
-                  color: '#fcd34d',
+                  color: '#5d4037',
                   maxWidth: '900px',
                   margin: '0 auto',
                   fontFamily: 'Crimson Text, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.4)',
                   letterSpacing: '1px'
                 }}>
                   We are not a traditional gym. We are Antalya's premier nomadic BJJ family that trains in nature's embrace.
@@ -447,28 +482,27 @@ export default function Home() {
                 gap: '60px',
                 marginTop: '80px'
               }}>
-                {/* Philosophy Card - Enhanced */}
+                {/* Philosophy Card - Modern Premium Style */}
                 <div style={{
                   padding: '50px',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  border: 'none',
                   borderRadius: '25px',
-                  backdropFilter: 'blur(20px)',
                   animation: 'scaleIn 1.2s ease-out 0.2s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                   position: 'relative',
                   overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 30px 60px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                  card.style.transform = 'translateY(-10px) scale(1.03)';
+                  card.style.boxShadow = '0 30px 60px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)';
+                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
                 }}
                 >
                   <div style={{
@@ -481,47 +515,46 @@ export default function Home() {
                     fontSize: '2.5rem',
                     fontWeight: 'bold',
                     marginBottom: '25px',
-                    color: '#ffd700',
+                    color: 'white',
                     fontFamily: 'Noto Serif JP, serif',
                     textAlign: 'center',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                     letterSpacing: '1px'
                   }}>Our Philosophy</h3>
                   <p style={{
                     fontSize: '1.2rem',
-                    color: '#e5e7eb',
+                    color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
                     fontFamily: 'Crimson Text, serif',
                     textAlign: 'center',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.6)'
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                   }}>
                     We believe in the freedom of outdoor BJJ training in Antalya. No walls, no restrictions, just pure BJJ in nature's embrace. 
                     Our nomadic lifestyle connects us with the ancient warrior traditions while exploring Antalya's beautiful landscapes.
                   </p>
                 </div>
 
-                {/* Training Style Card - Enhanced */}
+                {/* Training Style Card - Modern Premium Style */}
                 <div style={{
                   padding: '50px',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  border: 'none',
                   borderRadius: '25px',
-                  backdropFilter: 'blur(20px)',
                   animation: 'scaleIn 1.2s ease-out 0.4s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                   position: 'relative',
                   overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 30px 60px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                  card.style.transform = 'translateY(-10px) scale(1.03)';
+                  card.style.boxShadow = '0 30px 60px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)';
+                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
                 }}
                 >
                   <div style={{
@@ -534,47 +567,46 @@ export default function Home() {
                     fontSize: '2.5rem',
                     fontWeight: 'bold',
                     marginBottom: '25px',
-                    color: '#ffd700',
+                    color: 'white',
                     fontFamily: 'Noto Serif JP, serif',
                     textAlign: 'center',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                     letterSpacing: '1px'
                   }}>Antalya BJJ Training</h3>
                   <p style={{
                     fontSize: '1.2rem',
-                    color: '#e5e7eb',
+                    color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
                     fontFamily: 'Crimson Text, serif',
                     textAlign: 'center',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.6)'
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                   }}>
                     Our BJJ training in Antalya adapts to nature's conditions. From soft grass to sandy beaches, 
                     we learn to flow with any surface, making us more versatile and adaptable fighters in Antalya's diverse outdoor environments.
                   </p>
                 </div>
 
-                {/* Community Card - Enhanced */}
+                {/* Community Card - Modern Premium Style */}
                 <div style={{
                   padding: '50px',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  border: 'none',
                   borderRadius: '25px',
-                  backdropFilter: 'blur(20px)',
                   animation: 'scaleIn 1.2s ease-out 0.6s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                   position: 'relative',
                   overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 30px 60px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                  card.style.transform = 'translateY(-10px) scale(1.03)';
+                  card.style.boxShadow = '0 30px 60px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)';
+                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
                 }}
                 >
                   <div style={{
@@ -587,19 +619,19 @@ export default function Home() {
                     fontSize: '2.5rem',
                     fontWeight: 'bold',
                     marginBottom: '25px',
-                    color: '#ffd700',
+                    color: 'white',
                     fontFamily: 'Noto Serif JP, serif',
                     textAlign: 'center',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                     letterSpacing: '1px'
                   }}>Antalya BJJ Community</h3>
                   <p style={{
                     fontSize: '1.2rem',
-                    color: '#e5e7eb',
+                    color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
                     fontFamily: 'Crimson Text, serif',
                     textAlign: 'center',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.6)'
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                   }}>
                     We welcome all levels to our Antalya BJJ community, from beginners to advanced practitioners. 
                     Our team supports each other's growth in a free, outdoor environment across Antalya's beautiful training locations.
@@ -609,13 +641,32 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Training Images Gallery Section - Enhanced */}
+          {/* Training Images Gallery Section - Vintage Paper Style */}
           <section style={{
             padding: '140px 40px',
-            background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #1a1a2e 75%, #0f0f23 100%)',
+            backgroundImage: 'url(/background.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
             position: 'relative'
           }}>
-            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            {/* Paper texture overlay */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: `
+                radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 78, 58, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(212, 196, 168, 0.08) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(245, 241, 232, 0.1) 0%, rgba(212, 196, 168, 0.05) 100%)
+              `,
+              pointerEvents: 'none'
+            }}></div>
+            
+            <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
               <div style={{
                 textAlign: 'center',
                 marginBottom: '100px',
@@ -625,21 +676,21 @@ export default function Home() {
                   fontSize: '5rem',
                   fontWeight: 'bold',
                   marginBottom: '40px',
-                  color: '#ffd700',
+                  color: '#2c1810',
                   fontFamily: 'Noto Serif JP, serif',
-                  textShadow: '4px 4px 8px rgba(0,0,0,0.9), 0 0 40px rgba(255, 215, 0, 0.3)',
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                   animation: 'slideInDown 1.5s ease-out',
                   letterSpacing: '2px'
                 }}>Training Moments</h2>
                 <p style={{
                   fontSize: '1.8rem',
-                  color: '#fcd34d',
+                  color: '#5d4037',
                   maxWidth: '900px',
                   margin: '0 auto',
                   fontFamily: 'Crimson Text, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.4)',
                   letterSpacing: '1px'
                 }}>
                   Capturing the spirit of outdoor BJJ training in Antalya
@@ -652,27 +703,26 @@ export default function Home() {
                 gap: '60px',
                 marginTop: '80px'
               }}>
-                {/* Training Image 1 - Enhanced */}
+                {/* Training Image 1 - Modern Premium Style */}
                 <div style={{
                   borderRadius: '25px',
                   overflow: 'hidden',
-                  boxShadow: '0 25px 50px rgba(0,0,0,0.4)',
+                  boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3)',
                   animation: 'scaleIn 1.2s ease-out 0.2s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  backdropFilter: 'blur(20px)',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   position: 'relative'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 35px 70px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                  card.style.transform = 'translateY(-10px) scale(1.03)';
+                  card.style.boxShadow = '0 30px 60px rgba(102, 126, 234, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 25px 50px rgba(0,0,0,0.4)';
+                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3)';
                 }}
                 >
                   <img 
@@ -685,29 +735,49 @@ export default function Home() {
                       transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
                     }}
                   />
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    padding: '25px',
+                    color: 'white'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 'bold',
+                      marginBottom: '10px',
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                    }}>Outdoor Training</h3>
+                    <p style={{
+                      fontSize: '1rem',
+                      opacity: 0.9,
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
+                    }}>BJJ techniques in nature's embrace</p>
+                  </div>
                 </div>
 
-                {/* Training Image 2 - Enhanced */}
+                {/* Training Image 2 - Modern Premium Style */}
                 <div style={{
                   borderRadius: '25px',
                   overflow: 'hidden',
-                  boxShadow: '0 25px 50px rgba(0,0,0,0.4)',
+                  boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3)',
                   animation: 'scaleIn 1.2s ease-out 0.4s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  backdropFilter: 'blur(20px)',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   position: 'relative'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 35px 70px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                  card.style.transform = 'translateY(-10px) scale(1.03)';
+                  card.style.boxShadow = '0 30px 60px rgba(102, 126, 234, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 25px 50px rgba(0,0,0,0.4)';
+                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3)';
                 }}
                 >
                   <img 
@@ -720,29 +790,49 @@ export default function Home() {
                       transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
                     }}
                   />
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    padding: '25px',
+                    color: 'white'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 'bold',
+                      marginBottom: '10px',
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                    }}>Team Training</h3>
+                    <p style={{
+                      fontSize: '1rem',
+                      opacity: 0.9,
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
+                    }}>Building strength together in Antalya</p>
+                  </div>
                 </div>
 
-                {/* Training Image 3 - Enhanced */}
+                {/* Training Image 3 - Modern Premium Style */}
                 <div style={{
                   borderRadius: '25px',
                   overflow: 'hidden',
-                  boxShadow: '0 25px 50px rgba(0,0,0,0.4)',
+                  boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3)',
                   animation: 'scaleIn 1.2s ease-out 0.6s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  backdropFilter: 'blur(20px)',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   position: 'relative'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 35px 70px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                  card.style.transform = 'translateY(-10px) scale(1.03)';
+                  card.style.boxShadow = '0 30px 60px rgba(102, 126, 234, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 25px 50px rgba(0,0,0,0.4)';
+                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3)';
                 }}
                 >
                   <img 
@@ -755,29 +845,49 @@ export default function Home() {
                       transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
                     }}
                   />
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    padding: '25px',
+                    color: 'white'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 'bold',
+                      marginBottom: '10px',
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                    }}>Beach Training</h3>
+                    <p style={{
+                      fontSize: '1rem',
+                      opacity: 0.9,
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
+                    }}>Training by the Mediterranean Sea</p>
+                  </div>
                 </div>
 
-                {/* Training Image 4 - Enhanced */}
+                {/* Training Image 4 - Modern Premium Style */}
                 <div style={{
                   borderRadius: '25px',
                   overflow: 'hidden',
-                  boxShadow: '0 25px 50px rgba(0,0,0,0.4)',
+                  boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3)',
                   animation: 'scaleIn 1.2s ease-out 0.8s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  backdropFilter: 'blur(20px)',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   position: 'relative'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 35px 70px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                  card.style.transform = 'translateY(-10px) scale(1.03)';
+                  card.style.boxShadow = '0 30px 60px rgba(102, 126, 234, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 25px 50px rgba(0,0,0,0.4)';
+                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3)';
                 }}
                 >
                   <img 
@@ -790,29 +900,49 @@ export default function Home() {
                       transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
                     }}
                   />
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    padding: '25px',
+                    color: 'white'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 'bold',
+                      marginBottom: '10px',
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                    }}>Technique Focus</h3>
+                    <p style={{
+                      fontSize: '1rem',
+                      opacity: 0.9,
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
+                    }}>Perfecting BJJ techniques outdoors</p>
+                  </div>
                 </div>
 
-                {/* Training Image 5 - Enhanced */}
+                {/* Training Image 5 - Modern Premium Style */}
                 <div style={{
                   borderRadius: '25px',
                   overflow: 'hidden',
-                  boxShadow: '0 25px 50px rgba(0,0,0,0.4)',
+                  boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3)',
                   animation: 'scaleIn 1.2s ease-out 1.0s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  backdropFilter: 'blur(20px)',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   position: 'relative'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 35px 70px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                  card.style.transform = 'translateY(-10px) scale(1.03)';
+                  card.style.boxShadow = '0 30px 60px rgba(102, 126, 234, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 25px 50px rgba(0,0,0,0.4)';
+                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3)';
                 }}
                 >
                   <img 
@@ -825,29 +955,49 @@ export default function Home() {
                       transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
                     }}
                   />
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    padding: '25px',
+                    color: 'white'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 'bold',
+                      marginBottom: '10px',
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                    }}>Park Sessions</h3>
+                    <p style={{
+                      fontSize: '1rem',
+                      opacity: 0.9,
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
+                    }}>Training in Antalya's beautiful parks</p>
+                  </div>
                 </div>
 
-                {/* Training Image 6 - Enhanced */}
+                {/* Training Image 6 - Modern Premium Style */}
                 <div style={{
                   borderRadius: '25px',
                   overflow: 'hidden',
-                  boxShadow: '0 25px 50px rgba(0,0,0,0.4)',
+                  boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3)',
                   animation: 'scaleIn 1.2s ease-out 1.2s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  backdropFilter: 'blur(20px)',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   position: 'relative'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 35px 70px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                  card.style.transform = 'translateY(-10px) scale(1.03)';
+                  card.style.boxShadow = '0 30px 60px rgba(102, 126, 234, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 25px 50px rgba(0,0,0,0.4)';
+                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3)';
                 }}
                 >
                   <img 
@@ -860,18 +1010,102 @@ export default function Home() {
                       transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
                     }}
                   />
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    padding: '25px',
+                    color: 'white'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 'bold',
+                      marginBottom: '10px',
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                    }}>Community Spirit</h3>
+                    <p style={{
+                      fontSize: '1rem',
+                      opacity: 0.9,
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
+                    }}>Building bonds through BJJ</p>
+                  </div>
                 </div>
+              </div>
+
+              {/* Follow Us Button */}
+              <div style={{
+                textAlign: 'center',
+                marginTop: '80px',
+                animation: 'fadeIn 1.5s ease-out 1.5s both'
+              }}>
+                <a href="https://www.instagram.com/loremartialarts/" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   style={{
+                     background: 'linear-gradient(135deg, #8b4513 0%, #a0522d 50%, #8b4513 100%)',
+                     backgroundSize: '200% 200%',
+                     color: '#f5f5dc',
+                     padding: '20px 50px',
+                     fontSize: '1.4rem',
+                     textDecoration: 'none',
+                     borderRadius: '15px',
+                     fontWeight: '700',
+                     fontFamily: 'Crimson Text, serif',
+                     display: 'inline-block',
+                     transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                     boxShadow: '0 12px 30px rgba(139, 69, 19, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                     border: '3px solid #8b4513',
+                     position: 'relative',
+                     overflow: 'hidden',
+                     textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+                   }}
+                   onMouseEnter={(e) => {
+                     const link = e.target as HTMLElement;
+                     link.style.transform = 'translateY(-8px) scale(1.05)';
+                     link.style.backgroundPosition = '100% 100%';
+                     link.style.boxShadow = '0 20px 40px rgba(139, 69, 19, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+                   }}
+                   onMouseLeave={(e) => {
+                     const link = e.target as HTMLElement;
+                     link.style.transform = 'translateY(0) scale(1)';
+                     link.style.backgroundPosition = '0% 0%';
+                     link.style.boxShadow = '0 12px 30px rgba(139, 69, 19, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+                   }}
+                   >
+                  Follow Us on Instagram
+                </a>
               </div>
             </div>
           </section>
 
-          {/* Training Locations Section - Enhanced */}
+          {/* Training Locations Section - Vintage Paper Style */}
           <section id="locations" style={{
             padding: '140px 40px',
-            background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #1a1a2e 75%, #0f0f23 100%)',
+            backgroundImage: 'url(/background.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
             position: 'relative'
           }}>
-            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            {/* Paper texture overlay */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: `
+                radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 78, 58, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(212, 196, 168, 0.08) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(245, 241, 232, 0.1) 0%, rgba(212, 196, 168, 0.05) 100%)
+              `,
+              pointerEvents: 'none'
+            }}></div>
+            
+            <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
               <div style={{
                 textAlign: 'center',
                 marginBottom: '100px',
@@ -881,21 +1115,21 @@ export default function Home() {
                   fontSize: '5rem',
                   fontWeight: 'bold',
                   marginBottom: '40px',
-                  color: '#ffd700',
+                  color: '#2c1810',
                   fontFamily: 'Noto Serif JP, serif',
-                  textShadow: '4px 4px 8px rgba(0,0,0,0.9), 0 0 40px rgba(255, 215, 0, 0.3)',
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                   animation: 'slideInDown 1.5s ease-out',
                   letterSpacing: '2px'
                 }}>Training Locations</h2>
                 <p style={{
                   fontSize: '1.8rem',
-                  color: '#fcd34d',
+                  color: '#5d4037',
                   maxWidth: '900px',
                   margin: '0 auto',
                   fontFamily: 'Crimson Text, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.4)',
                   letterSpacing: '1px'
                 }}>
                   Discover our outdoor training spots across Antalya's beautiful landscapes
@@ -910,26 +1144,25 @@ export default function Home() {
               }}>
                 {locations.map((location, index) => (
                   <div key={index} style={{
-                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                    border: '3px solid rgba(255, 215, 0, 0.4)',
-                    borderRadius: '30px',
+                    background: '#f5f5dc',
+                    border: '2px solid #8b4513',
+                    borderRadius: '0',
                     padding: '50px',
-                    backdropFilter: 'blur(20px)',
                     animation: `scaleIn 1.2s ease-out ${0.2 + index * 0.2}s both`,
                     transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                    boxShadow: '0 25px 50px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
+                    boxShadow: 'none',
                     position: 'relative',
                     overflow: 'hidden'
                   }}
                   onMouseEnter={(e) => {
                     const card = e.currentTarget as HTMLElement;
-                    card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                    card.style.boxShadow = '0 35px 70px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                    card.style.transform = 'translateY(-5px)';
+                    card.style.backgroundColor = '#e8e8d0';
                   }}
                   onMouseLeave={(e) => {
                     const card = e.currentTarget as HTMLElement;
-                    card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                    card.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)';
+                    card.style.transform = 'translateY(0)';
+                    card.style.backgroundColor = '#f5f5dc';
                   }}
                   >
                     <div style={{
@@ -946,17 +1179,17 @@ export default function Home() {
                         <h3 style={{
                           fontSize: '2.5rem',
                           fontWeight: 'bold',
-                          color: '#ffd700',
+                          color: '#2c1810',
                           fontFamily: 'Noto Serif JP, serif',
                           marginBottom: '10px',
-                          textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                          textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
                           letterSpacing: '1px'
                         }}>{location.name}</h3>
                         <p style={{
                           fontSize: '1.3rem',
-                          color: '#fcd34d',
+                          color: '#5d4037',
                           fontFamily: 'Crimson Text, serif',
-                          textShadow: '1px 1px 2px rgba(0,0,0,0.6)'
+                          textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                         }}>{location.address}</p>
                       </div>
                     </div>
@@ -967,16 +1200,16 @@ export default function Home() {
                       <h4 style={{
                         fontSize: '1.5rem',
                         fontWeight: 'bold',
-                        color: '#ffd700',
+                        color: '#2c1810',
                         marginBottom: '15px',
                         fontFamily: 'Noto Serif JP, serif',
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                       }}>Training Schedule</h4>
                       <p style={{
                         fontSize: '1.2rem',
-                        color: '#e5e7eb',
+                        color: '#3e2723',
                         fontFamily: 'Crimson Text, serif',
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.6)'
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                       }}>{location.time}</p>
                     </div>
 
@@ -986,10 +1219,10 @@ export default function Home() {
                       <h4 style={{
                         fontSize: '1.5rem',
                         fontWeight: 'bold',
-                        color: '#ffd700',
+                        color: '#2c1810',
                         marginBottom: '15px',
                         fontFamily: 'Noto Serif JP, serif',
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                       }}>Features</h4>
                       <div style={{
                         display: 'flex',
@@ -998,14 +1231,14 @@ export default function Home() {
                       }}>
                         {location.features.map((feature, featureIndex) => (
                           <span key={featureIndex} style={{
-                            backgroundColor: 'rgba(255, 215, 0, 0.2)',
-                            color: '#ffd700',
+                            backgroundColor: 'rgba(139, 69, 19, 0.2)',
+                            color: '#2c1810',
                             padding: '8px 16px',
-                            borderRadius: '20px',
+                            borderRadius: '0',
                             fontSize: '1rem',
                             fontFamily: 'Crimson Text, serif',
-                            border: '1px solid rgba(255, 215, 0, 0.3)',
-                            textShadow: '1px 1px 2px rgba(0,0,0,0.6)'
+                            border: '1px solid #8b4513',
+                            textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                           }}>
                             {feature}
                           </span>
@@ -1014,10 +1247,11 @@ export default function Home() {
                     </div>
 
                     <div style={{
-                      borderRadius: '20px',
+                      borderRadius: '0',
                       overflow: 'hidden',
-                      boxShadow: '0 15px 35px rgba(0, 0, 0, 0.4)',
-                      animation: 'mapReveal 1.5s ease-out 0.5s both'
+                      boxShadow: 'none',
+                      animation: 'mapReveal 1.5s ease-out 0.5s both',
+                      border: '2px solid #8b4513'
                     }}>
                       <iframe
                         src={location.mapEmbed}
@@ -1035,13 +1269,32 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Social Media Section - Enhanced */}
+          {/* Social Media Section - Vintage Paper Style */}
           <section style={{
             padding: '140px 40px',
-            background: 'linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 25%, #3d2b6e 50%, #2d1b4e 75%, #1a0f2e 100%)',
+            backgroundImage: 'url(/background.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
             position: 'relative'
           }}>
-            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            {/* Paper texture overlay */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: `
+                radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 78, 58, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(212, 196, 168, 0.08) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(245, 241, 232, 0.1) 0%, rgba(212, 196, 168, 0.05) 100%)
+              `,
+              pointerEvents: 'none'
+            }}></div>
+            
+            <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
               <div style={{
                 textAlign: 'center',
                 marginBottom: '100px',
@@ -1051,21 +1304,21 @@ export default function Home() {
                   fontSize: '5rem',
                   fontWeight: 'bold',
                   marginBottom: '40px',
-                  color: '#ffd700',
+                  color: '#2c1810',
                   fontFamily: 'Noto Serif JP, serif',
-                  textShadow: '4px 4px 8px rgba(0,0,0,0.9), 0 0 40px rgba(255, 215, 0, 0.3)',
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                   animation: 'slideInDown 1.5s ease-out',
                   letterSpacing: '2px'
                 }}>Follow Our Journey</h2>
                 <p style={{
                   fontSize: '1.8rem',
-                  color: '#fcd34d',
+                  color: '#5d4037',
                   maxWidth: '900px',
                   margin: '0 auto',
                   fontFamily: 'Crimson Text, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.4)',
                   letterSpacing: '1px'
                 }}>
                   Stay connected with our outdoor BJJ adventures
@@ -1073,65 +1326,85 @@ export default function Home() {
               </div>
 
               <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))',
-                gap: '80px',
+                display: 'flex',
+                justifyContent: 'center',
                 marginTop: '80px'
               }}>
-                {/* YouTube Section - Enhanced */}
+                {/* YouTube Section - Modern Premium Style */}
                 <div style={{
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
-                  borderRadius: '30px',
-                  padding: '50px',
-                  backdropFilter: 'blur(20px)',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  border: 'none',
+                  borderRadius: '25px',
+                  padding: '60px',
                   animation: 'scaleIn 1.2s ease-out 0.2s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 25px 50px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 25px 50px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                   position: 'relative',
                   overflow: 'hidden',
-                  width: '300px'
+                  width: '100%',
+                  maxWidth: '800px'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 35px 70px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
+                  card.style.transform = 'translateY(-15px) scale(1.03)';
+                  card.style.boxShadow = '0 35px 70px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)';
+                  card.style.transform = 'translateY(0) scale(1)';
+                  card.style.boxShadow = '0 25px 50px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
                 }}
                 >
                   <div style={{
                     textAlign: 'center',
-                    marginBottom: '30px'
+                    marginBottom: '40px'
                   }}>
                     <h3 style={{
-                      fontSize: '2rem',
+                      fontSize: '2.5rem',
                       fontWeight: 'bold',
-                      color: '#ffd700',
+                      color: 'white',
                       fontFamily: 'Noto Serif JP, serif',
-                      marginBottom: '10px',
-                      textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                      marginBottom: '15px',
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                       letterSpacing: '1px'
                     }}>YouTube Channel</h3>
+                    <p style={{
+                      fontSize: '1.3rem',
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontFamily: 'Crimson Text, serif',
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
+                      letterSpacing: '1px',
+                      marginBottom: '20px'
+                    }}>Latest Vlog</p>
+                    <p style={{
+                      fontSize: '1.1rem',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      fontFamily: 'Crimson Text, serif',
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
+                      maxWidth: '600px',
+                      margin: '0 auto',
+                      lineHeight: '1.6'
+                    }}>
+                      Join us on our latest outdoor BJJ adventure! Watch as we train in Antalya's beautiful landscapes, 
+                      share techniques, and build our nomadic community. Experience the freedom of outdoor martial arts.
+                    </p>
                   </div>
 
                   <div style={{
                     position: 'relative',
                     borderRadius: '20px',
                     overflow: 'hidden',
-                    marginBottom: '30px',
+                    marginBottom: '40px',
                     boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)',
-                    animation: 'mapReveal 1.5s ease-out 0.5s both'
+                    animation: 'mapReveal 1.5s ease-out 0.5s both',
+                    border: '3px solid rgba(255, 255, 255, 0.2)'
                   }}>
                     <img 
                       src="https://img.youtube.com/vi/PoCnx58dYZk/maxresdefault.jpg" 
                       alt="YouTube Video Thumbnail" 
                       style={{
                         width: '100%',
-                        height: '200px',
+                        height: '350px',
                         objectFit: 'cover',
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                       }}
@@ -1145,144 +1418,37 @@ export default function Home() {
                        target="_blank" 
                        rel="noopener noreferrer"
                        style={{
-                         background: 'linear-gradient(135deg, #ff0000 0%, #cc0000 50%, #ff0000 100%)',
+                         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                          backgroundSize: '200% 200%',
                          color: 'white',
-                         padding: '12px 25px',
-                         fontSize: '1.1rem',
+                         padding: '20px 45px',
+                         fontSize: '1.4rem',
                          textDecoration: 'none',
-                         borderRadius: '12px',
+                         borderRadius: '15px',
                          fontWeight: '700',
                          fontFamily: 'Crimson Text, serif',
                          display: 'inline-block',
                          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                         boxShadow: '0 15px 35px rgba(255, 0, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.2)',
-                         border: '3px solid rgba(255, 0, 0, 0.3)',
+                         boxShadow: '0 15px 35px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                         border: 'none',
                          position: 'relative',
-                         overflow: 'hidden'
+                         overflow: 'hidden',
+                         textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                        }}
                        onMouseEnter={(e) => {
                          const link = e.target as HTMLElement;
                          link.style.transform = 'translateY(-8px) scale(1.05)';
-                         link.style.boxShadow = '0 25px 50px rgba(255, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.3)';
                          link.style.backgroundPosition = '100% 100%';
+                         link.style.boxShadow = '0 25px 50px rgba(102, 126, 234, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
                        }}
                        onMouseLeave={(e) => {
                          const link = e.target as HTMLElement;
                          link.style.transform = 'translateY(0) scale(1)';
-                         link.style.boxShadow = '0 15px 35px rgba(255, 0, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
                          link.style.backgroundPosition = '0% 0%';
+                         link.style.boxShadow = '0 15px 35px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
                        }}
                        >
-                      Watch on YouTube
-                    </a>
-                  </div>
-                </div>
-
-                {/* Instagram Section - Enhanced */}
-                <div style={{
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  border: '3px solid rgba(255, 215, 0, 0.4)',
-                  borderRadius: '30px',
-                  padding: '50px',
-                  backdropFilter: 'blur(20px)',
-                  animation: 'scaleIn 1.2s ease-out 0.4s both',
-                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 25px 50px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  width: '300px'
-                }}
-                onMouseEnter={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03) rotate(1deg)';
-                  card.style.boxShadow = '0 35px 70px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
-                  card.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)';
-                }}
-                >
-                  <div style={{
-                    textAlign: 'center',
-                    marginBottom: '30px'
-                  }}>
-                    <h3 style={{
-                      fontSize: '2rem',
-                      fontWeight: 'bold',
-                      color: '#ffd700',
-                      fontFamily: 'Noto Serif JP, serif',
-                      marginBottom: '10px',
-                      textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-                      letterSpacing: '1px'
-                    }}>Instagram</h3>
-                  </div>
-
-                  <div style={{
-                    textAlign: 'center',
-                    marginBottom: '30px'
-                  }}>
-                    <img 
-                      src="/logo2.jpg" 
-                      alt="LORE BJJ Instagram" 
-                      style={{
-                        maxWidth: '150px',
-                        borderRadius: '20px',
-                        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)',
-                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                        animation: 'softPulse 3s ease-in-out infinite'
-                      }}
-                      onMouseEnter={(e) => {
-                        const img = e.target as HTMLElement;
-                        img.style.transform = 'scale(1.1) rotate(2deg)';
-                        img.style.boxShadow = '0 30px 60px rgba(255, 215, 0, 0.4)';
-                      }}
-                      onMouseLeave={(e) => {
-                        const img = e.target as HTMLElement;
-                        img.style.transform = 'scale(1) rotate(0deg)';
-                        img.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.4)';
-                      }}
-                    />
-                  </div>
-
-                  <div style={{
-                    textAlign: 'center'
-                  }}>
-                    <a href="https://www.instagram.com/loremartialarts/" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       style={{
-                         background: 'linear-gradient(135deg, #e4405f 0%, #c13584 50%, #e4405f 100%)',
-                         backgroundSize: '200% 200%',
-                         color: 'white',
-                         padding: '12px 25px',
-                         fontSize: '1.1rem',
-                         textDecoration: 'none',
-                         borderRadius: '12px',
-                         fontWeight: '700',
-                         fontFamily: 'Crimson Text, serif',
-                         display: 'inline-block',
-                         transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                         boxShadow: '0 15px 35px rgba(228, 64, 95, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.2)',
-                         border: '3px solid rgba(228, 64, 95, 0.3)',
-                         position: 'relative',
-                         overflow: 'hidden'
-                       }}
-                       onMouseEnter={(e) => {
-                         const link = e.target as HTMLElement;
-                         link.style.transform = 'translateY(-8px) scale(1.05)';
-                         link.style.boxShadow = '0 25px 50px rgba(228, 64, 95, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.3)';
-                         link.style.backgroundPosition = '100% 100%';
-                       }}
-                       onMouseLeave={(e) => {
-                         const link = e.target as HTMLElement;
-                         link.style.transform = 'translateY(0) scale(1)';
-                         link.style.boxShadow = '0 15px 35px rgba(228, 64, 95, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.2)';
-                         link.style.backgroundPosition = '0% 0%';
-                       }}
-                       >
-                      Follow on Instagram
+                      Watch Latest Vlog
                     </a>
                   </div>
                 </div>
@@ -1290,28 +1456,50 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Contact & Footer */}
+          {/* Contact & Footer - Vintage Paper Style */}
           <section style={{
             padding: '80px 40px',
-            background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)',
-            textAlign: 'center'
+            backgroundImage: 'url(/background.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            textAlign: 'center',
+            position: 'relative'
           }}>
-            <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            {/* Paper texture overlay */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: `
+                radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 78, 58, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(212, 196, 168, 0.08) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(245, 241, 232, 0.1) 0%, rgba(212, 196, 168, 0.05) 100%)
+              `,
+              pointerEvents: 'none'
+            }}></div>
+            
+            <div style={{ maxWidth: '800px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
               <h2 style={{
                 fontSize: '3rem',
                 fontWeight: 'bold',
                 marginBottom: '30px',
-                color: '#ffd700',
+                color: '#2c1810',
                 fontFamily: 'Noto Serif JP, serif',
-                animation: 'fadeInUp 1s ease-out'
+                animation: 'fadeInUp 1s ease-out',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
               }}>Join Our Nomadic Journey</h2>
               <p style={{
                 fontSize: '1.3rem',
-                color: '#e5e7eb',
+                color: '#3e2723',
                 marginBottom: '40px',
                 fontFamily: 'Crimson Text, serif',
                 lineHeight: '1.8',
-                animation: 'fadeIn 1.5s ease-out 0.3s both'
+                animation: 'fadeIn 1.5s ease-out 0.3s both',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
               }}>
                 Ready to experience outdoor BJJ training? Contact us to join our next session.
               </p>
@@ -1323,56 +1511,55 @@ export default function Home() {
                 animation: 'fadeIn 1.8s ease-out 0.6s both'
               }}>
                 <a href="mailto:contact@lorebjj.com" style={{
-                  backgroundColor: '#ffd700',
-                  color: '#1a1a1a',
+                  backgroundColor: '#f5f5dc',
+                  color: '#2c1810',
                   padding: '15px 30px',
                   fontSize: '1.2rem',
                   textDecoration: 'none',
-                  borderRadius: '10px',
+                  borderRadius: '0',
                   fontWeight: '600',
                   fontFamily: 'Crimson Text, serif',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 10px 25px rgba(255, 215, 0, 0.3)'
+                  boxShadow: 'none',
+                  border: '2px solid #8b4513',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                 }}
                 onMouseEnter={(e) => {
                   const link = e.target as HTMLElement;
-                  link.style.transform = 'translateY(-5px) scale(1.05)';
-                  link.style.boxShadow = '0 15px 35px rgba(255, 215, 0, 0.4)';
+                  link.style.transform = 'translateY(-3px)';
+                  link.style.backgroundColor = '#e8e8d0';
                 }}
                 onMouseLeave={(e) => {
                   const link = e.target as HTMLElement;
-                  link.style.transform = 'translateY(0) scale(1)';
-                  link.style.boxShadow = '0 10px 25px rgba(255, 215, 0, 0.3)';
+                  link.style.transform = 'translateY(0)';
+                  link.style.backgroundColor = '#f5f5dc';
                 }}
                 >
                   Contact Us
                 </a>
                 <a href="#locations" style={{
                   backgroundColor: 'transparent',
-                  color: '#ffd700',
+                  color: '#2c1810',
                   padding: '15px 30px',
                   fontSize: '1.2rem',
                   textDecoration: 'none',
-                  borderRadius: '10px',
+                  borderRadius: '0',
                   fontWeight: '600',
                   fontFamily: 'Crimson Text, serif',
-                  border: '3px solid #ffd700',
+                  border: '2px solid #8b4513',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 10px 25px rgba(255, 215, 0, 0.2)'
+                  boxShadow: 'none',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                 }}
                 onMouseEnter={(e) => {
                   const link = e.target as HTMLElement;
-                  link.style.transform = 'translateY(-5px) scale(1.05)';
-                  link.style.backgroundColor = '#ffd700';
-                  link.style.color = '#1a1a1a';
-                  link.style.boxShadow = '0 15px 35px rgba(255, 215, 0, 0.4)';
+                  link.style.transform = 'translateY(-3px)';
+                  link.style.backgroundColor = '#f5f5dc';
                 }}
                 onMouseLeave={(e) => {
                   const link = e.target as HTMLElement;
-                  link.style.transform = 'translateY(0) scale(1)';
+                  link.style.transform = 'translateY(0)';
                   link.style.backgroundColor = 'transparent';
-                  link.style.color = '#ffd700';
-                  link.style.boxShadow = '0 10px 25px rgba(255, 215, 0, 0.2)';
                 }}
                 >
                   View Locations
