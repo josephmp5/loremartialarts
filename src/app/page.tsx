@@ -287,7 +287,8 @@ export default function Home() {
               gap: 'clamp(15px, 4vw, 30px)',
               justifyContent: 'center',
               flexWrap: 'wrap',
-              animation: 'fadeIn 2.2s ease-out 6.4s both'
+              animation: 'fadeIn 2.2s ease-out 6.4s both',
+              marginBottom: 'clamp(80px, 15vw, 120px)'
             }}>
                 <a href="#about" style={{
                 backgroundColor: 'rgba(245, 245, 220, 0.9)',
@@ -357,9 +358,9 @@ export default function Home() {
             </div>
           </section>
 
-        {/* About Our Team Section */}
-          <section id="about" style={{
-          padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
+                {/* About Our Team Section */}
+        <section id="about" style={{
+          padding: 'clamp(100px, 15vw, 180px) clamp(20px, 5vw, 40px)',
           position: 'relative',
           width: '100%',
           margin: 0,
