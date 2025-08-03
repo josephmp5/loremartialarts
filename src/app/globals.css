@@ -5,39 +5,51 @@
 @tailwind components;
 @tailwind utilities;
 
+/* COMPLETE RESET - NO WHITE SPACES */
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 html {
   margin: 0;
   padding: 0;
   width: 100%;
+  height: 100%;
   overflow-x: hidden;
-}
-
-html {
   scroll-behavior: smooth;
 }
 
 body {
   font-family: 'Crimson Text', 'Noto Serif JP', 'Georgia', serif !important;
-  background-image: url('/background.jpg') !important;
-  background-size: cover !important;
-  background-attachment: fixed !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
   color: #2c1810 !important;
   line-height: 1.6 !important;
-  min-height: 100vh !important;
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
+  min-height: 100vh !important;
   overflow-x: hidden !important;
+  
+  /* FULL BACKGROUND COVERAGE - NO WHITE SPACES */
+  background: #1a1a2e url('/background.jpg') center center/cover no-repeat fixed !important;
+  
+  /* Fallback for very large background */
+  background-color: #1a1a2e !important;
 }
 
+/* Ensure body takes full space */
+#__next {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Remove any default margins from main containers */
+main, section, div {
+  box-sizing: border-box;
+}
+
+/* Paper texture overlay - lighter for better performance */
 body::before {
   content: '';
   position: fixed;
@@ -46,9 +58,9 @@ body::before {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(107, 78, 58, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(212, 196, 168, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(107, 78, 58, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(212, 196, 168, 0.04) 0%, transparent 50%);
   pointer-events: none;
   z-index: 1;
 }
@@ -84,12 +96,11 @@ body::before {
   animation: logoIntro 2s ease-out forwards !important;
 }
 
-/* Intro fade out animation */
 .intro-fade-out {
   animation: introFadeOut 1s ease-out forwards !important;
 }
 
-/* Fade-in animation */
+/* Fade animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -101,7 +112,6 @@ body::before {
   }
 }
 
-/* Fade-out animation for logo */
 @keyframes fadeOut {
   from {
     opacity: 1;
@@ -121,7 +131,6 @@ body::before {
   animation: fadeOut 1s ease-out forwards !important;
 }
 
-/* Logo specific animations */
 .logo-fade-in {
   animation: fadeIn 1.5s ease-out !important;
 }
@@ -265,8 +274,10 @@ body::before {
   font-size: 12px;
 }
 
+/* MOBILE OPTIMIZATIONS */
 @media (max-width: 768px) {
   body {
+    /* Fix background on mobile - use scroll instead of fixed */
     background-attachment: scroll !important;
     background-size: cover !important;
     background-position: center center !important;
@@ -277,14 +288,38 @@ body::before {
     padding: 8px 16px !important;
   }
   
-  /* Ensure mobile viewports don't have horizontal scroll */
+  /* Prevent horizontal scroll on mobile */
   * {
-    max-width: 100%;
+    max-width: 100vw;
   }
   
-  /* Fix any elements that might cause horizontal scroll */
-  .container, .section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+  /* Reduce animations on mobile for better performance */
+  *, *::before, *::after {
+    animation-duration: 0.5s !important;
   }
+}
+
+@media (max-width: 480px) {
+  body {
+    /* Even more aggressive mobile fixes */
+    background-attachment: scroll !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+}
+
+/* DESKTOP SPECIFIC */
+@media (min-width: 769px) {
+  body {
+    background-attachment: fixed !important;
+  }
+}
+
+/* PREVENT ANY LAYOUT ISSUES */
+.page-container {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
