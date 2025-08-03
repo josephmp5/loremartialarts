@@ -12,6 +12,13 @@
 }
 
 html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html {
   scroll-behavior: smooth;
 }
 
@@ -21,9 +28,14 @@ body {
   background-size: cover !important;
   background-attachment: fixed !important;
   background-position: center !important;
+  background-repeat: no-repeat !important;
   color: #2c1810 !important;
   line-height: 1.6 !important;
   min-height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  overflow-x: hidden !important;
 }
 
 body::before {
@@ -256,10 +268,23 @@ body::before {
 @media (max-width: 768px) {
   body {
     background-attachment: scroll !important;
+    background-size: cover !important;
+    background-position: center center !important;
   }
   
   .stamped-button {
     font-size: 14px !important;
     padding: 8px 16px !important;
+  }
+  
+  /* Ensure mobile viewports don't have horizontal scroll */
+  * {
+    max-width: 100%;
+  }
+  
+  /* Fix any elements that might cause horizontal scroll */
+  .container, .section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 }

@@ -40,7 +40,7 @@ export default function Home() {
       backgroundPosition: 'center',
       color: 'white',
       fontFamily: 'Crimson Text, serif',
-      overflow: 'hidden'
+      overflowX: 'hidden'
     }}>
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -160,7 +160,7 @@ export default function Home() {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundImage: 'url(/loremartialarts/background.jpg)',
+        backgroundImage: 'url(/background.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
@@ -192,14 +192,15 @@ export default function Home() {
             textAlign: 'center',
             animation: 'introFadeIn 2.5s ease-out',
             backgroundColor: 'rgba(0, 0, 0, 0.3)',
-            padding: '80px 50px',
-            borderRadius: '30px',
+            padding: 'clamp(30px, 8vw, 80px) clamp(20px, 6vw, 50px)',
+            borderRadius: 'clamp(15px, 4vw, 30px)',
             border: '4px solid rgba(139, 69, 19, 0.4)',
             boxShadow: '0 30px 60px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
             position: 'relative',
             backdropFilter: 'blur(15px)',
-            maxWidth: '500px',
-            width: '90%'
+            maxWidth: '400px',
+            width: '90%',
+            margin: '0 auto'
           }}>
             {/* Enhanced decorative corners */}
             <div style={{
@@ -248,11 +249,12 @@ export default function Home() {
             }}></div>
             
             <img 
-              src="/loremartialarts/logo.png" 
+              src="/logo.png" 
               alt="LORE BJJ Logo" 
               style={{
-                maxWidth: '400px',
-                marginBottom: '50px',
+                width: '100%',
+                maxWidth: '200px',
+                marginBottom: '30px',
                 animation: 'logoFloat 4s ease-in-out infinite',
                 mixBlendMode: 'overlay',
                 opacity: 0.9,
@@ -260,16 +262,16 @@ export default function Home() {
               }}
             />
             <h1 style={{
-              fontSize: '4.5rem',
+              fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
               fontWeight: 'bold',
-              marginBottom: '25px',
+              marginBottom: '20px',
               color: '#ffd700',
               textShadow: '4px 4px 8px rgba(0,0,0,0.9), 0 0 30px rgba(255, 215, 0, 0.3)',
               fontFamily: 'Noto Serif JP, serif',
               letterSpacing: '2px'
             }}>LORE BJJ</h1>
             <p style={{
-              fontSize: '1.8rem',
+              fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
               color: '#fcd34d',
               fontFamily: 'Crimson Text, serif',
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
@@ -288,11 +290,11 @@ export default function Home() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundImage: 'url(/loremartialarts/background.jpg)',
+            backgroundImage: 'url(/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
-            padding: '0 40px',
+            padding: '0 clamp(20px, 5vw, 40px)',
             position: 'relative'
           }}>
             {/* Paper texture overlay */}
@@ -319,17 +321,17 @@ export default function Home() {
               zIndex: 1
             }}>
               <h1 style={{
-                fontSize: '6rem',
+                fontSize: 'clamp(3rem, 12vw, 6rem)',
                 fontWeight: 'bold',
                 marginBottom: '35px',
                 color: '#2c1810',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                 fontFamily: 'Noto Serif JP, serif',
                 animation: 'slideInDown 1.5s ease-out',
-                letterSpacing: '3px'
+                letterSpacing: 'clamp(1px, 0.5vw, 3px)'
               }}>LORE BJJ</h1>
               <p style={{
-                fontSize: '2.5rem',
+                fontSize: 'clamp(1.5rem, 6vw, 2.5rem)',
                 color: '#5d4037',
                 marginBottom: '50px',
                 fontFamily: 'Crimson Text, serif',
@@ -338,14 +340,15 @@ export default function Home() {
                 letterSpacing: '1px'
               }}>Outdoor Nomad Free Team</p>
               <p style={{
-                fontSize: '1.5rem',
+                fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
                 color: '#3e2723',
                 maxWidth: '900px',
                 margin: '0 auto 60px',
                 lineHeight: '1.9',
                 fontFamily: 'Crimson Text, serif',
                 animation: 'fadeIn 2s ease-out 0.6s both',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+                textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                padding: '0 20px'
               }}>
                 Experience the freedom of outdoor BJJ training. Join our nomadic team as we train in nature&apos;s gym - 
                 from park sessions to beach workouts, embracing the warrior spirit in the open air.
@@ -360,8 +363,8 @@ export default function Home() {
                 <a href="#about" style={{
                   backgroundColor: '#f5f5dc',
                   color: '#2c1810',
-                  padding: '20px 40px',
-                  fontSize: '1.3rem',
+                  padding: 'clamp(15px, 3vw, 20px) clamp(25px, 6vw, 40px)',
+                  fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
                   textDecoration: 'none',
                   borderRadius: '0',
                   fontWeight: '700',
@@ -389,8 +392,8 @@ export default function Home() {
                 <a href="#locations" style={{
                   backgroundColor: 'transparent',
                   color: '#2c1810',
-                  padding: '20px 40px',
-                  fontSize: '1.3rem',
+                  padding: 'clamp(15px, 3vw, 20px) clamp(25px, 6vw, 40px)',
+                  fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
                   textDecoration: 'none',
                   borderRadius: '0',
                   fontWeight: '700',
@@ -421,8 +424,8 @@ export default function Home() {
 
           {/* About Our Team Section - Vintage Paper Style */}
           <section id="about" style={{
-            padding: '140px 40px',
-            backgroundImage: 'url(/loremartialarts/background.jpg)',
+            padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
+            backgroundImage: 'url(/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
@@ -451,17 +454,17 @@ export default function Home() {
                 animation: 'fadeInUp 1.2s ease-out'
               }}>
                 <h2 style={{
-                  fontSize: '5rem',
+                  fontSize: 'clamp(2.5rem, 8vw, 5rem)',
                   fontWeight: 'bold',
                   marginBottom: '40px',
                   color: '#2c1810',
                   fontFamily: 'Noto Serif JP, serif',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                   animation: 'slideInDown 1.5s ease-out',
-                  letterSpacing: '2px'
+                  letterSpacing: 'clamp(1px, 0.3vw, 2px)'
                 }}>About Our Team</h2>
                 <p style={{
-                  fontSize: '1.8rem',
+                  fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
                   color: '#5d4037',
                   maxWidth: '900px',
                   margin: '0 auto',
@@ -469,7 +472,8 @@ export default function Home() {
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.4)',
-                  letterSpacing: '1px'
+                  letterSpacing: '1px',
+                  padding: '0 20px'
                 }}>
                   We are not a traditional gym. We are Antalya&apos;s premier nomadic BJJ family that trains in nature&apos;s embrace.
                 </p>
@@ -477,8 +481,8 @@ export default function Home() {
 
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '60px',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: 'clamp(30px, 6vw, 60px)',
                 marginTop: '80px'
               }}>
                 {/* Philosophy Card - Modern Premium Style */}
@@ -505,13 +509,13 @@ export default function Home() {
                 }}
                 >
                   <div style={{
-                    fontSize: '5rem',
+                    fontSize: 'clamp(2.5rem, 8vw, 5rem)',
                     marginBottom: '30px',
                     textAlign: 'center',
                     animation: 'softPulse 3s ease-in-out infinite'
                   }}>🌿</div>
                   <h3 style={{
-                    fontSize: '2.5rem',
+                    fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                     fontWeight: 'bold',
                     marginBottom: '25px',
                     color: 'white',
@@ -557,13 +561,13 @@ export default function Home() {
                 }}
                 >
                   <div style={{
-                    fontSize: '5rem',
+                    fontSize: 'clamp(2.5rem, 8vw, 5rem)',
                     marginBottom: '30px',
                     textAlign: 'center',
                     animation: 'softPulse 3s ease-in-out infinite 1s'
                   }}>🥋</div>
                   <h3 style={{
-                    fontSize: '2.5rem',
+                    fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                     fontWeight: 'bold',
                     marginBottom: '25px',
                     color: 'white',
@@ -609,13 +613,13 @@ export default function Home() {
                 }}
                 >
                   <div style={{
-                    fontSize: '5rem',
+                    fontSize: 'clamp(2.5rem, 8vw, 5rem)',
                     marginBottom: '30px',
                     textAlign: 'center',
                     animation: 'softPulse 3s ease-in-out infinite 2s'
                   }}>🤝</div>
                   <h3 style={{
-                    fontSize: '2.5rem',
+                    fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                     fontWeight: 'bold',
                     marginBottom: '25px',
                     color: 'white',
@@ -642,8 +646,8 @@ export default function Home() {
 
           {/* Training Images Gallery Section - Vintage Paper Style */}
           <section style={{
-            padding: '140px 40px',
-            backgroundImage: 'url(/loremartialarts/background.jpg)',
+            padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
+            backgroundImage: 'url(/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
@@ -672,14 +676,14 @@ export default function Home() {
                 animation: 'fadeInUp 1.2s ease-out'
               }}>
                 <h2 style={{
-                  fontSize: '5rem',
+                  fontSize: 'clamp(2.5rem, 8vw, 5rem)',
                   fontWeight: 'bold',
                   marginBottom: '40px',
                   color: '#2c1810',
                   fontFamily: 'Noto Serif JP, serif',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                   animation: 'slideInDown 1.5s ease-out',
-                  letterSpacing: '2px'
+                  letterSpacing: 'clamp(1px, 0.3vw, 2px)'
                 }}>Training Moments</h2>
                 <p style={{
                   fontSize: '1.8rem',
@@ -1081,8 +1085,8 @@ export default function Home() {
 
           {/* Training Locations Section - Vintage Paper Style */}
           <section id="locations" style={{
-            padding: '140px 40px',
-            backgroundImage: 'url(/loremartialarts/background.jpg)',
+            padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
+            backgroundImage: 'url(/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
@@ -1111,14 +1115,14 @@ export default function Home() {
                 animation: 'fadeInUp 1.2s ease-out'
               }}>
                 <h2 style={{
-                  fontSize: '5rem',
+                  fontSize: 'clamp(2.5rem, 8vw, 5rem)',
                   fontWeight: 'bold',
                   marginBottom: '40px',
                   color: '#2c1810',
                   fontFamily: 'Noto Serif JP, serif',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                   animation: 'slideInDown 1.5s ease-out',
-                  letterSpacing: '2px'
+                  letterSpacing: 'clamp(1px, 0.3vw, 2px)'
                 }}>Training Locations</h2>
                 <p style={{
                   fontSize: '1.8rem',
@@ -1176,7 +1180,7 @@ export default function Home() {
                       }}>{location.icon}</div>
                       <div>
                         <h3 style={{
-                          fontSize: '2.5rem',
+                          fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                           fontWeight: 'bold',
                           color: '#2c1810',
                           fontFamily: 'Noto Serif JP, serif',
@@ -1270,8 +1274,8 @@ export default function Home() {
 
           {/* Social Media Section - Vintage Paper Style */}
           <section style={{
-            padding: '140px 40px',
-            backgroundImage: 'url(/loremartialarts/background.jpg)',
+            padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
+            backgroundImage: 'url(/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
@@ -1300,14 +1304,14 @@ export default function Home() {
                 animation: 'fadeInUp 1.2s ease-out'
               }}>
                 <h2 style={{
-                  fontSize: '5rem',
+                  fontSize: 'clamp(2.5rem, 8vw, 5rem)',
                   fontWeight: 'bold',
                   marginBottom: '40px',
                   color: '#2c1810',
                   fontFamily: 'Noto Serif JP, serif',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                   animation: 'slideInDown 1.5s ease-out',
-                  letterSpacing: '2px'
+                  letterSpacing: 'clamp(1px, 0.3vw, 2px)'
                 }}>Follow Our Journey</h2>
                 <p style={{
                   fontSize: '1.8rem',
@@ -1359,7 +1363,7 @@ export default function Home() {
                     marginBottom: '40px'
                   }}>
                     <h3 style={{
-                      fontSize: '2.5rem',
+                      fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                       fontWeight: 'bold',
                       color: 'white',
                       fontFamily: 'Noto Serif JP, serif',
@@ -1458,7 +1462,7 @@ export default function Home() {
           {/* Contact & Footer - Vintage Paper Style */}
           <section style={{
             padding: '80px 40px',
-            backgroundImage: 'url(/loremartialarts/background.jpg)',
+            backgroundImage: 'url(/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
