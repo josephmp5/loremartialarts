@@ -18,6 +18,11 @@ export default function RootLayout({
     <html lang="en" style={{ margin: 0, padding: 0, width: '100%', height: '100%' }}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        
+        {/* Preload critical images for faster loading */}
+        <link rel="preload" href="/loremartialarts/logo.png" as="image" type="image/png" />
+        <link rel="preload" href="/loremartialarts/background.jpg" as="image" type="image/jpeg" />
+        
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet" />

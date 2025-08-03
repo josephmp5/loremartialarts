@@ -116,19 +116,19 @@ export default function Home() {
         animation: 'introFadeOut 1s ease-in-out 4s forwards',
         pointerEvents: 'none'
       }}>
-          <div style={{
+                    <div style={{
             textAlign: 'center',
             animation: 'introFadeIn 2.5s ease-out',
-          backgroundColor: 'rgba(0, 0, 0, 0.4)',
-          padding: 'clamp(30px, 8vw, 80px) clamp(20px, 6vw, 50px)',
-          borderRadius: 'clamp(15px, 4vw, 30px)',
-            border: '4px solid rgba(139, 69, 19, 0.4)',
-            boxShadow: '0 30px 60px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            padding: 'clamp(25px, 6vw, 50px) clamp(20px, 5vw, 35px)',
+            borderRadius: 'clamp(12px, 3vw, 20px)',
+            border: '3px solid rgba(139, 69, 19, 0.4)',
+            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
             position: 'relative',
             backdropFilter: 'blur(15px)',
-          maxWidth: '400px',
-          width: '90%',
-          margin: '0 auto'
+            maxWidth: '320px',
+            width: '85%',
+            margin: '0 auto'
           }}>
           {/* Decorative corners */}
             <div style={{
@@ -176,35 +176,35 @@ export default function Home() {
               borderRadius: '0 0 8px 0'
             }}></div>
             
-            <img 
+                      <img 
             src="/loremartialarts/logo.png" 
-              alt="LORE BJJ Logo" 
-              style={{
+            alt="LORE BJJ Logo" 
+            loading="eager"
+            style={{
               width: '100%',
-              maxWidth: '200px',
-              marginBottom: '30px',
-                animation: 'logoFloat 4s ease-in-out infinite',
-                mixBlendMode: 'overlay',
-                opacity: 0.9,
-                filter: 'drop-shadow(0 15px 30px rgba(255, 215, 0, 0.3))'
-              }}
-            />
-            <h1 style={{
-            fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
-              fontWeight: 'bold',
-            marginBottom: '20px',
-              color: '#ffd700',
-              textShadow: '4px 4px 8px rgba(0,0,0,0.9), 0 0 30px rgba(255, 215, 0, 0.3)',
-              fontFamily: 'Noto Serif JP, serif',
-              letterSpacing: '2px'
-            }}>LORE BJJ</h1>
-            <p style={{
-            fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
-              color: '#fcd34d',
-              fontFamily: 'Crimson Text, serif',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-              letterSpacing: '1px'
-            }}>Outdoor Nomad Free Team</p>
+              maxWidth: '150px',
+              marginBottom: '20px',
+              animation: 'logoFloat 4s ease-in-out infinite',
+              filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3))',
+              opacity: 1
+            }}
+          />
+                      <h1 style={{
+            fontSize: 'clamp(2rem, 7vw, 3.5rem)',
+            fontWeight: 'bold',
+            marginBottom: '15px',
+            color: '#ffd700',
+            textShadow: '3px 3px 6px rgba(0,0,0,0.8), 0 0 20px rgba(255, 215, 0, 0.3)',
+            fontFamily: 'Noto Serif JP, serif',
+            letterSpacing: '1px'
+          }}>LORE BJJ</h1>
+                      <p style={{
+            fontSize: 'clamp(1rem, 3.5vw, 1.4rem)',
+            color: '#fcd34d',
+            fontFamily: 'Crimson Text, serif',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+            letterSpacing: '0.5px'
+          }}>Outdoor Nomad Free Team</p>
           </div>
         </div>
 
@@ -627,7 +627,8 @@ export default function Home() {
                 >
                   <img 
                     src={image.src}
-                    alt="LORE BJJ Training Session" 
+                    alt="LORE BJJ Training Session"
+                    loading="lazy"
                     style={{
                       width: '100%',
                       height: '280px',
@@ -1014,16 +1015,17 @@ export default function Home() {
                     animation: 'mapReveal 1.5s ease-out 0.5s both',
                     border: '3px solid rgba(255, 255, 255, 0.2)'
                   }}>
-                    <img 
-                      src="https://img.youtube.com/vi/PoCnx58dYZk/maxresdefault.jpg" 
-                      alt="YouTube Video Thumbnail" 
-                      style={{
-                        width: '100%',
+                                      <img 
+                    src="https://img.youtube.com/vi/PoCnx58dYZk/maxresdefault.jpg" 
+                    alt="YouTube Video Thumbnail"
+                    loading="lazy"
+                    style={{
+                      width: '100%',
                       height: 'clamp(250px, 50vw, 350px)',
-                        objectFit: 'cover',
-                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                      }}
-                    />
+                      objectFit: 'cover',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}
+                  />
                   </div>
 
                   <div style={{
