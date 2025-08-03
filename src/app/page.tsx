@@ -177,7 +177,7 @@ export default function Home() {
             }}></div>
             
             <img 
-            src="/loremartialarts/logo2.jpg" 
+            src="/loremartialarts/logo.png" 
               alt="LORE BJJ Logo" 
               style={{
               width: '100%',
