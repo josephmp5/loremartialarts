@@ -39,7 +39,7 @@ export default function Home() {
       padding: 0,
       background: 'transparent',
       color: 'white',
-      fontFamily: 'Futura, Crimson Text, serif',
+      fontFamily: 'Chakra Petch, Crimson Text, serif',
       overflowX: 'hidden',
       position: 'relative'
     }}>
@@ -193,19 +193,22 @@ export default function Home() {
             />
             <h1 style={{
             fontSize: 'clamp(2rem, 7vw, 3.5rem)',
-              fontWeight: 'bold',
+              fontWeight: '700',
             marginBottom: '15px',
               color: '#ffd700',
             textShadow: '3px 3px 6px rgba(0,0,0,0.8), 0 0 20px rgba(255, 215, 0, 0.3)',
-              fontFamily: 'Futura, Noto Serif JP, serif',
-            letterSpacing: '1px'
+              fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+            letterSpacing: '2px',
+            textTransform: 'uppercase'
             }}>LORE BJJ</h1>
             <p style={{
             fontSize: 'clamp(1rem, 3.5vw, 1.4rem)',
               color: '#fcd34d',
-              fontFamily: 'Futura, Crimson Text, serif',
+              fontFamily: 'Chakra Petch, Crimson Text, serif',
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-            letterSpacing: '0.5px'
+            letterSpacing: '1px',
+            textTransform: 'uppercase',
+            fontWeight: '600'
             }}>Outdoor Nomad Free Team</p>
           </div>
         </div>
@@ -251,22 +254,25 @@ export default function Home() {
             />
               <h1 style={{
               fontSize: 'clamp(3rem, 12vw, 6rem)',
-                fontWeight: 'bold',
+                fontWeight: '700',
                 marginBottom: '35px',
               color: '#f5f5dc',
               textShadow: '2px 2px 4px rgba(0,0,0,0.7), 0 0 20px rgba(255,215,0,0.3)',
-                fontFamily: 'Futura, Noto Serif JP, serif',
+                fontFamily: 'Chakra Petch, Noto Serif JP, serif',
               animation: 'slideInDown 1.5s ease-out 5.5s both',
-              letterSpacing: 'clamp(1px, 0.5vw, 3px)'
+              letterSpacing: 'clamp(2px, 1vw, 4px)',
+              textTransform: 'uppercase'
               }}>LORE BJJ</h1>
                           <p style={{
               fontSize: 'clamp(1.5rem, 6vw, 2.5rem)',
               color: '#fcd34d',
               marginBottom: '50px',
-              fontFamily: 'Futura, Crimson Text, serif',
+              fontFamily: 'Chakra Petch, Crimson Text, serif',
               animation: 'slideInUp 1.5s ease-out 5.8s both',
               textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
-              letterSpacing: '1px'
+              letterSpacing: 'clamp(1px, 0.5vw, 2px)',
+              textTransform: 'uppercase',
+              fontWeight: '600'
             }}>Outdoor Nomad Free Team</p>
                           <p style={{
               fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
@@ -274,10 +280,11 @@ export default function Home() {
               maxWidth: '900px',
               margin: '0 auto 60px',
               lineHeight: '1.9',
-              fontFamily: 'Futura, Crimson Text, serif',
+              fontFamily: 'Chakra Petch, Crimson Text, serif',
               animation: 'fadeIn 2s ease-out 6.1s both',
               textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-              padding: '0 20px'
+              padding: '0 20px',
+              fontWeight: '400'
             }}>
               Experience the freedom of outdoor BJJ training. Join our nomadic team as we train in nature's gym - 
                 from park sessions to beach workouts, embracing the warrior spirit in the open air.
@@ -298,14 +305,16 @@ export default function Home() {
                   textDecoration: 'none',
                 borderRadius: '8px',
                   fontWeight: '700',
-                  fontFamily: 'Futura, Crimson Text, serif',
+                  fontFamily: 'Chakra Petch, Crimson Text, serif',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   border: '2px solid #8b4513',
                   position: 'relative',
                   overflow: 'hidden',
                 boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
-                backdropFilter: 'blur(10px)'
+                backdropFilter: 'blur(10px)',
+                textTransform: 'uppercase',
+                letterSpacing: '1px'
                 }}
                 onMouseEnter={(e) => {
                   const link = e.target as HTMLElement;
@@ -330,14 +339,16 @@ export default function Home() {
                   textDecoration: 'none',
                 borderRadius: '8px',
                   fontWeight: '700',
-                  fontFamily: 'Futura, Crimson Text, serif',
+                  fontFamily: 'Chakra Petch, Crimson Text, serif',
                   border: '2px solid #8b4513',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   position: 'relative',
                   overflow: 'hidden',
                 boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                backdropFilter: 'blur(10px)'
+                backdropFilter: 'blur(10px)',
+                textTransform: 'uppercase',
+                letterSpacing: '1px'
                 }}
                 onMouseEnter={(e) => {
                   const link = e.target as HTMLElement;
