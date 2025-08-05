@@ -39,7 +39,7 @@ export default function Home() {
       padding: 0,
       background: 'transparent',
       color: 'white',
-      fontFamily: 'Futo, Crimson Text, serif',
+      fontFamily: 'Futura, Crimson Text, serif',
       overflowX: 'hidden',
       position: 'relative'
     }}>
@@ -197,13 +197,13 @@ export default function Home() {
             marginBottom: '15px',
               color: '#ffd700',
             textShadow: '3px 3px 6px rgba(0,0,0,0.8), 0 0 20px rgba(255, 215, 0, 0.3)',
-              fontFamily: 'Futo, Noto Serif JP, serif',
+              fontFamily: 'Futura, Noto Serif JP, serif',
             letterSpacing: '1px'
             }}>LORE BJJ</h1>
             <p style={{
             fontSize: 'clamp(1rem, 3.5vw, 1.4rem)',
               color: '#fcd34d',
-              fontFamily: 'Futo, Crimson Text, serif',
+              fontFamily: 'Futura, Crimson Text, serif',
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
             letterSpacing: '0.5px'
             }}>Outdoor Nomad Free Team</p>
@@ -255,7 +255,7 @@ export default function Home() {
                 marginBottom: '35px',
               color: '#f5f5dc',
               textShadow: '2px 2px 4px rgba(0,0,0,0.7), 0 0 20px rgba(255,215,0,0.3)',
-                fontFamily: 'Futo, Noto Serif JP, serif',
+                fontFamily: 'Futura, Noto Serif JP, serif',
               animation: 'slideInDown 1.5s ease-out 5.5s both',
               letterSpacing: 'clamp(1px, 0.5vw, 3px)'
               }}>LORE BJJ</h1>
@@ -263,7 +263,7 @@ export default function Home() {
               fontSize: 'clamp(1.5rem, 6vw, 2.5rem)',
               color: '#fcd34d',
               marginBottom: '50px',
-              fontFamily: 'Futo, Crimson Text, serif',
+              fontFamily: 'Futura, Crimson Text, serif',
               animation: 'slideInUp 1.5s ease-out 5.8s both',
               textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
               letterSpacing: '1px'
@@ -274,7 +274,7 @@ export default function Home() {
               maxWidth: '900px',
               margin: '0 auto 60px',
               lineHeight: '1.9',
-              fontFamily: 'Futo, Crimson Text, serif',
+              fontFamily: 'Futura, Crimson Text, serif',
               animation: 'fadeIn 2s ease-out 6.1s both',
               textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
               padding: '0 20px'
@@ -298,7 +298,7 @@ export default function Home() {
                   textDecoration: 'none',
                 borderRadius: '8px',
                   fontWeight: '700',
-                  fontFamily: 'Futo, Crimson Text, serif',
+                  fontFamily: 'Futura, Crimson Text, serif',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   border: '2px solid #8b4513',
                   position: 'relative',
@@ -330,7 +330,7 @@ export default function Home() {
                   textDecoration: 'none',
                 borderRadius: '8px',
                   fontWeight: '700',
-                  fontFamily: 'Futo, Crimson Text, serif',
+                  fontFamily: 'Futura, Crimson Text, serif',
                   border: '2px solid #8b4513',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   position: 'relative',
