@@ -27,10 +27,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet" />
         
-        {/* Zen Antique Font - Authentic Japanese Martial Arts Style */}
+        {/* Chakra Petch Font - Authentic Blocky, Distressed Style */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Zen+Antique:wght@400&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={inter.className} style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
         <div id="__next" style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
