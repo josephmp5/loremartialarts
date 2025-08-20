@@ -180,10 +180,10 @@ export default function Home() {
                     backgroundColor: 'transparent',
                     color: '#dc2626',
                     padding: '12px 24px',
-                    fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+                    fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
                     border: 'none',
-                    fontWeight: '700',
-                                              fontFamily: 'Go3v2, serif',
+                    fontWeight: 'normal',
+                    fontFamily: 'Manga, serif',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     textTransform: 'uppercase',
@@ -209,10 +209,10 @@ export default function Home() {
                     backgroundColor: 'transparent',
                     color: '#dc2626',
                     padding: '12px 24px',
-                    fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+                    fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
                     border: 'none',
-                    fontWeight: '700',
-                                              fontFamily: 'Go3v2, serif',
+                    fontWeight: 'normal',
+                    fontFamily: 'Manga, serif',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     textTransform: 'uppercase',
@@ -251,10 +251,10 @@ export default function Home() {
                     backgroundColor: 'transparent',
                     color: '#dc2626',
                     padding: '12px 24px',
-                    fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+                    fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
                     border: 'none',
-                    fontWeight: '700',
-                                              fontFamily: 'Go3v2, serif',
+                    fontWeight: 'normal',
+                    fontFamily: 'Manga, serif',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     textTransform: 'uppercase',
@@ -280,10 +280,10 @@ export default function Home() {
                     backgroundColor: 'transparent',
                     color: '#dc2626',
                     padding: '12px 24px',
-                    fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+                    fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
                     border: 'none',
-                    fontWeight: '700',
-                                              fontFamily: 'Go3v2, serif',
+                    fontWeight: 'normal',
+                    fontFamily: 'Manga, serif',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     textTransform: 'uppercase',
@@ -328,7 +328,7 @@ export default function Home() {
                   fontWeight: '700',
                   marginBottom: '40px',
                 color: '#f5f5dc',
-                  fontFamily: 'Go3v2, serif',
+                                      fontFamily: 'Go3v2, serif',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                   animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
@@ -338,7 +338,7 @@ export default function Home() {
                 color: '#e8e8d0',
                   maxWidth: '900px',
                   margin: '0 auto',
-                                            fontFamily: 'Go3v2, serif',
+                                      fontFamily: 'Go3v2, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -364,18 +364,13 @@ export default function Home() {
                   position: 'relative'
                 }}
                 >
-                  <div style={{
-                  fontSize: 'clamp(3rem, 8vw, 5rem)',
-                    marginBottom: '30px',
-                    textAlign: 'center',
-                    animation: 'softPulse 3s ease-in-out infinite'
-                  }}>🌿</div>
+
                   <h3 style={{
                   fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                    fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -384,7 +379,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                    fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -408,7 +403,7 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                    fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -417,7 +412,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                    fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -441,7 +436,7 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                    fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -450,7 +445,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                    fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -482,7 +477,7 @@ export default function Home() {
                 fontWeight: '700',
                 marginBottom: '40px',
                 color: '#f5f5dc',
-                fontFamily: 'Go3v2, serif',
+                                    fontFamily: 'Go3v2, serif',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                 animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
@@ -492,7 +487,7 @@ export default function Home() {
                 color: '#e8e8d0',
                 maxWidth: '900px',
                 margin: '0 auto',
-                fontFamily: 'Go3v2, serif',
+                                    fontFamily: 'Go3v2, serif',
                 lineHeight: '1.9',
                 animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -527,7 +522,7 @@ export default function Home() {
                     fontSize: 'clamp(2rem, 6vw, 2.5rem)',
                     fontWeight: '700',
                     color: 'white',
-                                              fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Go3v2, serif',
                     marginBottom: '15px',
                     textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -535,7 +530,7 @@ export default function Home() {
                   <p style={{
                     fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
-                                              fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Go3v2, serif',
                     textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
                     letterSpacing: '1px',
                     marginBottom: '20px'
@@ -543,7 +538,7 @@ export default function Home() {
                   <p style={{
                     fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
                     color: 'rgba(255, 255, 255, 0.8)',
-                                              fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Go3v2, serif',
                     textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
                     maxWidth: '600px',
                     margin: '0 auto',
@@ -585,8 +580,8 @@ export default function Home() {
                        padding: 'clamp(15px, 4vw, 20px) clamp(30px, 6vw, 45px)',
                        fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
                        textDecoration: 'none',
-                       fontWeight: '700',
-                       fontFamily: 'Go3v2, serif',
+                       fontWeight: 'normal',
+                 fontFamily: 'Go3v2, serif',
                        display: 'inline-block',
                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
@@ -630,7 +625,7 @@ export default function Home() {
                 fontWeight: '700',
                 marginBottom: '40px',
                 color: '#f5f5dc',
-                fontFamily: 'Go3v2, serif',
+                                    fontFamily: 'Go3v2, serif',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                 animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
@@ -640,7 +635,7 @@ export default function Home() {
                 color: '#e8e8d0',
                 maxWidth: '900px',
                 margin: '0 auto',
-                fontFamily: 'Go3v2, serif',
+                                    fontFamily: 'Go3v2, serif',
                 lineHeight: '1.9',
                 animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -750,7 +745,7 @@ export default function Home() {
                    fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
                    textDecoration: 'none',
                    fontWeight: '700',
-                                             fontFamily: 'Go3v2, serif',
+                 fontFamily: 'Go3v2, serif',
                    display: 'inline-block',
                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
@@ -792,7 +787,7 @@ export default function Home() {
                   fontWeight: '700',
                   marginBottom: '40px',
                 color: '#f5f5dc',
-                  fontFamily: 'Go3v2, serif',
+                                      fontFamily: 'Go3v2, serif',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                   animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
@@ -802,7 +797,7 @@ export default function Home() {
                 color: '#e8e8d0',
                   maxWidth: '900px',
                   margin: '0 auto',
-                                            fontFamily: 'Go3v2, serif',
+                                      fontFamily: 'Go3v2, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -851,7 +846,7 @@ export default function Home() {
                         fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                           fontWeight: '700',
                           color: '#2c1810',
-                          fontFamily: 'Go3v2, serif',
+                    fontFamily: 'Go3v2, serif',
                           marginBottom: '10px',
                           textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
                           letterSpacing: '1px'
@@ -859,7 +854,7 @@ export default function Home() {
                         <p style={{
                         fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
                           color: '#5d4037',
-                          fontFamily: 'Go3v2, serif',
+                    fontFamily: 'Go3v2, serif',
                           textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                         }}>{location.address}</p>
                       </div>
@@ -873,13 +868,13 @@ export default function Home() {
                         fontWeight: '700',
                         color: '#2c1810',
                         marginBottom: '15px',
-                        fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Go3v2, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                       }}>Training Schedule</h4>
                       <p style={{
                       fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                         color: '#3e2723',
-                        fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Go3v2, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                       }}>{location.time}</p>
                     </div>
@@ -892,7 +887,7 @@ export default function Home() {
                         fontWeight: '700',
                         color: '#2c1810',
                         marginBottom: '15px',
-                        fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Go3v2, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                       }}>Features</h4>
                       <div style={{
@@ -906,7 +901,7 @@ export default function Home() {
                             color: '#2c1810',
                             padding: '8px 16px',
                           fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-                            fontFamily: 'Go3v2, serif',
+                      fontFamily: 'Go3v2, serif',
                             textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                           }}>
                             {feature}
@@ -951,7 +946,7 @@ export default function Home() {
                 fontWeight: '700',
                 marginBottom: '30px',
               color: '#f5f5dc',
-                                          fontFamily: 'Go3v2, serif',
+                                    fontFamily: 'Go3v2, serif',
                 animation: 'fadeInUp 1s ease-out',
               textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
               }}>Join Our Nomadic Journey</h2>
@@ -979,8 +974,8 @@ export default function Home() {
                 padding: 'clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)',
                 fontSize: 'clamp(1.1rem, 3vw, 1.2rem)',
                   textDecoration: 'none',
-                  fontWeight: '600',
-                                            fontFamily: 'Go3v2, serif',
+                  fontWeight: 'normal',
+                                      fontFamily: 'Go3v2, serif',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                 }}
@@ -1003,8 +998,8 @@ export default function Home() {
                 padding: 'clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)',
                 fontSize: 'clamp(1.1rem, 3vw, 1.2rem)',
                   textDecoration: 'none',
-                  fontWeight: '600',
-                                            fontFamily: 'Go3v2, serif',
+                  fontWeight: 'normal',
+                                      fontFamily: 'Go3v2, serif',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                 }}
