@@ -177,28 +177,34 @@ export default function Home() {
                 <button
                   onClick={() => scrollToSection('about')}
                   style={{
-                    backgroundColor: 'transparent',
+                    backgroundColor: 'rgba(220, 38, 38, 0.1)',
                     color: '#dc2626',
-                    padding: '12px 24px',
-                    fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
-                    border: 'none',
+                    padding: '15px 30px',
+                    fontSize: 'clamp(1rem, 2.8vw, 1.2rem)',
+                    border: '2px solid #dc2626',
+                    borderRadius: '8px',
                     fontWeight: '700',
                     fontFamily: 'Go3v2, serif',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    animation: 'fadeIn 1s ease-out 0.5s both'
+                    letterSpacing: '2px',
+                    animation: 'fadeIn 1s ease-out 0.5s both',
+                    backdropFilter: 'blur(10px)'
                   }}
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#ef4444';
+                    btn.style.transform = 'scale(1.05)';
+                    btn.style.backgroundColor = '#dc2626';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#dc2626';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1)';
+                    btn.style.backgroundColor = 'rgba(220, 38, 38, 0.1)';
                     btn.style.color = '#dc2626';
+                    btn.style.borderColor = '#dc2626';
                   }}
                 >
                   OUR STORY
@@ -221,13 +227,17 @@ export default function Home() {
                   }}
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#ef4444';
+                    btn.style.transform = 'scale(1.05)';
+                    btn.style.backgroundColor = '#dc2626';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#dc2626';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1)';
+                    btn.style.backgroundColor = 'rgba(220, 38, 38, 0.1)';
                     btn.style.color = '#dc2626';
+                    btn.style.borderColor = '#dc2626';
                   }}
                 >
                   GALLERY
@@ -263,13 +273,17 @@ export default function Home() {
                   }}
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#ef4444';
+                    btn.style.transform = 'scale(1.05)';
+                    btn.style.backgroundColor = '#dc2626';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#dc2626';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1)';
+                    btn.style.backgroundColor = 'rgba(220, 38, 38, 0.1)';
                     btn.style.color = '#dc2626';
+                    btn.style.borderColor = '#dc2626';
                   }}
                 >
                   LOCATIONS
@@ -292,13 +306,17 @@ export default function Home() {
                   }}
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#ef4444';
+                    btn.style.transform = 'scale(1.05)';
+                    btn.style.backgroundColor = '#dc2626';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#dc2626';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1)';
+                    btn.style.backgroundColor = 'rgba(220, 38, 38, 0.1)';
                     btn.style.color = '#dc2626';
+                    btn.style.borderColor = '#dc2626';
                   }}
                 >
                   CAMPS
@@ -402,12 +420,7 @@ export default function Home() {
                   position: 'relative'
                 }}
                 >
-                  <div style={{
-                  fontSize: 'clamp(3rem, 8vw, 5rem)',
-                    marginBottom: '30px',
-                    textAlign: 'center',
-                    animation: 'softPulse 3s ease-in-out infinite 1s'
-                  }}>🥋</div>
+
                   <h3 style={{
                   fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                     fontWeight: '700',
@@ -440,12 +453,7 @@ export default function Home() {
                   position: 'relative'
                 }}
                 >
-                  <div style={{
-                  fontSize: 'clamp(3rem, 8vw, 5rem)',
-                    marginBottom: '30px',
-                    textAlign: 'center',
-                    animation: 'softPulse 3s ease-in-out infinite 2s'
-                  }}>🤝</div>
+
                   <h3 style={{
                   fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                     fontWeight: '700',
@@ -492,7 +500,7 @@ export default function Home() {
                 fontWeight: '700',
                 marginBottom: '40px',
                 color: '#f5f5dc',
-                fontFamily: 'Go3v2, serif',
+                fontFamily: 'Manga, serif',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                 animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
@@ -502,7 +510,7 @@ export default function Home() {
                 color: '#e8e8d0',
                 maxWidth: '900px',
                 margin: '0 auto',
-                fontFamily: 'Go3v2, serif',
+                fontFamily: 'Manga, serif',
                 lineHeight: '1.9',
                 animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -640,7 +648,7 @@ export default function Home() {
                 fontWeight: '700',
                 marginBottom: '40px',
                 color: '#f5f5dc',
-                fontFamily: 'Go3v2, serif',
+                fontFamily: 'Manga, serif',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                 animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
@@ -650,7 +658,7 @@ export default function Home() {
                 color: '#e8e8d0',
                 maxWidth: '900px',
                 margin: '0 auto',
-                fontFamily: 'Go3v2, serif',
+                fontFamily: 'Manga, serif',
                 lineHeight: '1.9',
                 animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -730,12 +738,14 @@ export default function Home() {
                       fontSize: 'clamp(1.3rem, 4vw, 1.5rem)',
                       fontWeight: '700',
                       marginBottom: '10px',
-                      textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+                      fontFamily: 'Manga, serif'
                     }}>{image.title}</h3>
                     <p style={{
                       fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
                       opacity: 0.9,
-                      textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+                      fontFamily: 'Manga, serif'
                     }}>{image.desc}</p>
                   </div>
                 </div>
@@ -859,7 +869,7 @@ export default function Home() {
                         fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                           fontWeight: '700',
                           color: '#2c1810',
-                          fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+                          fontFamily: 'Manga, serif',
                           marginBottom: '10px',
                           textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
                           letterSpacing: '1px'
