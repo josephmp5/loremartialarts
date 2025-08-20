@@ -136,7 +136,7 @@ export default function Home() {
             {/* Central Logo */}
             <div style={{
               marginBottom: '40px',
-              animation: 'logoFadeIn 2s ease-out 1.5s both'
+              animation: 'fadeIn 2s ease-out'
             }}>
               <img 
                 src="/logo.png" 
@@ -144,8 +144,7 @@ export default function Home() {
                 loading="eager"
                 style={{
                   width: '100%',
-                  maxWidth: '300px',
-                  animation: 'logoFloat 4s ease-in-out 3.5s infinite'
+                  maxWidth: '300px'
                 }}
               />
             </div>
@@ -174,32 +173,28 @@ export default function Home() {
                 <button
                   onClick={() => scrollToSection('about')}
                   style={{
-                    backgroundColor: 'rgba(139, 69, 19, 0.9)',
+                    backgroundColor: 'transparent',
                     color: '#f5f5dc',
                     padding: '12px 24px',
                     fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                     border: 'none',
-                    borderRadius: '8px',
                     fontWeight: '700',
                     fontFamily: 'Go3v2, serif',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     textTransform: 'uppercase',
                     letterSpacing: '1px',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                    animation: 'menuFadeIn 1s ease-out 0.5s both'
+                    animation: 'fadeIn 1s ease-out 0.5s both'
                   }}
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'translateY(-3px) scale(1.05)';
-                    btn.style.backgroundColor = 'rgba(139, 69, 19, 1)';
-                    btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
+                    btn.style.transform = 'scale(1.1)';
+                    btn.style.color = '#fcd34d';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'translateY(0) scale(1)';
-                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
-                    btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                    btn.style.transform = 'scale(1)';
+                    btn.style.color = '#f5f5dc';
                   }}
                 >
                   OUR STORY
@@ -207,32 +202,28 @@ export default function Home() {
                 <button
                   onClick={() => scrollToSection('gallery')}
                   style={{
-                    backgroundColor: 'rgba(139, 69, 19, 0.9)',
+                    backgroundColor: 'transparent',
                     color: '#f5f5dc',
                     padding: '12px 24px',
                     fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                     border: 'none',
-                    borderRadius: '8px',
                     fontWeight: '700',
                     fontFamily: 'Go3v2, serif',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     textTransform: 'uppercase',
                     letterSpacing: '1px',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                    animation: 'menuFadeIn 1s ease-out 0.7s both'
+                    animation: 'fadeIn 1s ease-out 0.7s both'
                   }}
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'translateY(-3px) scale(1.05)';
-                    btn.style.backgroundColor = 'rgba(139, 69, 19, 1)';
-                    btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
+                    btn.style.transform = 'scale(1.1)';
+                    btn.style.color = '#fcd34d';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'translateY(0) scale(1)';
-                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
-                    btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                    btn.style.transform = 'scale(1)';
+                    btn.style.color = '#f5f5dc';
                   }}
                 >
                   GALLERY
@@ -253,32 +244,28 @@ export default function Home() {
                 <button
                   onClick={() => scrollToSection('locations')}
                   style={{
-                    backgroundColor: 'rgba(139, 69, 19, 0.9)',
+                    backgroundColor: 'transparent',
                     color: '#f5f5dc',
                     padding: '12px 24px',
                     fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                     border: 'none',
-                    borderRadius: '8px',
                     fontWeight: '700',
                     fontFamily: 'Go3v2, serif',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     textTransform: 'uppercase',
                     letterSpacing: '1px',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                    animation: 'menuFadeIn 1s ease-out 0.9s both'
+                    animation: 'fadeIn 1s ease-out 0.9s both'
                   }}
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'translateY(-3px) scale(1.05)';
-                    btn.style.backgroundColor = 'rgba(139, 69, 19, 1)';
-                    btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
+                    btn.style.transform = 'scale(1.1)';
+                    btn.style.color = '#fcd34d';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'translateY(0) scale(1)';
-                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
-                    btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                    btn.style.transform = 'scale(1)';
+                    btn.style.color = '#f5f5dc';
                   }}
                 >
                   LOCATIONS
@@ -286,32 +273,28 @@ export default function Home() {
                 <button
                   onClick={() => scrollToSection('youtube')}
                   style={{
-                    backgroundColor: 'rgba(139, 69, 19, 0.9)',
+                    backgroundColor: 'transparent',
                     color: '#f5f5dc',
                     padding: '12px 24px',
                     fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                     border: 'none',
-                    borderRadius: '8px',
                     fontWeight: '700',
                     fontFamily: 'Go3v2, serif',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     textTransform: 'uppercase',
                     letterSpacing: '1px',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                    animation: 'menuFadeIn 1s ease-out 1.1s both'
+                    animation: 'fadeIn 1s ease-out 1.1s both'
                   }}
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'translateY(-3px) scale(1.05)';
-                    btn.style.backgroundColor = 'rgba(139, 69, 19, 1)';
-                    btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
+                    btn.style.transform = 'scale(1.1)';
+                    btn.style.color = '#fcd34d';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
-                    btn.style.transform = 'translateY(0) scale(1)';
-                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
-                    btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                    btn.style.transform = 'scale(1)';
+                    btn.style.color = '#f5f5dc';
                   }}
                 >
                   CAMPS
@@ -549,7 +532,7 @@ export default function Home() {
                           <div style={{
               background: 'transparent',
               padding: 'clamp(40px, 8vw, 60px)',
-              animation: 'scaleIn 1.2s ease-out 0.2s both',
+              animation: 'fadeIn 1.2s ease-out 0.2s both',
               transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
               position: 'relative',
               width: '100%',
@@ -591,15 +574,12 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div style={{
-                  position: 'relative',
-                  borderRadius: '20px',
-                  overflow: 'hidden',
-                  marginBottom: '40px',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
-                  animation: 'mapReveal 1.5s ease-out 0.5s both',
-                  border: '3px solid rgba(255, 255, 255, 0.2)'
-                }}>
+                                  <div style={{
+                    position: 'relative',
+                    overflow: 'hidden',
+                    marginBottom: '40px',
+                    animation: 'fadeIn 1.5s ease-out 0.5s both'
+                  }}>
                   <img 
                     src="https://img.youtube.com/vi/PoCnx58dYZk/maxresdefault.jpg" 
                     alt="YouTube Video Thumbnail" 
@@ -620,34 +600,26 @@ export default function Home() {
                      target="_blank" 
                      rel="noopener noreferrer"
                      style={{
-                       background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%)',
-                       backgroundSize: '200% 200%',
+                       backgroundColor: 'rgba(139, 69, 19, 0.9)',
                        color: 'white',
                        padding: 'clamp(15px, 4vw, 20px) clamp(30px, 6vw, 45px)',
                        fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
                        textDecoration: 'none',
-                       borderRadius: '15px',
                        fontWeight: '700',
                        fontFamily: 'Go3v2, serif',
                        display: 'inline-block',
                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                       boxShadow: '0 15px 35px rgba(0, 0, 0, 0.4)',
-                       border: '2px solid rgba(255, 255, 255, 0.3)',
-                       position: 'relative',
-                       overflow: 'hidden',
                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
                      }}
                      onMouseEnter={(e) => {
                        const link = e.target as HTMLElement;
-                       link.style.transform = 'translateY(-8px) scale(1.05)';
-                       link.style.backgroundPosition = '100% 100%';
-                       link.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.5)';
+                       link.style.transform = 'scale(1.05)';
+                       link.style.backgroundColor = 'rgba(139, 69, 19, 1)';
                      }}
                      onMouseLeave={(e) => {
                        const link = e.target as HTMLElement;
-                       link.style.transform = 'translateY(0) scale(1)';
-                       link.style.backgroundPosition = '0% 0%';
-                       link.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.4)';
+                       link.style.transform = 'scale(1)';
+                       link.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
                      }}
                      >
                     Watch Latest Vlog
@@ -714,24 +686,19 @@ export default function Home() {
                 { src: '/lore4.png', title: 'Community Spirit', desc: 'Building bonds through BJJ' }
               ].map((image, index) => (
                 <div key={index} style={{
-                  borderRadius: '25px',
                   overflow: 'hidden',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)',
-                  animation: `scaleIn 1.2s ease-out ${0.2 + index * 0.2}s both`,
+                  animation: `fadeIn 1.2s ease-out ${0.2 + index * 0.2}s both`,
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%)',
-                  position: 'relative',
-                  backdropFilter: 'blur(10px)'
+                  background: 'transparent',
+                  position: 'relative'
                 }}
                 onMouseEnter={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-10px) scale(1.03)';
-                  card.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.5)';
+                  card.style.transform = 'scale(1.05)';
                 }}
                 onMouseLeave={(e) => {
                   const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1)';
-                  card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.4)';
+                  card.style.transform = 'scale(1)';
                 }}
                 >
                   <img 
