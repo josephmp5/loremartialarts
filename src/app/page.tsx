@@ -334,7 +334,7 @@ export default function Home() {
                 color: '#e8e8d0',
                   maxWidth: '900px',
                   margin: '0 auto',
-                  fontFamily: 'Chakra Petch, Crimson Text, serif',
+                  fontFamily: 'Go3v2, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -380,7 +380,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                    fontFamily: 'Chakra Petch, Crimson Text, serif',
+                    fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -418,7 +418,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                    fontFamily: 'Chakra Petch, Crimson Text, serif',
+                    fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -470,7 +470,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                    fontFamily: 'Chakra Petch, Crimson Text, serif',
+                    fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -820,7 +820,7 @@ export default function Home() {
                 color: '#e8e8d0',
                   maxWidth: '900px',
                   margin: '0 auto',
-                  fontFamily: 'Chakra Petch, Crimson Text, serif',
+                  fontFamily: 'Go3v2, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -839,28 +839,19 @@ export default function Home() {
               }}>
                 {locations.map((location, index) => (
                   <div key={index} style={{
-                  background: 'rgba(245, 245, 220, 0.95)',
-                  border: '2px solid rgba(139, 69, 19, 0.8)',
-                  borderRadius: '15px',
+                  background: 'transparent',
                   padding: 'clamp(30px, 6vw, 50px)',
-                    animation: `scaleIn 1.2s ease-out ${0.2 + index * 0.2}s both`,
+                    animation: `fadeIn 1.2s ease-out ${0.2 + index * 0.2}s both`,
                     transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 15px 30px rgba(0, 0, 0, 0.3)',
-                    position: 'relative',
-                  overflow: 'hidden',
-                  backdropFilter: 'blur(10px)'
+                    position: 'relative'
                   }}
                   onMouseEnter={(e) => {
                     const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-8px) scale(1.02)';
-                  card.style.backgroundColor = 'rgba(245, 245, 220, 1)';
-                  card.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.4)';
+                    card.style.transform = 'scale(1.02)';
                   }}
                   onMouseLeave={(e) => {
                     const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1)';
-                  card.style.backgroundColor = 'rgba(245, 245, 220, 0.95)';
-                  card.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.3)';
+                    card.style.transform = 'scale(1)';
                   }}
                   >
                     <div style={{
@@ -886,7 +877,7 @@ export default function Home() {
                         <p style={{
                         fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
                           color: '#5d4037',
-                          fontFamily: 'Chakra Petch, Crimson Text, serif',
+                          fontFamily: 'Go3v2, serif',
                           textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                         }}>{location.address}</p>
                       </div>
@@ -906,7 +897,7 @@ export default function Home() {
                       <p style={{
                       fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                         color: '#3e2723',
-                        fontFamily: 'Chakra Petch, Crimson Text, serif',
+                        fontFamily: 'Go3v2, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                       }}>{location.time}</p>
                     </div>
@@ -933,7 +924,7 @@ export default function Home() {
                             color: '#2c1810',
                             padding: '8px 16px',
                           fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-                            fontFamily: 'Chakra Petch, Crimson Text, serif',
+                            fontFamily: 'Go3v2, serif',
                             textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                           }}>
                             {feature}
@@ -1007,7 +998,7 @@ export default function Home() {
                 fontSize: 'clamp(1.1rem, 3vw, 1.2rem)',
                   textDecoration: 'none',
                   fontWeight: '600',
-                  fontFamily: 'Chakra Petch, Crimson Text, serif',
+                  fontFamily: 'Go3v2, serif',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                 }}
@@ -1031,7 +1022,7 @@ export default function Home() {
                 fontSize: 'clamp(1.1rem, 3vw, 1.2rem)',
                   textDecoration: 'none',
                   fontWeight: '600',
-                  fontFamily: 'Chakra Petch, Crimson Text, serif',
+                  fontFamily: 'Go3v2, serif',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                 }}
