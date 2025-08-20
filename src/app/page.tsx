@@ -139,7 +139,7 @@ export default function Home() {
               animation: 'fadeIn 2s ease-out'
             }}>
               <img 
-                src="/logo.png" 
+                src="/loremartialarts/logo.png" 
                 alt="LORE BJJ Logo" 
                 loading="eager"
                 style={{
@@ -427,27 +427,13 @@ export default function Home() {
                   </p>
                 </div>
 
-              {/* Community Card */}
+              {/* Community Section */}
                 <div style={{
                 padding: 'clamp(30px, 6vw, 50px)',
-                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%)',
-                  borderRadius: '25px',
-                  animation: 'scaleIn 1.2s ease-out 0.6s both',
+                background: 'transparent',
+                  animation: 'fadeIn 1.2s ease-out 0.6s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
-                  position: 'relative',
-                overflow: 'hidden',
-                backdropFilter: 'blur(10px)'
-                }}
-                onMouseEnter={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-10px) scale(1.03)';
-                card.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1)';
-                card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
+                  position: 'relative'
                 }}
                 >
                   <div style={{
@@ -678,12 +664,12 @@ export default function Home() {
               marginTop: '80px'
             }}>
               {[
-                { src: '/insta1.png', title: 'Outdoor Training', desc: 'BJJ techniques in nature\'s embrace' },
-                { src: '/insta10.jpg', title: 'Team Training', desc: 'Building strength together in Antalya' },
-                { src: '/lore1.png', title: 'Beach Training', desc: 'Training by the Mediterranean Sea' },
-                { src: '/lore2.png', title: 'Technique Focus', desc: 'Perfecting BJJ techniques outdoors' },
-                { src: '/lore3.png', title: 'Park Sessions', desc: 'Training in Antalya\'s beautiful parks' },
-                { src: '/lore4.png', title: 'Community Spirit', desc: 'Building bonds through BJJ' }
+                { src: '/loremartialarts/insta1.png', title: 'Outdoor Training', desc: 'BJJ techniques in nature\'s embrace' },
+                { src: '/loremartialarts/insta10.jpg', title: 'Team Training', desc: 'Building strength together in Antalya' },
+                { src: '/loremartialarts/lore1.png', title: 'Beach Training', desc: 'Training by the Mediterranean Sea' },
+                { src: '/loremartialarts/lore2.png', title: 'Technique Focus', desc: 'Perfecting BJJ techniques outdoors' },
+                { src: '/loremartialarts/lore3.png', title: 'Park Sessions', desc: 'Training in Antalya\'s beautiful parks' },
+                { src: '/loremartialarts/lore4.png', title: 'Community Spirit', desc: 'Building bonds through BJJ' }
               ].map((image, index) => (
                 <div key={index} style={{
                   overflow: 'hidden',

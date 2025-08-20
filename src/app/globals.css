@@ -165,7 +165,7 @@ body {
   overflow-x: hidden !important;
   
   /* FULL BACKGROUND COVERAGE - NO WHITE SPACES */
-  background: #1a1a2e url('/background.jpg') center center/cover no-repeat fixed !important;
+  background: #1a1a2e url('/loremartialarts/background.jpg') center center/cover no-repeat fixed !important;
   
   /* Fallback for very large background */
   background-color: #1a1a2e !important;
