@@ -139,9 +139,25 @@ export default function Home() {
               animation: 'fadeIn 2s ease-out'
             }}>
               <img 
-                src="/loremartialarts/logo.png" 
+                src="/logo.png" 
                 alt="LORE BJJ Logo" 
                 loading="eager"
+                onError={(e) => {
+                  console.log('Logo failed to load:', e);
+                  const img = e.target as HTMLImageElement;
+                  img.style.display = 'block';
+                  img.style.width = '300px';
+                  img.style.height = '100px';
+                  img.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                  img.style.border = '2px solid #f5f5dc';
+                  img.style.color = '#f5f5dc';
+                  img.style.textAlign = 'center';
+                  img.style.lineHeight = '96px';
+                  img.alt = 'LOGO LOADING ERROR - CHECK CONSOLE';
+                }}
+                onLoad={() => {
+                  console.log('Logo loaded successfully!');
+                }}
                 style={{
                   width: '100%',
                   maxWidth: '300px'
