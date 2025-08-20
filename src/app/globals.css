@@ -15,7 +15,53 @@
   font-display: swap;
 }
 
-/* Add more font-face declarations as needed for your specific fonts */
+@font-face {
+  font-family: 'Manga';
+  src: url('/fonts/Manga.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manga';
+  src: url('/fonts/Manga Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manga';
+  src: url('/fonts/Manga Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manga';
+  src: url('/fonts/Manga Bold Italic.otf') format('opentype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manga Hollow';
+  src: url('/fonts/Manga Hollow.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manga Hollow';
+  src: url('/fonts/Manga Hollow Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -44,6 +90,29 @@ body {
 /* Custom font utility classes */
 .font-go3v2 {
   font-family: 'Go3v2', serif;
+}
+
+.font-manga {
+  font-family: 'Manga', serif;
+}
+
+.font-manga-bold {
+  font-family: 'Manga', serif;
+  font-weight: bold;
+}
+
+.font-manga-italic {
+  font-family: 'Manga', serif;
+  font-style: italic;
+}
+
+.font-manga-hollow {
+  font-family: 'Manga Hollow', serif;
+}
+
+.font-manga-hollow-italic {
+  font-family: 'Manga Hollow', serif;
+  font-style: italic;
 }
 
 /* Smooth scrolling for the entire page */

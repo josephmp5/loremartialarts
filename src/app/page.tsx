@@ -341,7 +341,7 @@ export default function Home() {
                   fontWeight: '700',
                   marginBottom: '40px',
                 color: '#f5f5dc',
-                  fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+                  fontFamily: 'Manga, serif',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                   animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
@@ -388,7 +388,7 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                    fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+                    fontFamily: 'Manga, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -426,7 +426,7 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                    fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+                    fontFamily: 'Manga, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -478,7 +478,7 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                    fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+                    fontFamily: 'Manga, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -843,7 +843,7 @@ export default function Home() {
                   fontWeight: '700',
                   marginBottom: '40px',
                 color: '#f5f5dc',
-                  fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+                  fontFamily: 'Manga, serif',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                   animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
@@ -933,7 +933,7 @@ export default function Home() {
                         fontWeight: '700',
                         color: '#2c1810',
                         marginBottom: '15px',
-                        fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+                        fontFamily: 'Manga, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                       }}>Training Schedule</h4>
                       <p style={{
@@ -952,7 +952,7 @@ export default function Home() {
                         fontWeight: '700',
                         color: '#2c1810',
                         marginBottom: '15px',
-                        fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+                        fontFamily: 'Manga, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                       }}>Features</h4>
                       <div style={{
@@ -1011,7 +1011,7 @@ export default function Home() {
                 fontWeight: '700',
                 marginBottom: '30px',
               color: '#f5f5dc',
-                fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+                fontFamily: 'Manga, serif',
                 animation: 'fadeInUp 1s ease-out',
               textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
               }}>Join Our Nomadic Journey</h2>
