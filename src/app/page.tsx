@@ -166,19 +166,19 @@ export default function Home() {
               {/* Left Side Navigation */}
               <div style={{
                 position: 'absolute',
-                left: '20%',
+                left: '15%',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 display: 'flex',
-                flexDirection: 'column',
-                gap: '30px',
+                flexDirection: 'row',
+                gap: '40px',
                 pointerEvents: 'auto'
               }}>
                 <button
                   onClick={() => scrollToSection('about')}
                   style={{
                     backgroundColor: 'transparent',
-                    color: '#f5f5dc',
+                    color: '#dc2626',
                     padding: '12px 24px',
                     fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                     border: 'none',
@@ -193,12 +193,12 @@ export default function Home() {
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#fcd34d';
+                    btn.style.color = '#ef4444';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1)';
-                    btn.style.color = '#f5f5dc';
+                    btn.style.color = '#dc2626';
                   }}
                 >
                   OUR STORY
@@ -207,7 +207,7 @@ export default function Home() {
                   onClick={() => scrollToSection('gallery')}
                   style={{
                     backgroundColor: 'transparent',
-                    color: '#f5f5dc',
+                    color: '#dc2626',
                     padding: '12px 24px',
                     fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                     border: 'none',
@@ -222,12 +222,12 @@ export default function Home() {
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#fcd34d';
+                    btn.style.color = '#ef4444';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1)';
-                    btn.style.color = '#f5f5dc';
+                    btn.style.color = '#dc2626';
                   }}
                 >
                   GALLERY
@@ -237,19 +237,19 @@ export default function Home() {
               {/* Right Side Navigation */}
               <div style={{
                 position: 'absolute',
-                right: '20%',
+                right: '15%',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 display: 'flex',
-                flexDirection: 'column',
-                gap: '30px',
+                flexDirection: 'row',
+                gap: '40px',
                 pointerEvents: 'auto'
               }}>
                 <button
                   onClick={() => scrollToSection('locations')}
                   style={{
                     backgroundColor: 'transparent',
-                    color: '#f5f5dc',
+                    color: '#dc2626',
                     padding: '12px 24px',
                     fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                     border: 'none',
@@ -264,12 +264,12 @@ export default function Home() {
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#fcd34d';
+                    btn.style.color = '#ef4444';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1)';
-                    btn.style.color = '#f5f5dc';
+                    btn.style.color = '#dc2626';
                   }}
                 >
                   LOCATIONS
@@ -278,7 +278,7 @@ export default function Home() {
                   onClick={() => scrollToSection('youtube')}
                   style={{
                     backgroundColor: 'transparent',
-                    color: '#f5f5dc',
+                    color: '#dc2626',
                     padding: '12px 24px',
                     fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                     border: 'none',
@@ -293,12 +293,12 @@ export default function Home() {
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#fcd34d';
+                    btn.style.color = '#ef4444';
                   }}
                   onMouseLeave={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'scale(1)';
-                    btn.style.color = '#f5f5dc';
+                    btn.style.color = '#dc2626';
                   }}
                 >
                   CAMPS
@@ -338,7 +338,7 @@ export default function Home() {
                 color: '#e8e8d0',
                   maxWidth: '900px',
                   margin: '0 auto',
-                  fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Manga, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -384,7 +384,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                    fontFamily: 'Go3v2, serif',
+                    fontFamily: 'Manga, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -422,7 +422,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                    fontFamily: 'Go3v2, serif',
+                    fontFamily: 'Manga, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -460,7 +460,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                    fontFamily: 'Go3v2, serif',
+                    fontFamily: 'Manga, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -537,7 +537,7 @@ export default function Home() {
                     fontSize: 'clamp(2rem, 6vw, 2.5rem)',
                     fontWeight: '700',
                     color: 'white',
-                    fontFamily: 'Go3v2, serif',
+                    fontFamily: 'Manga, serif',
                     marginBottom: '15px',
                     textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -545,7 +545,7 @@ export default function Home() {
                   <p style={{
                     fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
-                    fontFamily: 'Go3v2, serif',
+                    fontFamily: 'Manga, serif',
                     textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
                     letterSpacing: '1px',
                     marginBottom: '20px'
@@ -553,7 +553,7 @@ export default function Home() {
                   <p style={{
                     fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
                     color: 'rgba(255, 255, 255, 0.8)',
-                    fontFamily: 'Go3v2, serif',
+                    fontFamily: 'Manga, serif',
                     textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
                     maxWidth: '600px',
                     margin: '0 auto',
@@ -596,7 +596,7 @@ export default function Home() {
                        fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
                        textDecoration: 'none',
                        fontWeight: '700',
-                       fontFamily: 'Go3v2, serif',
+                       fontFamily: 'Manga, serif',
                        display: 'inline-block',
                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
@@ -758,7 +758,7 @@ export default function Home() {
                    fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
                    textDecoration: 'none',
                    fontWeight: '700',
-                   fontFamily: 'Go3v2, serif',
+                   fontFamily: 'Manga, serif',
                    display: 'inline-block',
                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
@@ -810,7 +810,7 @@ export default function Home() {
                 color: '#e8e8d0',
                   maxWidth: '900px',
                   margin: '0 auto',
-                  fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Manga, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -867,7 +867,7 @@ export default function Home() {
                         <p style={{
                         fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
                           color: '#5d4037',
-                          fontFamily: 'Go3v2, serif',
+                          fontFamily: 'Manga, serif',
                           textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                         }}>{location.address}</p>
                       </div>
@@ -887,7 +887,7 @@ export default function Home() {
                       <p style={{
                       fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                         color: '#3e2723',
-                        fontFamily: 'Go3v2, serif',
+                        fontFamily: 'Manga, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                       }}>{location.time}</p>
                     </div>
@@ -914,7 +914,7 @@ export default function Home() {
                             color: '#2c1810',
                             padding: '8px 16px',
                           fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-                            fontFamily: 'Go3v2, serif',
+                            fontFamily: 'Manga, serif',
                             textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                           }}>
                             {feature}
@@ -988,7 +988,7 @@ export default function Home() {
                 fontSize: 'clamp(1.1rem, 3vw, 1.2rem)',
                   textDecoration: 'none',
                   fontWeight: '600',
-                  fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Manga, serif',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                 }}
@@ -1012,7 +1012,7 @@ export default function Home() {
                 fontSize: 'clamp(1.1rem, 3vw, 1.2rem)',
                   textDecoration: 'none',
                   fontWeight: '600',
-                  fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Manga, serif',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                 }}
