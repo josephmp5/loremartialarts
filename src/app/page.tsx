@@ -21,7 +21,7 @@ export default function Home() {
 
   const locations = [
     {
-      name: "Erdal İnönü Park",
+      name: "Erdal Inönü Park",
       address: "Konyaaltı, Antalya",
       time: "Every Tuesday & Thursday 20:00",
       features: ["Outdoor training", "Park environment", "Fresh air"],
@@ -166,7 +166,7 @@ export default function Home() {
               {/* Left Side Navigation */}
               <div style={{
                 position: 'absolute',
-                left: '15%',
+                left: '12%',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 display: 'flex',
@@ -180,7 +180,7 @@ export default function Home() {
                     backgroundColor: 'transparent',
                     color: '#dc2626',
                     padding: '12px 24px',
-                    fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
+                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
                     border: 'none',
                     fontWeight: 'normal',
                     fontFamily: 'Manga, serif',
@@ -209,7 +209,7 @@ export default function Home() {
                     backgroundColor: 'transparent',
                     color: '#dc2626',
                     padding: '12px 24px',
-                    fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
+                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
                     border: 'none',
                     fontWeight: 'normal',
                     fontFamily: 'Manga, serif',
@@ -237,7 +237,7 @@ export default function Home() {
               {/* Right Side Navigation */}
               <div style={{
                 position: 'absolute',
-                right: '15%',
+                right: '12%',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 display: 'flex',
@@ -251,7 +251,7 @@ export default function Home() {
                     backgroundColor: 'transparent',
                     color: '#dc2626',
                     padding: '12px 24px',
-                    fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
+                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
                     border: 'none',
                     fontWeight: 'normal',
                     fontFamily: 'Manga, serif',
@@ -280,7 +280,7 @@ export default function Home() {
                     backgroundColor: 'transparent',
                     color: '#dc2626',
                     padding: '12px 24px',
-                    fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
+                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
                     border: 'none',
                     fontWeight: 'normal',
                     fontFamily: 'Manga, serif',
@@ -810,17 +810,20 @@ export default function Home() {
 
               <div style={{
                 display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
-              gap: 'clamp(40px, 8vw, 80px)',
-                marginTop: '80px'
+                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                gap: 'clamp(30px, 6vw, 60px)',
+                marginTop: '80px',
+                justifyItems: 'center'
               }}>
                 {locations.map((location, index) => (
                   <div key={index} style={{
-                  background: 'transparent',
-                  padding: 'clamp(30px, 6vw, 50px)',
+                    background: 'transparent',
+                    padding: 'clamp(30px, 6vw, 50px)',
                     animation: `fadeIn 1.2s ease-out ${0.2 + index * 0.2}s both`,
                     transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                    position: 'relative'
+                    position: 'relative',
+                    width: '100%',
+                    maxWidth: '500px'
                   }}
                   onMouseEnter={(e) => {
                     const card = e.currentTarget as HTMLElement;
