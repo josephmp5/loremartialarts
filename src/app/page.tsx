@@ -2,15 +2,22 @@
 import { useState, useEffect } from 'react';
 
 export default function Home() {
-  const [showContent, setShowContent] = useState(false);
+  const [showContent, setShowContent] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowContent(true);
-    }, 5000);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const locations = [
     {
@@ -45,15 +52,9 @@ export default function Home() {
     }}>
       <style dangerouslySetInnerHTML={{
         __html: `
-          @keyframes introFadeIn {
+          @keyframes logoFadeIn {
             0% { opacity: 0; transform: scale(0.8) rotate(-2deg); }
             100% { opacity: 1; transform: scale(1) rotate(0deg); }
-          }
-
-          @keyframes introFadeOut {
-            0% { opacity: 1; pointer-events: auto; }
-            99% { opacity: 0; pointer-events: auto; }
-            100% { opacity: 0; pointer-events: none; visibility: hidden; }
           }
           
           @keyframes logoFloat {
@@ -97,276 +98,342 @@ export default function Home() {
             0% { opacity: 0; transform: scale(0.8) rotate(-2deg); }
             100% { opacity: 1; transform: scale(1) rotate(0deg); }
           }
+
+          @keyframes menuFadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
         `
       }} />
 
-      {/* Intro Screen - FULL COVERAGE */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundImage: 'url(/loremartialarts/background.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 1000,
-        animation: 'introFadeOut 1s ease-in-out 4s forwards',
-        pointerEvents: 'none'
-      }}>
-          <div style={{
-            textAlign: 'center',
-            animation: 'introFadeIn 2.5s ease-out',
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
-            padding: 'clamp(25px, 6vw, 50px) clamp(20px, 5vw, 35px)',
-            borderRadius: 'clamp(12px, 3vw, 20px)',
-            border: '3px solid rgba(139, 69, 19, 0.4)',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-            position: 'relative',
-            backdropFilter: 'blur(15px)',
-            maxWidth: '320px',
-            width: '85%',
-            margin: '0 auto'
-          }}>
-          {/* Decorative corners */}
-            <div style={{
-              position: 'absolute',
-              top: '15px',
-              left: '15px',
-              width: '40px',
-              height: '40px',
-              border: '3px solid #8b4513',
-              borderRight: 'none',
-              borderBottom: 'none',
-              borderRadius: '8px 0 0 0'
-            }}></div>
-            <div style={{
-              position: 'absolute',
-              top: '15px',
-              right: '15px',
-              width: '40px',
-              height: '40px',
-              border: '3px solid #8b4513',
-              borderLeft: 'none',
-              borderBottom: 'none',
-              borderRadius: '0 8px 0 0'
-            }}></div>
-            <div style={{
-              position: 'absolute',
-              bottom: '15px',
-              left: '15px',
-              width: '40px',
-              height: '40px',
-              border: '3px solid #8b4513',
-              borderRight: 'none',
-              borderTop: 'none',
-              borderRadius: '0 0 0 8px'
-            }}></div>
-            <div style={{
-              position: 'absolute',
-              bottom: '15px',
-              right: '15px',
-              width: '40px',
-              height: '40px',
-              border: '3px solid #8b4513',
-              borderLeft: 'none',
-              borderTop: 'none',
-              borderRadius: '0 0 8px 0'
-            }}></div>
-            
-            <img 
-              src="/loremartialarts/logo.png" 
-              alt="LORE BJJ Logo" 
-            loading="eager"
-              style={{
-              width: '100%',
-              maxWidth: '150px',
-              marginBottom: '20px',
-                animation: 'logoFloat 4s ease-in-out infinite',
-              opacity: 1
-              }}
-            />
-            <h1 style={{
-            fontSize: 'clamp(2rem, 7vw, 3.5rem)',
-              fontWeight: '700',
-            marginBottom: '15px',
-              color: '#ffd700',
-            textShadow: '3px 3px 6px rgba(0,0,0,0.8), 0 0 20px rgba(255, 215, 0, 0.3)',
-              fontFamily: 'Chakra Petch, Noto Serif JP, serif',
-            letterSpacing: '2px',
-            textTransform: 'uppercase'
-            }}>LORE BJJ</h1>
-            <p style={{
-            fontSize: 'clamp(1rem, 3.5vw, 1.4rem)',
-              color: '#fcd34d',
-              fontFamily: 'Chakra Petch, Crimson Text, serif',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-            letterSpacing: '1px',
-            textTransform: 'uppercase',
-            fontWeight: '600'
-            }}>Outdoor Nomad Free Team</p>
-          </div>
-        </div>
-
       {/* Main Content - NO MARGINS/PADDING CAUSING WHITE SPACE */}
       <div style={{
-        animation: 'fadeIn 1s ease-in-out 5s both',
+        animation: 'fadeIn 1s ease-in-out both',
         width: '100%',
         margin: 0,
         padding: 0
       }}>
         {/* Hero Section - FULL VIEWPORT */}
-          <section style={{
-            minHeight: '100vh',
+        <section style={{
+          minHeight: '100vh',
           width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           padding: '0 clamp(20px, 5vw, 40px)',
           position: 'relative',
           margin: 0,
           background: 'transparent'
         }}>
-            <div style={{
-              textAlign: 'center',
-              maxWidth: '1200px',
-              animation: 'fadeInUp 1.2s ease-out',
-              position: 'relative',
+          <div style={{
+            textAlign: 'center',
+            maxWidth: '1200px',
+            animation: 'fadeInUp 1.2s ease-out',
+            position: 'relative',
             zIndex: 2,
             width: '100%'
+          }}>
+            {/* Navigation Menu Tabs */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '60px',
+              flexWrap: 'wrap',
+              gap: '20px'
             }}>
-                          <img 
-              src="/loremartialarts/logo.png" 
-              alt="LORE BJJ Logo" 
-              loading="eager"
-              style={{
-                width: '100%',
-                maxWidth: '200px',
-                marginBottom: '35px',
-                animation: 'fadeIn 2s ease-out 5.5s both, logoFloat 4s ease-in-out 7s infinite',
-                opacity: 1
-              }}
-            />
-              <h1 style={{
+              {/* Left Side Navigation */}
+              <div style={{
+                display: 'flex',
+                gap: '30px',
+                flexWrap: 'wrap',
+                justifyContent: 'center'
+              }}>
+                <button
+                  onClick={() => scrollToSection('about')}
+                  style={{
+                    backgroundColor: 'rgba(139, 69, 19, 0.9)',
+                    color: '#f5f5dc',
+                    padding: '12px 24px',
+                    fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontWeight: '700',
+                    fontFamily: 'Go3v2, serif',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                    animation: 'menuFadeIn 1s ease-out 0.5s both'
+                  }}
+                  onMouseEnter={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'translateY(-3px) scale(1.05)';
+                    btn.style.backgroundColor = 'rgba(139, 69, 19, 1)';
+                    btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'translateY(0) scale(1)';
+                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
+                    btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                  }}
+                >
+                  OUR STORY
+                </button>
+                <button
+                  onClick={() => scrollToSection('gallery')}
+                  style={{
+                    backgroundColor: 'rgba(139, 69, 19, 0.9)',
+                    color: '#f5f5dc',
+                    padding: '12px 24px',
+                    fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontWeight: '700',
+                    fontFamily: 'Go3v2, serif',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                    animation: 'menuFadeIn 1s ease-out 0.7s both'
+                  }}
+                  onMouseEnter={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'translateY(-3px) scale(1.05)';
+                    btn.style.backgroundColor = 'rgba(139, 69, 19, 1)';
+                    btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'translateY(0) scale(1)';
+                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
+                    btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                  }}
+                >
+                  GALLERY
+                </button>
+              </div>
+
+              {/* Right Side Navigation */}
+              <div style={{
+                display: 'flex',
+                gap: '30px',
+                flexWrap: 'wrap',
+                justifyContent: 'center'
+              }}>
+                <button
+                  onClick={() => scrollToSection('locations')}
+                  style={{
+                    backgroundColor: 'rgba(139, 69, 19, 0.9)',
+                    color: '#f5f5dc',
+                    padding: '12px 24px',
+                    fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontWeight: '700',
+                    fontFamily: 'Go3v2, serif',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                    animation: 'menuFadeIn 1s ease-out 0.9s both'
+                  }}
+                  onMouseEnter={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'translateY(-3px) scale(1.05)';
+                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
+                    btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'translateY(0) scale(1)';
+                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
+                    btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                  }}
+                >
+                  LOCATIONS
+                </button>
+                <button
+                  onClick={() => scrollToSection('youtube')}
+                  style={{
+                    backgroundColor: 'rgba(139, 69, 19, 0.9)',
+                    color: '#f5f5dc',
+                    padding: '12px 24px',
+                    fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontWeight: '700',
+                    fontFamily: 'Go3v2, serif',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                    animation: 'menuFadeIn 1s ease-out 1.1s both'
+                  }}
+                  onMouseEnter={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'translateY(-3px) scale(1.05)';
+                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
+                    btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'translateY(0) scale(1)';
+                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
+                    btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                  }}
+                >
+                  CAMPS
+                </button>
+              </div>
+            </div>
+
+            {/* Central Logo with Fade In Animation */}
+            <div style={{
+              marginBottom: '40px',
+              animation: 'logoFadeIn 2s ease-out 1.5s both'
+            }}>
+              <img 
+                src="/logo.png" 
+                alt="LORE BJJ Logo" 
+                loading="eager"
+                style={{
+                  width: '100%',
+                  maxWidth: '300px',
+                  animation: 'logoFloat 4s ease-in-out 3.5s infinite'
+                }}
+              />
+            </div>
+
+            {/* Main Title */}
+            <h1 style={{
               fontSize: 'clamp(3rem, 12vw, 6rem)',
-                fontWeight: '700',
-                marginBottom: '35px',
+              fontWeight: '700',
+              marginBottom: '20px',
               color: '#f5f5dc',
               textShadow: '2px 2px 4px rgba(0,0,0,0.7), 0 0 20px rgba(255,215,0,0.3)',
-                fontFamily: 'Chakra Petch, Noto Serif JP, serif',
-              animation: 'slideInDown 1.5s ease-out 5.5s both',
+              fontFamily: 'Go3v2, serif',
+              animation: 'slideInDown 1.5s ease-out 2s both',
               letterSpacing: 'clamp(2px, 1vw, 4px)',
               textTransform: 'uppercase'
-              }}>LORE BJJ</h1>
-                          <p style={{
+            }}>LORE</h1>
+
+            {/* Subtitle */}
+            <p style={{
               fontSize: 'clamp(1.5rem, 6vw, 2.5rem)',
               color: '#fcd34d',
               marginBottom: '50px',
-              fontFamily: 'Chakra Petch, Crimson Text, serif',
-              animation: 'slideInUp 1.5s ease-out 5.8s both',
+              fontFamily: 'Go3v2, serif',
+              animation: 'slideInUp 1.5s ease-out 2.3s both',
               textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
               letterSpacing: 'clamp(1px, 0.5vw, 2px)',
               textTransform: 'uppercase',
               fontWeight: '600'
-            }}>Outdoor Nomad Free Team</p>
-                          <p style={{
+            }}>MAR TIAL ARTS</p>
+
+            {/* Description */}
+            <p style={{
               fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
               color: '#e8e8d0',
               maxWidth: '900px',
               margin: '0 auto 60px',
               lineHeight: '1.9',
               fontFamily: 'Chakra Petch, Crimson Text, serif',
-              animation: 'fadeIn 2s ease-out 6.1s both',
+              animation: 'fadeIn 2s ease-out 2.6s both',
               textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
               padding: '0 20px'
             }}>
               Experience the freedom of outdoor BJJ training. Join our nomadic team as we train in nature's gym - 
-                from park sessions to beach workouts, embracing the warrior spirit in the open air.
-              </p>
-                          <div style={{
+              from park sessions to beach workouts, embracing the warrior spirit in the open air.
+            </p>
+
+            {/* Call to Action Buttons */}
+            <div style={{
               display: 'flex',
               gap: 'clamp(15px, 4vw, 30px)',
               justifyContent: 'center',
               flexWrap: 'wrap',
-              animation: 'fadeIn 2.2s ease-out 6.4s both',
+              animation: 'fadeIn 2.2s ease-out 2.9s both',
               marginBottom: 'clamp(80px, 15vw, 120px)'
             }}>
-                <a href="#about" style={{
+              <a href="#about" style={{
                 backgroundColor: 'rgba(245, 245, 220, 0.9)',
-                  color: '#2c1810',
+                color: '#2c1810',
                 padding: 'clamp(15px, 3vw, 20px) clamp(25px, 6vw, 40px)',
                 fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                  textDecoration: 'none',
+                textDecoration: 'none',
                 borderRadius: '8px',
-                  fontWeight: '700',
-                  fontFamily: 'Chakra Petch, Crimson Text, serif',
-                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  border: '2px solid #8b4513',
-                  position: 'relative',
-                  overflow: 'hidden',
+                fontWeight: '700',
+                fontFamily: 'Chakra Petch, Crimson Text, serif',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                border: '2px solid #8b4513',
+                position: 'relative',
+                overflow: 'hidden',
                 boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
-                backdropFilter: 'blur(10px)', textTransform: 'uppercase',
+                backdropFilter: 'blur(10px)',
+                textTransform: 'uppercase',
                 letterSpacing: '1px'
-                }}
-                onMouseEnter={(e) => {
-                  const link = e.target as HTMLElement;
+              }}
+              onMouseEnter={(e) => {
+                const link = e.target as HTMLElement;
                 link.style.transform = 'translateY(-3px) scale(1.05)';
                 link.style.backgroundColor = 'rgba(245, 245, 220, 1)';
                 link.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  const link = e.target as HTMLElement;
+              }}
+              onMouseLeave={(e) => {
+                const link = e.target as HTMLElement;
                 link.style.transform = 'translateY(0) scale(1)';
                 link.style.backgroundColor = 'rgba(245, 245, 220, 0.9)';
                 link.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
-                }}
-                >
-                  Discover Our Team
-                </a>
-                <a href="#locations" style={{
+              }}
+              >
+                Discover Our Team
+              </a>
+              <a href="#locations" style={{
                 backgroundColor: 'rgba(26, 26, 46, 0.8)',
                 color: '#f5f5dc',
                 padding: 'clamp(15px, 3vw, 20px) clamp(25px, 6vw, 40px)',
                 fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                  textDecoration: 'none',
+                textDecoration: 'none',
                 borderRadius: '8px',
-                  fontWeight: '700',
-                  fontFamily: 'Chakra Petch, Crimson Text, serif',
-                  border: '2px solid #8b4513',
-                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  position: 'relative',
-                  overflow: 'hidden',
+                fontWeight: '700',
+                fontFamily: 'Chakra Petch, Crimson Text, serif',
+                border: '2px solid #8b4513',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                position: 'relative',
+                overflow: 'hidden',
                 boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                backdropFilter: 'blur(10px)', textTransform: 'uppercase',
+                backdropFilter: 'blur(10px)',
+                textTransform: 'uppercase',
                 letterSpacing: '1px'
-                }}
-                onMouseEnter={(e) => {
-                  const link = e.target as HTMLElement;
+              }}
+              onMouseEnter={(e) => {
+                const link = e.target as HTMLElement;
                 link.style.transform = 'translateY(-3px) scale(1.05)';
                 link.style.backgroundColor = 'rgba(26, 26, 46, 1)';
                 link.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  const link = e.target as HTMLElement;
+              }}
+              onMouseLeave={(e) => {
+                const link = e.target as HTMLElement;
                 link.style.transform = 'translateY(0) scale(1)';
                 link.style.backgroundColor = 'rgba(26, 26, 46, 0.8)';
                 link.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
-                }}
-                >
-                  Training Locations
-                </a>
-              </div>
+              }}
+              >
+                Training Locations
+              </a>
             </div>
-          </section>
+          </div>
+        </section>
 
-                {/* About Our Team Section */}
+        {/* About Our Team Section */}
         <section id="about" style={{
           padding: 'clamp(100px, 15vw, 180px) clamp(20px, 5vw, 40px)',
           position: 'relative',
@@ -572,8 +639,8 @@ export default function Home() {
             </div>
           </section>
 
-        {/* Training Images Gallery Section */}
-          <section style={{
+        {/* YouTube Section - Now comes after About Us */}
+        <section id="youtube" style={{
           padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
           position: 'relative',
           width: '100%',
@@ -582,50 +649,223 @@ export default function Home() {
           backdropFilter: 'blur(5px)'
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-              <div style={{
-                textAlign: 'center',
-                marginBottom: '100px',
-                animation: 'fadeInUp 1.2s ease-out'
-              }}>
-                <h2 style={{
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '100px',
+              animation: 'fadeInUp 1.2s ease-out'
+            }}>
+              <h2 style={{
                 fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-                  fontWeight: '700',
-                  marginBottom: '40px',
+                fontWeight: '700',
+                marginBottom: '40px',
                 color: '#f5f5dc',
-                  fontFamily: 'Chakra Petch, Noto Serif JP, serif',
+                fontFamily: 'Go3v2, serif',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                  animation: 'slideInDown 1.5s ease-out',
+                animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
-                }}>Training Moments</h2>
-                <p style={{
+              }}>Follow Our Journey</h2>
+              <p style={{
                 fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
                 color: '#e8e8d0',
-                  maxWidth: '900px',
-                  margin: '0 auto',
-                  fontFamily: 'Chakra Petch, Crimson Text, serif',
-                  lineHeight: '1.9',
-                  animation: 'slideInUp 1.5s ease-out 0.3s both',
+                maxWidth: '900px',
+                margin: '0 auto',
+                fontFamily: 'Go3v2, serif',
+                lineHeight: '1.9',
+                animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
                 letterSpacing: '1px',
                 padding: '0 20px'
-                }}>
-                  Capturing the spirit of outdoor BJJ training in Antalya
-                </p>
-              </div>
+              }}>
+                Stay connected with our outdoor BJJ adventures
+              </p>
+            </div>
 
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '80px'
+            }}>
+              {/* YouTube Section */}
               <div style={{
-                display: 'grid',
+                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%)',
+                borderRadius: '25px',
+                padding: 'clamp(40px, 8vw, 60px)',
+                animation: 'scaleIn 1.2s ease-out 0.2s both',
+                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 25px 50px rgba(0, 0, 0, 0.4)',
+                position: 'relative',
+                overflow: 'hidden',
+                width: '100%',
+                maxWidth: '800px',
+                backdropFilter: 'blur(10px)'
+              }}
+              onMouseEnter={(e) => {
+                const card = e.currentTarget as HTMLElement;
+                card.style.transform = 'translateY(-15px) scale(1.03)';
+                card.style.boxShadow = '0 35px 70px rgba(0, 0, 0, 0.5)';
+              }}
+              onMouseLeave={(e) => {
+                const card = e.currentTarget as HTMLElement;
+                card.style.transform = 'translateY(0) scale(1)';
+                card.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.4)';
+              }}
+              >
+                <div style={{
+                  textAlign: 'center',
+                  marginBottom: '40px'
+                }}>
+                  <h3 style={{
+                    fontSize: 'clamp(2rem, 6vw, 2.5rem)',
+                    fontWeight: '700',
+                    color: 'white',
+                    fontFamily: 'Go3v2, serif',
+                    marginBottom: '15px',
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+                    letterSpacing: '1px'
+                  }}>YouTube Channel</h3>
+                  <p style={{
+                    fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontFamily: 'Go3v2, serif',
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                    letterSpacing: '1px',
+                    marginBottom: '20px'
+                  }}>Latest Vlog</p>
+                  <p style={{
+                    fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: 'Go3v2, serif',
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                    maxWidth: '600px',
+                    margin: '0 auto',
+                    lineHeight: '1.6'
+                  }}>
+                    Join us on our latest outdoor BJJ adventure! Watch as we train in Antalya's beautiful landscapes, 
+                    share techniques, and build our nomadic community. Experience the freedom of outdoor martial arts.
+                  </p>
+                </div>
+
+                <div style={{
+                  position: 'relative',
+                  borderRadius: '20px',
+                  overflow: 'hidden',
+                  marginBottom: '40px',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
+                  animation: 'mapReveal 1.5s ease-out 0.5s both',
+                  border: '3px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  <img 
+                    src="https://img.youtube.com/vi/PoCnx58dYZk/maxresdefault.jpg" 
+                    alt="YouTube Video Thumbnail" 
+                    loading="lazy"
+                    style={{
+                      width: '100%',
+                      height: 'clamp(250px, 50vw, 350px)',
+                      objectFit: 'cover',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}
+                  />
+                </div>
+
+                <div style={{
+                  textAlign: 'center'
+                }}>
+                  <a href="https://www.youtube.com/watch?v=PoCnx58dYZk&t=1s" 
+                     target="_blank" 
+                     rel="noopener noreferrer"
+                     style={{
+                       background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%)',
+                       backgroundSize: '200% 200%',
+                       color: 'white',
+                       padding: 'clamp(15px, 4vw, 20px) clamp(30px, 6vw, 45px)',
+                       fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
+                       textDecoration: 'none',
+                       borderRadius: '15px',
+                       fontWeight: '700',
+                       fontFamily: 'Go3v2, serif',
+                       display: 'inline-block',
+                       transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                       boxShadow: '0 15px 35px rgba(0, 0, 0, 0.4)',
+                       border: '2px solid rgba(255, 255, 255, 0.3)',
+                       position: 'relative',
+                       overflow: 'hidden',
+                       textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                     }}
+                     onMouseEnter={(e) => {
+                       const link = e.target as HTMLElement;
+                       link.style.transform = 'translateY(-8px) scale(1.05)';
+                       link.style.backgroundPosition = '100% 100%';
+                       link.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.5)';
+                     }}
+                     onMouseLeave={(e) => {
+                       const link = e.target as HTMLElement;
+                       link.style.transform = 'translateY(0) scale(1)';
+                       link.style.backgroundPosition = '0% 0%';
+                       link.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.4)';
+                     }}
+                     >
+                    Watch Latest Vlog
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Training Images Gallery Section */}
+        <section id="gallery" style={{
+          padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
+          position: 'relative',
+          width: '100%',
+          margin: 0,
+          background: 'rgba(0, 0, 0, 0.2)',
+          backdropFilter: 'blur(5px)'
+        }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '100px',
+              animation: 'fadeInUp 1.2s ease-out'
+            }}>
+              <h2 style={{
+                fontSize: 'clamp(2.5rem, 8vw, 5rem)',
+                fontWeight: '700',
+                marginBottom: '40px',
+                color: '#f5f5dc',
+                fontFamily: 'Go3v2, serif',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+                animation: 'slideInDown 1.5s ease-out',
+                letterSpacing: 'clamp(1px, 0.3vw, 2px)'
+              }}>Training Moments</h2>
+              <p style={{
+                fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
+                color: '#e8e8d0',
+                maxWidth: '900px',
+                margin: '0 auto',
+                fontFamily: 'Go3v2, serif',
+                lineHeight: '1.9',
+                animation: 'slideInUp 1.5s ease-out 0.3s both',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
+                letterSpacing: '1px',
+                padding: '0 20px'
+              }}>
+                Capturing the spirit of outdoor BJJ training in Antalya
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
               gap: 'clamp(30px, 6vw, 60px)',
-                marginTop: '80px'
-              }}>
+              marginTop: '80px'
+            }}>
               {[
-                { src: '/loremartialarts/insta1.png', title: 'Outdoor Training', desc: 'BJJ techniques in nature\'s embrace' },
-                { src: '/loremartialarts/insta10.jpg', title: 'Team Training', desc: 'Building strength together in Antalya' },
-                { src: '/loremartialarts/lore1.png', title: 'Beach Training', desc: 'Training by the Mediterranean Sea' },
-                { src: '/loremartialarts/lore2.png', title: 'Technique Focus', desc: 'Perfecting BJJ techniques outdoors' },
-                { src: '/loremartialarts/lore3.png', title: 'Park Sessions', desc: 'Training in Antalya\'s beautiful parks' },
-                { src: '/loremartialarts/lore4.png', title: 'Community Spirit', desc: 'Building bonds through BJJ' }
+                { src: '/insta1.png', title: 'Outdoor Training', desc: 'BJJ techniques in nature\'s embrace' },
+                { src: '/insta10.jpg', title: 'Team Training', desc: 'Building strength together in Antalya' },
+                { src: '/lore1.png', title: 'Beach Training', desc: 'Training by the Mediterranean Sea' },
+                { src: '/lore2.png', title: 'Technique Focus', desc: 'Perfecting BJJ techniques outdoors' },
+                { src: '/lore3.png', title: 'Park Sessions', desc: 'Training in Antalya\'s beautiful parks' },
+                { src: '/lore4.png', title: 'Community Spirit', desc: 'Building bonds through BJJ' }
               ].map((image, index) => (
                 <div key={index} style={{
                   borderRadius: '25px',
@@ -697,54 +937,54 @@ export default function Home() {
                   </div>
                 </div>
               ))}
-              </div>
+            </div>
 
-              {/* Follow Us Button */}
-              <div style={{
-                textAlign: 'center',
-                marginTop: '80px',
-                animation: 'fadeIn 1.5s ease-out 1.5s both'
-              }}>
-                <a href="https://www.instagram.com/loremartialarts/" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   style={{
+            {/* Follow Us Button */}
+            <div style={{
+              textAlign: 'center',
+              marginTop: '80px',
+              animation: 'fadeIn 1.5s ease-out 1.5s both'
+            }}>
+              <a href="https://www.instagram.com/loremartialarts/" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 style={{
                    background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.9) 0%, rgba(160, 82, 45, 0.9) 50%, rgba(139, 69, 19, 0.9) 100%)',
-                     backgroundSize: '200% 200%',
-                     color: '#f5f5dc',
+                   backgroundSize: '200% 200%',
+                   color: '#f5f5dc',
                    padding: 'clamp(15px, 4vw, 20px) clamp(30px, 8vw, 50px)',
                    fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
-                     textDecoration: 'none',
-                     borderRadius: '15px',
-                     fontWeight: '700',
-                     fontFamily: 'Chakra Petch, Crimson Text, serif',
-                     display: 'inline-block',
-                     transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                   textDecoration: 'none',
+                   borderRadius: '15px',
+                   fontWeight: '700',
+                   fontFamily: 'Go3v2, serif',
+                   display: 'inline-block',
+                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                    boxShadow: '0 12px 30px rgba(0, 0, 0, 0.4)',
                    border: '3px solid rgba(139, 69, 19, 0.8)',
-                     position: 'relative',
-                     overflow: 'hidden',
+                   position: 'relative',
+                   overflow: 'hidden',
                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
                    backdropFilter: 'blur(10px)'
-                   }}
-                   onMouseEnter={(e) => {
-                     const link = e.target as HTMLElement;
-                     link.style.transform = 'translateY(-8px) scale(1.05)';
-                     link.style.backgroundPosition = '100% 100%';
+                 }}
+                 onMouseEnter={(e) => {
+                   const link = e.target as HTMLElement;
+                   link.style.transform = 'translateY(-8px) scale(1.05)';
+                   link.style.backgroundPosition = '100% 100%';
                    link.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.5)';
-                   }}
-                   onMouseLeave={(e) => {
-                     const link = e.target as HTMLElement;
-                     link.style.transform = 'translateY(0) scale(1)';
-                     link.style.backgroundPosition = '0% 0%';
-                   link.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.4)';
-                   }}
-                   >
-                  Follow Us on Instagram
-                </a>
-              </div>
+                 }}
+                 onMouseLeave={(e) => {
+                   const link = e.target as HTMLElement;
+                   link.style.transform = 'translateY(0) scale(1)';
+                   link.style.backgroundPosition = '0% 0%';
+                   link.style.boxShadow = '0 12px 30px rgba(0,0,0,0.4)';
+                 }}
+                 >
+                Follow Us on Instagram
+              </a>
             </div>
-          </section>
+          </div>
+        </section>
 
         {/* Training Locations Section */}
           <section id="locations" style={{
@@ -919,179 +1159,6 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-          </section>
-
-        {/* Social Media Section */}
-          <section style={{
-          padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
-          position: 'relative',
-          width: '100%',
-          margin: 0,
-          background: 'rgba(0, 0, 0, 0.2)',
-          backdropFilter: 'blur(5px)'
-        }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-              <div style={{
-                textAlign: 'center',
-                marginBottom: '100px',
-                animation: 'fadeInUp 1.2s ease-out'
-              }}>
-                <h2 style={{
-                fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-                  fontWeight: '700',
-                  marginBottom: '40px',
-                color: '#f5f5dc',
-                  fontFamily: 'Chakra Petch, Noto Serif JP, serif',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                  animation: 'slideInDown 1.5s ease-out',
-                letterSpacing: 'clamp(1px, 0.3vw, 2px)'
-                }}>Follow Our Journey</h2>
-                <p style={{
-                fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
-                color: '#e8e8d0',
-                  maxWidth: '900px',
-                  margin: '0 auto',
-                  fontFamily: 'Chakra Petch, Crimson Text, serif',
-                  lineHeight: '1.9',
-                  animation: 'slideInUp 1.5s ease-out 0.3s both',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
-                letterSpacing: '1px',
-                padding: '0 20px'
-                }}>
-                  Stay connected with our outdoor BJJ adventures
-                </p>
-              </div>
-
-              <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginTop: '80px'
-              }}>
-              {/* YouTube Section */}
-                <div style={{
-                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%)',
-                  borderRadius: '25px',
-                padding: 'clamp(40px, 8vw, 60px)',
-                  animation: 'scaleIn 1.2s ease-out 0.2s both',
-                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 25px 50px rgba(0, 0, 0, 0.4)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  width: '100%',
-                maxWidth: '800px',
-                backdropFilter: 'blur(10px)'
-                }}
-                onMouseEnter={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-15px) scale(1.03)';
-                card.style.boxShadow = '0 35px 70px rgba(0, 0, 0, 0.5)';
-                }}
-                onMouseLeave={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1)';
-                card.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.4)';
-                }}
-                >
-                  <div style={{
-                    textAlign: 'center',
-                    marginBottom: '40px'
-                  }}>
-                    <h3 style={{
-                    fontSize: 'clamp(2rem, 6vw, 2.5rem)',
-                      fontWeight: '700',
-                      color: 'white',
-                      fontFamily: 'Chakra Petch, Noto Serif JP, serif',
-                      marginBottom: '15px',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                      letterSpacing: '1px'
-                    }}>YouTube Channel</h3>
-                    <p style={{
-                    fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                      color: 'rgba(255, 255, 255, 0.9)',
-                      fontFamily: 'Chakra Petch, Crimson Text, serif',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                      letterSpacing: '1px',
-                      marginBottom: '20px'
-                    }}>Latest Vlog</p>
-                    <p style={{
-                    fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      fontFamily: 'Chakra Petch, Crimson Text, serif',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                      maxWidth: '600px',
-                      margin: '0 auto',
-                      lineHeight: '1.6'
-                    }}>
-                    Join us on our latest outdoor BJJ adventure! Watch as we train in Antalya's beautiful landscapes, 
-                      share techniques, and build our nomadic community. Experience the freedom of outdoor martial arts.
-                    </p>
-                  </div>
-
-                  <div style={{
-                    position: 'relative',
-                    borderRadius: '20px',
-                    overflow: 'hidden',
-                    marginBottom: '40px',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
-                    animation: 'mapReveal 1.5s ease-out 0.5s both',
-                    border: '3px solid rgba(255, 255, 255, 0.2)'
-                  }}>
-                    <img 
-                      src="https://img.youtube.com/vi/PoCnx58dYZk/maxresdefault.jpg" 
-                      alt="YouTube Video Thumbnail" 
-                    loading="lazy"
-                      style={{
-                        width: '100%',
-                      height: 'clamp(250px, 50vw, 350px)',
-                        objectFit: 'cover',
-                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                      }}
-                    />
-                  </div>
-
-                  <div style={{
-                    textAlign: 'center'
-                  }}>
-                    <a href="https://www.youtube.com/watch?v=PoCnx58dYZk&t=1s" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       style={{
-                       background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%)',
-                         backgroundSize: '200% 200%',
-                         color: 'white',
-                       padding: 'clamp(15px, 4vw, 20px) clamp(30px, 6vw, 45px)',
-                       fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
-                         textDecoration: 'none',
-                         borderRadius: '15px',
-                         fontWeight: '700',
-                         fontFamily: 'Chakra Petch, Crimson Text, serif',
-                         display: 'inline-block',
-                         transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                       boxShadow: '0 15px 35px rgba(0, 0, 0, 0.4)',
-                       border: '2px solid rgba(255, 255, 255, 0.3)',
-                         position: 'relative',
-                         overflow: 'hidden',
-                       textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                       }}
-                       onMouseEnter={(e) => {
-                         const link = e.target as HTMLElement;
-                         link.style.transform = 'translateY(-8px) scale(1.05)';
-                         link.style.backgroundPosition = '100% 100%';
-                       link.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.5)';
-                       }}
-                       onMouseLeave={(e) => {
-                         const link = e.target as HTMLElement;
-                         link.style.transform = 'translateY(0) scale(1)';
-                         link.style.backgroundPosition = '0% 0%';
-                       link.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.4)';
-                       }}
-                       >
-                      Watch Latest Vlog
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
           </section>
