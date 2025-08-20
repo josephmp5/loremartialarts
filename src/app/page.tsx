@@ -848,7 +848,7 @@ export default function Home() {
                         <h3 style={{
                         fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                           fontWeight: '700',
-                          color: '#2c1810',
+                          color: '#e8e8d0',
                     fontFamily: 'Go3v2, serif',
                           marginBottom: '10px',
                           textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
@@ -856,7 +856,7 @@ export default function Home() {
                         }}>{location.name}</h3>
                         <p style={{
                         fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                          color: '#5d4037',
+                          color: '#e8e8d0',
                     fontFamily: 'Go3v2, serif',
                           textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                         }}>{location.address}</p>
@@ -869,14 +869,14 @@ export default function Home() {
                       <h4 style={{
                       fontSize: 'clamp(1.3rem, 4vw, 1.5rem)',
                         fontWeight: '700',
-                        color: '#2c1810',
+                        color: '#e8e8d0',
                         marginBottom: '15px',
                   fontFamily: 'Go3v2, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                       }}>Training Schedule</h4>
                       <p style={{
                       fontSize: 'clamp(1rem, 3vw, 1.2rem)',
-                        color: '#3e2723',
+                        color: '#e8e8d0',
                   fontFamily: 'Go3v2, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                       }}>{location.time}</p>
@@ -888,7 +888,7 @@ export default function Home() {
                       <h4 style={{
                       fontSize: 'clamp(1.3rem, 4vw, 1.5rem)',
                         fontWeight: '700',
-                        color: '#2c1810',
+                        color: '#e8e8d0',
                         marginBottom: '15px',
                   fontFamily: 'Go3v2, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
@@ -901,7 +901,7 @@ export default function Home() {
                         {location.features.map((feature, featureIndex) => (
                           <span key={featureIndex} style={{
                             backgroundColor: 'rgba(139, 69, 19, 0.2)',
-                            color: '#2c1810',
+                            color: '#e8e8d0',
                             padding: '8px 16px',
                           fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
                       fontFamily: 'Go3v2, serif',
