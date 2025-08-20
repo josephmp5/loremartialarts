@@ -113,7 +113,7 @@ export default function Home() {
         margin: 0,
         padding: 0
       }}>
-        {/* Hero Section - FULL VIEWPORT */}
+        {/* Hero Section - EXACTLY LIKE THE IMAGE */}
         <section style={{
           minHeight: '100vh',
           width: '100%',
@@ -133,21 +133,43 @@ export default function Home() {
             zIndex: 2,
             width: '100%'
           }}>
-            {/* Navigation Menu Tabs */}
+            {/* Central Logo */}
             <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '60px',
-              flexWrap: 'wrap',
-              gap: '20px'
+              marginBottom: '40px',
+              animation: 'logoFadeIn 2s ease-out 1.5s both'
+            }}>
+              <img 
+                src="/logo.png" 
+                alt="LORE BJJ Logo" 
+                loading="eager"
+                style={{
+                  width: '100%',
+                  maxWidth: '300px',
+                  animation: 'logoFloat 4s ease-in-out 3.5s infinite'
+                }}
+              />
+            </div>
+
+            {/* Navigation Tabs Positioned Around Logo */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '100%',
+              height: '100%',
+              pointerEvents: 'none'
             }}>
               {/* Left Side Navigation */}
               <div style={{
+                position: 'absolute',
+                left: '20%',
+                top: '50%',
+                transform: 'translateY(-50%)',
                 display: 'flex',
+                flexDirection: 'column',
                 gap: '30px',
-                flexWrap: 'wrap',
-                justifyContent: 'center'
+                pointerEvents: 'auto'
               }}>
                 <button
                   onClick={() => scrollToSection('about')}
@@ -219,10 +241,14 @@ export default function Home() {
 
               {/* Right Side Navigation */}
               <div style={{
+                position: 'absolute',
+                right: '20%',
+                top: '50%',
+                transform: 'translateY(-50%)',
                 display: 'flex',
+                flexDirection: 'column',
                 gap: '30px',
-                flexWrap: 'wrap',
-                justifyContent: 'center'
+                pointerEvents: 'auto'
               }}>
                 <button
                   onClick={() => scrollToSection('locations')}
@@ -245,7 +271,7 @@ export default function Home() {
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'translateY(-3px) scale(1.05)';
-                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
+                    btn.style.backgroundColor = 'rgba(139, 69, 19, 1)';
                     btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
                   }}
                   onMouseLeave={(e) => {
@@ -278,7 +304,7 @@ export default function Home() {
                   onMouseEnter={(e) => {
                     const btn = e.target as HTMLElement;
                     btn.style.transform = 'translateY(-3px) scale(1.05)';
-                    btn.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
+                    btn.style.backgroundColor = 'rgba(139, 69, 19, 1)';
                     btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
                   }}
                   onMouseLeave={(e) => {
@@ -291,144 +317,6 @@ export default function Home() {
                   CAMPS
                 </button>
               </div>
-            </div>
-
-            {/* Central Logo with Fade In Animation */}
-            <div style={{
-              marginBottom: '40px',
-              animation: 'logoFadeIn 2s ease-out 1.5s both'
-            }}>
-              <img 
-                src="/logo.png" 
-                alt="LORE BJJ Logo" 
-                loading="eager"
-                style={{
-                  width: '100%',
-                  maxWidth: '300px',
-                  animation: 'logoFloat 4s ease-in-out 3.5s infinite'
-                }}
-              />
-            </div>
-
-            {/* Main Title */}
-            <h1 style={{
-              fontSize: 'clamp(3rem, 12vw, 6rem)',
-              fontWeight: '700',
-              marginBottom: '20px',
-              color: '#f5f5dc',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.7), 0 0 20px rgba(255,215,0,0.3)',
-              fontFamily: 'Go3v2, serif',
-              animation: 'slideInDown 1.5s ease-out 2s both',
-              letterSpacing: 'clamp(2px, 1vw, 4px)',
-              textTransform: 'uppercase'
-            }}>LORE</h1>
-
-            {/* Subtitle */}
-            <p style={{
-              fontSize: 'clamp(1.5rem, 6vw, 2.5rem)',
-              color: '#fcd34d',
-              marginBottom: '50px',
-              fontFamily: 'Go3v2, serif',
-              animation: 'slideInUp 1.5s ease-out 2.3s both',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
-              letterSpacing: 'clamp(1px, 0.5vw, 2px)',
-              textTransform: 'uppercase',
-              fontWeight: '600'
-            }}>MAR TIAL ARTS</p>
-
-            {/* Description */}
-            <p style={{
-              fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
-              color: '#e8e8d0',
-              maxWidth: '900px',
-              margin: '0 auto 60px',
-              lineHeight: '1.9',
-              fontFamily: 'Chakra Petch, Crimson Text, serif',
-              animation: 'fadeIn 2s ease-out 2.6s both',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-              padding: '0 20px'
-            }}>
-              Experience the freedom of outdoor BJJ training. Join our nomadic team as we train in nature's gym - 
-              from park sessions to beach workouts, embracing the warrior spirit in the open air.
-            </p>
-
-            {/* Call to Action Buttons */}
-            <div style={{
-              display: 'flex',
-              gap: 'clamp(15px, 4vw, 30px)',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              animation: 'fadeIn 2.2s ease-out 2.9s both',
-              marginBottom: 'clamp(80px, 15vw, 120px)'
-            }}>
-              <a href="#about" style={{
-                backgroundColor: 'rgba(245, 245, 220, 0.9)',
-                color: '#2c1810',
-                padding: 'clamp(15px, 3vw, 20px) clamp(25px, 6vw, 40px)',
-                fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                textDecoration: 'none',
-                borderRadius: '8px',
-                fontWeight: '700',
-                fontFamily: 'Chakra Petch, Crimson Text, serif',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                border: '2px solid #8b4513',
-                position: 'relative',
-                overflow: 'hidden',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
-                backdropFilter: 'blur(10px)',
-                textTransform: 'uppercase',
-                letterSpacing: '1px'
-              }}
-              onMouseEnter={(e) => {
-                const link = e.target as HTMLElement;
-                link.style.transform = 'translateY(-3px) scale(1.05)';
-                link.style.backgroundColor = 'rgba(245, 245, 220, 1)';
-                link.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
-              }}
-              onMouseLeave={(e) => {
-                const link = e.target as HTMLElement;
-                link.style.transform = 'translateY(0) scale(1)';
-                link.style.backgroundColor = 'rgba(245, 245, 220, 0.9)';
-                link.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
-              }}
-              >
-                Discover Our Team
-              </a>
-              <a href="#locations" style={{
-                backgroundColor: 'rgba(26, 26, 46, 0.8)',
-                color: '#f5f5dc',
-                padding: 'clamp(15px, 3vw, 20px) clamp(25px, 6vw, 40px)',
-                fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                textDecoration: 'none',
-                borderRadius: '8px',
-                fontWeight: '700',
-                fontFamily: 'Chakra Petch, Crimson Text, serif',
-                border: '2px solid #8b4513',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                position: 'relative',
-                overflow: 'hidden',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                backdropFilter: 'blur(10px)',
-                textTransform: 'uppercase',
-                letterSpacing: '1px'
-              }}
-              onMouseEnter={(e) => {
-                const link = e.target as HTMLElement;
-                link.style.transform = 'translateY(-3px) scale(1.05)';
-                link.style.backgroundColor = 'rgba(26, 26, 46, 1)';
-                link.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
-              }}
-              onMouseLeave={(e) => {
-                const link = e.target as HTMLElement;
-                link.style.transform = 'translateY(0) scale(1)';
-                link.style.backgroundColor = 'rgba(26, 26, 46, 0.8)';
-                link.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
-              }}
-              >
-                Training Locations
-              </a>
             </div>
           </div>
         </section>
@@ -480,27 +368,13 @@ export default function Home() {
               gap: 'clamp(30px, 6vw, 60px)',
                 marginTop: '80px'
               }}>
-              {/* Philosophy Card */}
+              {/* Philosophy Section */}
                 <div style={{
                 padding: 'clamp(30px, 6vw, 50px)',
-                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%)',
-                  borderRadius: '25px',
+                background: 'transparent',
                   animation: 'scaleIn 1.2s ease-out 0.2s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
-                  position: 'relative',
-                overflow: 'hidden',
-                backdropFilter: 'blur(10px)'
-                }}
-                onMouseEnter={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-10px) scale(1.03)';
-                card.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1)';
-                card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
+                  position: 'relative'
                 }}
                 >
                   <div style={{
@@ -532,27 +406,13 @@ export default function Home() {
                   </p>
                 </div>
 
-              {/* Training Style Card */}
+              {/* Training Style Section */}
                 <div style={{
                 padding: 'clamp(30px, 6vw, 50px)',
-                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%)',
-                  borderRadius: '25px',
+                background: 'transparent',
                   animation: 'scaleIn 1.2s ease-out 0.4s both',
                   transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
-                  position: 'relative',
-                overflow: 'hidden',
-                backdropFilter: 'blur(10px)'
-                }}
-                onMouseEnter={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(-10px) scale(1.03)';
-                card.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'translateY(0) scale(1)';
-                card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
+                  position: 'relative'
                 }}
                 >
                   <div style={{
@@ -686,29 +546,15 @@ export default function Home() {
               marginTop: '80px'
             }}>
               {/* YouTube Section */}
-              <div style={{
-                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%)',
-                borderRadius: '25px',
-                padding: 'clamp(40px, 8vw, 60px)',
-                animation: 'scaleIn 1.2s ease-out 0.2s both',
-                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 25px 50px rgba(0, 0, 0, 0.4)',
-                position: 'relative',
-                overflow: 'hidden',
-                width: '100%',
-                maxWidth: '800px',
-                backdropFilter: 'blur(10px)'
-              }}
-              onMouseEnter={(e) => {
-                const card = e.currentTarget as HTMLElement;
-                card.style.transform = 'translateY(-15px) scale(1.03)';
-                card.style.boxShadow = '0 35px 70px rgba(0, 0, 0, 0.5)';
-              }}
-              onMouseLeave={(e) => {
-                const card = e.currentTarget as HTMLElement;
-                card.style.transform = 'translateY(0) scale(1)';
-                card.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.4)';
-              }}
+                          <div style={{
+              background: 'transparent',
+              padding: 'clamp(40px, 8vw, 60px)',
+              animation: 'scaleIn 1.2s ease-out 0.2s both',
+              transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+              position: 'relative',
+              width: '100%',
+              maxWidth: '800px'
+            }}
               >
                 <div style={{
                   textAlign: 'center',
@@ -949,35 +795,26 @@ export default function Home() {
                  target="_blank" 
                  rel="noopener noreferrer"
                  style={{
-                   background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.9) 0%, rgba(160, 82, 45, 0.9) 50%, rgba(139, 69, 19, 0.9) 100%)',
-                   backgroundSize: '200% 200%',
+                   backgroundColor: 'rgba(139, 69, 19, 0.9)',
                    color: '#f5f5dc',
                    padding: 'clamp(15px, 4vw, 20px) clamp(30px, 8vw, 50px)',
                    fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
                    textDecoration: 'none',
-                   borderRadius: '15px',
                    fontWeight: '700',
                    fontFamily: 'Go3v2, serif',
                    display: 'inline-block',
                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                   boxShadow: '0 12px 30px rgba(0, 0, 0, 0.4)',
-                   border: '3px solid rgba(139, 69, 19, 0.8)',
-                   position: 'relative',
-                   overflow: 'hidden',
-                   textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-                   backdropFilter: 'blur(10px)'
+                   textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
                  }}
                  onMouseEnter={(e) => {
                    const link = e.target as HTMLElement;
-                   link.style.transform = 'translateY(-8px) scale(1.05)';
-                   link.style.backgroundPosition = '100% 100%';
-                   link.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.5)';
+                   link.style.transform = 'translateY(-3px) scale(1.05)';
+                   link.style.backgroundColor = 'rgba(139, 69, 19, 1)';
                  }}
                  onMouseLeave={(e) => {
                    const link = e.target as HTMLElement;
                    link.style.transform = 'translateY(0) scale(1)';
-                   link.style.backgroundPosition = '0% 0%';
-                   link.style.boxShadow = '0 12px 30px rgba(0,0,0,0.4)';
+                   link.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
                  }}
                  >
                 Follow Us on Instagram
@@ -1128,10 +965,8 @@ export default function Home() {
                             backgroundColor: 'rgba(139, 69, 19, 0.2)',
                             color: '#2c1810',
                             padding: '8px 16px',
-                          borderRadius: '8px',
                           fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
                             fontFamily: 'Chakra Petch, Crimson Text, serif',
-                          border: '1px solid rgba(139, 69, 19, 0.5)',
                             textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                           }}>
                             {feature}
@@ -1141,11 +976,8 @@ export default function Home() {
                     </div>
 
                     <div style={{
-                    borderRadius: '10px',
                       overflow: 'hidden',
-                    boxShadow: '0 10px 20px rgba(0, 0, 0, 0.3)',
-                      animation: 'mapReveal 1.5s ease-out 0.5s both',
-                    border: '2px solid rgba(139, 69, 19, 0.5)'
+                      animation: 'mapReveal 1.5s ease-out 0.5s both'
                     }}>
                       <iframe
                         src={location.mapEmbed}
@@ -1207,26 +1039,20 @@ export default function Home() {
                 padding: 'clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)',
                 fontSize: 'clamp(1.1rem, 3vw, 1.2rem)',
                   textDecoration: 'none',
-                borderRadius: '8px',
                   fontWeight: '600',
                   fontFamily: 'Chakra Petch, Crimson Text, serif',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)',
-                border: '2px solid rgba(139, 69, 19, 0.8)',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
-                backdropFilter: 'blur(10px)'
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                 }}
                 onMouseEnter={(e) => {
                   const link = e.target as HTMLElement;
                 link.style.transform = 'translateY(-3px) scale(1.05)';
                 link.style.backgroundColor = 'rgba(245, 245, 220, 1)';
-                link.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   const link = e.target as HTMLElement;
                 link.style.transform = 'translateY(0) scale(1)';
                 link.style.backgroundColor = 'rgba(245, 245, 220, 0.9)';
-                link.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
                 }}
                 >
                   Contact Us
@@ -1237,26 +1063,20 @@ export default function Home() {
                 padding: 'clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)',
                 fontSize: 'clamp(1.1rem, 3vw, 1.2rem)',
                   textDecoration: 'none',
-                borderRadius: '8px',
                   fontWeight: '600',
                   fontFamily: 'Chakra Petch, Crimson Text, serif',
-                border: '2px solid rgba(139, 69, 19, 0.8)',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                backdropFilter: 'blur(10px)'
+                textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                 }}
                 onMouseEnter={(e) => {
                   const link = e.target as HTMLElement;
                 link.style.transform = 'translateY(-3px) scale(1.05)';
                 link.style.backgroundColor = 'rgba(26, 26, 46, 1)';
-                link.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   const link = e.target as HTMLElement;
                 link.style.transform = 'translateY(0) scale(1)';
                 link.style.backgroundColor = 'rgba(26, 26, 46, 0.8)';
-                link.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
                 }}
                 >
                   View Locations
