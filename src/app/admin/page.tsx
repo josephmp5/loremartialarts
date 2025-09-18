@@ -351,6 +351,29 @@ export default function AdminDashboard() {
             >
               Manage Content
             </a>
+            
+            <a
+              href="/admin/migrate-images"
+              style={{
+                background: 'rgba(245, 158, 11, 0.8)',
+                color: '#f5f5dc',
+                padding: '12px 24px',
+                borderRadius: '8px',
+                textDecoration: 'none',
+                fontWeight: '600',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(245, 158, 11, 1)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(245, 158, 11, 0.8)'
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
+            >
+              🚀 Migrate Images
+            </a>
           </div>
         </div>
 

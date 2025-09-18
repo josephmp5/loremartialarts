@@ -625,22 +625,55 @@ export default function ContentManagement() {
               opacity: 0.6,
               marginBottom: '20px'
             }}>
-              Add your first content item to get started
+              You need to run the SQL schema to populate the content database
             </p>
-            <button
-              onClick={() => setShowAddForm(true)}
-              style={{
-                background: 'rgba(139, 69, 19, 0.8)',
-                color: '#f5f5dc',
-                border: 'none',
-                padding: '12px 24px',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontSize: '1rem'
-              }}
-            >
-              Add First Content
-            </button>
+            <div style={{
+              background: 'rgba(59, 130, 246, 0.1)',
+              border: '1px solid rgba(59, 130, 246, 0.3)',
+              borderRadius: '8px',
+              padding: '20px',
+              marginBottom: '20px',
+              textAlign: 'left'
+            }}>
+              <h4 style={{ fontSize: '1.1rem', marginBottom: '10px' }}>📋 To fix this:</h4>
+              <ol style={{ fontSize: '0.9rem', lineHeight: '1.6', paddingLeft: '20px' }}>
+                <li>Go to your <strong>Supabase project dashboard</strong></li>
+                <li>Click <strong>"SQL Editor"</strong> in the left sidebar</li>
+                <li>Copy and paste the entire <strong>supabase-schema.sql</strong> file content</li>
+                <li>Click <strong>"Run"</strong></li>
+                <li>Refresh this page</li>
+              </ol>
+            </div>
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+              <button
+                onClick={() => setShowAddForm(true)}
+                style={{
+                  background: 'rgba(139, 69, 19, 0.8)',
+                  color: '#f5f5dc',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '1rem'
+                }}
+              >
+                Add Content Manually
+              </button>
+              <button
+                onClick={() => window.location.reload()}
+                style={{
+                  background: 'rgba(34, 197, 94, 0.8)',
+                  color: '#f5f5dc',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '1rem'
+                }}
+              >
+                Refresh Page
+              </button>
+            </div>
           </div>
         ) : (
           Object.keys(filteredContent).map(section => (
