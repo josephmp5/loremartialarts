@@ -132,12 +132,12 @@ ON CONFLICT DO NOTHING;
 
 -- Insert sample training gallery images
 INSERT INTO training_gallery (title, description, image_url, display_order) VALUES
-  ('Outdoor Training', 'BJJ techniques in nature''s embrace', '/loremartialarts/insta1.png', 1),
-  ('Team Training', 'Building strength together in Antalya', '/loremartialarts/insta10.jpg', 2),
-  ('Beach Training', 'Training by the Mediterranean Sea', '/loremartialarts/lore1.png', 3),
-  ('Technique Focus', 'Perfecting BJJ techniques outdoors', '/loremartialarts/lore2.png', 4),
-  ('Park Sessions', 'Training in Antalya''s beautiful parks', '/loremartialarts/lore3.png', 5),
-  ('Community Spirit', 'Building bonds through BJJ', '/loremartialarts/lore4.png', 6)
+  ('Outdoor Training', 'BJJ techniques in nature''s embrace', '/insta1.png', 1),
+  ('Team Training', 'Building strength together in Antalya', '/insta10.jpg', 2),
+  ('Beach Training', 'Training by the Mediterranean Sea', '/lore1.png', 3),
+  ('Technique Focus', 'Perfecting BJJ techniques outdoors', '/lore2.png', 4),
+  ('Park Sessions', 'Training in Antalya''s beautiful parks', '/lore3.png', 5),
+  ('Community Spirit', 'Building bonds through BJJ', '/lore4.png', 6)
 ON CONFLICT DO NOTHING;
 
 -- Create indexes for better performance

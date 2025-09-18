@@ -186,7 +186,7 @@ export default function Home() {
                 pointerEvents: 'auto'
               }}>
                 <img 
-                  src="/loremartialarts/logo.png" 
+                  src="/logo.png" 
                   alt="LORE BJJ Logo" 
                   loading="eager"
                   style={{
