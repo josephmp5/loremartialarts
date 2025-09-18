@@ -28,6 +28,11 @@ export default function Home() {
   }, []);
 
   const fetchGalleryImages = async () => {
+    if (!supabase) {
+      setLoadingGallery(false);
+      return;
+    }
+    
     try {
       const { data, error } = await supabase
         .from('training_gallery')

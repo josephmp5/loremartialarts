@@ -29,6 +29,12 @@ export default function BlogPostPage() {
   }, [params.slug])
 
   const fetchPost = async (slug: string) => {
+    if (!supabase) {
+      setError('Database not available')
+      setLoading(false)
+      return
+    }
+    
     const { data, error } = await supabase
       .from('blog_posts')
       .select('*')
