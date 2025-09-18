@@ -46,6 +46,16 @@ export default function GalleryManagement() {
 
   const fetchImages = async () => {
     if (!supabase) {
+      // Show hardcoded images when Supabase is not available
+      const hardcodedImages = [
+        { id: 'static-1', title: 'Outdoor Training', description: 'BJJ techniques in nature\'s embrace', image_url: '/insta1.png', display_order: 1, active: true, created_at: new Date().toISOString() },
+        { id: 'static-2', title: 'Team Training', description: 'Building strength together in Antalya', image_url: '/insta10.jpg', display_order: 2, active: true, created_at: new Date().toISOString() },
+        { id: 'static-3', title: 'Beach Training', description: 'Training by the Mediterranean Sea', image_url: '/lore1.png', display_order: 3, active: true, created_at: new Date().toISOString() },
+        { id: 'static-4', title: 'Technique Focus', description: 'Perfecting BJJ techniques outdoors', image_url: '/lore2.png', display_order: 4, active: true, created_at: new Date().toISOString() },
+        { id: 'static-5', title: 'Park Sessions', description: 'Training in Antalya\'s beautiful parks', image_url: '/lore3.png', display_order: 5, active: true, created_at: new Date().toISOString() },
+        { id: 'static-6', title: 'Community Spirit', description: 'Building bonds through BJJ', image_url: '/lore4.png', display_order: 6, active: true, created_at: new Date().toISOString() }
+      ]
+      setImages(hardcodedImages)
       setLoadingImages(false)
       return
     }
@@ -55,8 +65,19 @@ export default function GalleryManagement() {
       .select('*')
       .order('display_order', { ascending: true })
 
-    if (data) {
+    if (data && data.length > 0) {
       setImages(data)
+    } else {
+      // If no database images, show existing hardcoded images with option to import
+      const hardcodedImages = [
+        { id: 'static-1', title: 'Outdoor Training', description: 'BJJ techniques in nature\'s embrace', image_url: '/insta1.png', display_order: 1, active: true, created_at: new Date().toISOString() },
+        { id: 'static-2', title: 'Team Training', description: 'Building strength together in Antalya', image_url: '/insta10.jpg', display_order: 2, active: true, created_at: new Date().toISOString() },
+        { id: 'static-3', title: 'Beach Training', description: 'Training by the Mediterranean Sea', image_url: '/lore1.png', display_order: 3, active: true, created_at: new Date().toISOString() },
+        { id: 'static-4', title: 'Technique Focus', description: 'Perfecting BJJ techniques outdoors', image_url: '/lore2.png', display_order: 4, active: true, created_at: new Date().toISOString() },
+        { id: 'static-5', title: 'Park Sessions', description: 'Training in Antalya\'s beautiful parks', image_url: '/lore3.png', display_order: 5, active: true, created_at: new Date().toISOString() },
+        { id: 'static-6', title: 'Community Spirit', description: 'Building bonds through BJJ', image_url: '/lore4.png', display_order: 6, active: true, created_at: new Date().toISOString() }
+      ]
+      setImages(hardcodedImages)
     }
     setLoadingImages(false)
   }
@@ -183,6 +204,12 @@ export default function GalleryManagement() {
       return
     }
 
+    // Handle static images
+    if (id.startsWith('static-')) {
+      setError('Cannot delete static images. Use "Import to Database" to manage them.')
+      return
+    }
+
     if (!supabase) {
       setError('Database not available')
       return
@@ -201,6 +228,37 @@ export default function GalleryManagement() {
       }
     } catch (err) {
       setError('Failed to delete image')
+    }
+  }
+
+  const importStaticImages = async () => {
+    if (!supabase) {
+      setError('Database not available')
+      return
+    }
+
+    try {
+      const hardcodedImages = [
+        { title: 'Outdoor Training', description: 'BJJ techniques in nature\'s embrace', image_url: '/insta1.png', display_order: 1, active: true },
+        { title: 'Team Training', description: 'Building strength together in Antalya', image_url: '/insta10.jpg', display_order: 2, active: true },
+        { title: 'Beach Training', description: 'Training by the Mediterranean Sea', image_url: '/lore1.png', display_order: 3, active: true },
+        { title: 'Technique Focus', description: 'Perfecting BJJ techniques outdoors', image_url: '/lore2.png', display_order: 4, active: true },
+        { title: 'Park Sessions', description: 'Training in Antalya\'s beautiful parks', image_url: '/lore3.png', display_order: 5, active: true },
+        { title: 'Community Spirit', description: 'Building bonds through BJJ', image_url: '/lore4.png', display_order: 6, active: true }
+      ]
+
+      const { error } = await supabase
+        .from('training_gallery')
+        .insert(hardcodedImages)
+
+      if (error) {
+        setError('Failed to import images: ' + error.message)
+      } else {
+        fetchImages()
+        setError('')
+      }
+    } catch (err) {
+      setError('Failed to import images')
     }
   }
 
@@ -299,6 +357,28 @@ export default function GalleryManagement() {
           >
             + Add Image
           </button>
+          {images.some(img => img.id.startsWith('static-')) && (
+            <button
+              onClick={importStaticImages}
+              style={{
+                background: 'rgba(16, 185, 129, 0.8)',
+                color: '#f5f5dc',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(16, 185, 129, 1)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(16, 185, 129, 0.8)'
+              }}
+            >
+              Import to Database
+            </button>
+          )}
           <a
             href="/admin"
             style={{
@@ -611,27 +691,40 @@ export default function GalleryManagement() {
                 </div>
                 
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  <button
-                    onClick={() => handleEdit(image)}
-                    style={{
-                      background: 'rgba(59, 130, 246, 0.8)',
-                      color: '#f5f5dc',
+                  {!image.id.startsWith('static-') ? (
+                    <button
+                      onClick={() => handleEdit(image)}
+                      style={{
+                        background: 'rgba(59, 130, 246, 0.8)',
+                        color: '#f5f5dc',
+                        border: 'none',
+                        padding: '6px 12px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '0.8rem',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(59, 130, 246, 1)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(59, 130, 246, 0.8)'
+                      }}
+                    >
+                      Edit
+                    </button>
+                  ) : (
+                    <span style={{
+                      background: 'rgba(107, 114, 128, 0.3)',
+                      color: '#9ca3af',
                       border: 'none',
                       padding: '6px 12px',
                       borderRadius: '4px',
-                      cursor: 'pointer',
-                      fontSize: '0.8rem',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(59, 130, 246, 1)'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(59, 130, 246, 0.8)'
-                    }}
-                  >
-                    Edit
-                  </button>
+                      fontSize: '0.8rem'
+                    }}>
+                      Static Image
+                    </span>
+                  )}
                   
                   <button
                     onClick={() => toggleActive(image.id, image.active)}
