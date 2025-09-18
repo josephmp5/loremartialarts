@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { fetchSiteContent, getContent, ContentBySection } from '@/lib/content';
 
 interface GalleryImage {
   id: string
@@ -14,6 +15,8 @@ export default function Home() {
   const [showContent, setShowContent] = useState(true);
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [loadingGallery, setLoadingGallery] = useState(true);
+  const [siteContent, setSiteContent] = useState<ContentBySection>({});
+  const [contentLoading, setContentLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,7 +28,19 @@ export default function Home() {
 
   useEffect(() => {
     fetchGalleryImages();
+    fetchContent();
   }, []);
+
+  const fetchContent = async () => {
+    try {
+      const content = await fetchSiteContent();
+      setSiteContent(content);
+    } catch (err) {
+      console.error('Error loading site content:', err);
+    } finally {
+      setContentLoading(false);
+    }
+  };
 
   const fetchGalleryImages = async () => {
     if (!supabase) {
@@ -401,7 +416,7 @@ export default function Home() {
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                   animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
-                }}>About Our Team</h2>
+                }}>{getContent(siteContent, 'about', 'section_title')}</h2>
                 <p style={{
                 fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
                 color: '#e8e8d0',
@@ -414,7 +429,7 @@ export default function Home() {
                 letterSpacing: '1px',
                 padding: '0 20px'
                 }}>
-                We are not a traditional gym. We are Antalya's premier nomadic BJJ family that trains in nature's embrace.
+{getContent(siteContent, 'about', 'intro_text')}
                 </p>
               </div>
 
@@ -443,7 +458,7 @@ export default function Home() {
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
-                  }}>Our Philosophy</h3>
+                  }}>{getContent(siteContent, 'about', 'philosophy_title')}</h3>
                   <p style={{
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
@@ -452,8 +467,7 @@ export default function Home() {
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
-                  We believe in the freedom of outdoor BJJ training in Antalya. No walls, no restrictions, just pure BJJ in nature's embrace.
-                  Our nomadic lifestyle connects us with the ancient warrior traditions while exploring Antalya's beautiful landscapes.
+                  {getContent(siteContent, 'about', 'philosophy_text')}
                   </p>
                 </div>
 
@@ -901,7 +915,7 @@ export default function Home() {
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                   animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'
-                }}>Training Locations</h2>
+                }}>{getContent(siteContent, 'locations', 'section_title')}</h2>
                 <p style={{
                 fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
                 color: '#e8e8d0',
@@ -914,7 +928,7 @@ export default function Home() {
                 letterSpacing: '1px',
                 padding: '0 20px'
                 }}>
-                Discover our outdoor training spots across Antalya's beautiful landscapes
+{getContent(siteContent, 'locations', 'subtitle')}
                 </p>
               </div>
 
@@ -1072,7 +1086,7 @@ export default function Home() {
                 animation: 'fadeIn 1.5s ease-out 0.3s both',
               textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
               }}>
-                Ready to experience outdoor BJJ training? Contact us to join our next session.
+                {getContent(siteContent, 'contact', 'main_text')}
               </p>
               <div style={{
                 display: 'flex',
