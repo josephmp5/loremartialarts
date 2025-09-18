@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,9 +34,11 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={inter.className} style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
-        <div id="__next" style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
-          {children}
-        </div>
+        <AuthProvider>
+          <div id="__next" style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
+            {children}
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

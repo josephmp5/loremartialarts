@@ -1,8 +1,19 @@
 "use client";
 import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
+
+interface GalleryImage {
+  id: string
+  title: string
+  description: string
+  image_url: string
+  display_order: number
+}
 
 export default function Home() {
   const [showContent, setShowContent] = useState(true);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [loadingGallery, setLoadingGallery] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -11,6 +22,28 @@ export default function Home() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    fetchGalleryImages();
+  }, []);
+
+  const fetchGalleryImages = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('training_gallery')
+        .select('*')
+        .eq('active', true)
+        .order('display_order', { ascending: true });
+
+      if (data) {
+        setGalleryImages(data);
+      }
+    } catch (err) {
+      console.error('Error fetching gallery images:', err);
+    } finally {
+      setLoadingGallery(false);
+    }
+  };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -303,6 +336,37 @@ export default function Home() {
                 >
                   CAMPS
                 </button>
+                <a
+                  href="/blog"
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: '#dc2626',
+                    padding: '12px 24px',
+                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
+                    border: 'none',
+                    fontWeight: 'normal',
+                    fontFamily: 'Manga, serif',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    animation: 'fadeIn 1s ease-out 1.3s both',
+                    textDecoration: 'none',
+                    display: 'inline-block'
+                  }}
+                  onMouseEnter={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'scale(1.1)';
+                    btn.style.color = '#ef4444';
+                  }}
+                  onMouseLeave={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'scale(1)';
+                    btn.style.color = '#dc2626';
+                  }}
+                >
+                  BLOG
+                </a>
               </div>
             </div>
           </div>
@@ -652,14 +716,54 @@ export default function Home() {
               gap: 'clamp(30px, 6vw, 60px)',
               marginTop: '80px'
             }}>
-              {[
-                { src: '/loremartialarts/insta1.png', title: 'Outdoor Training', desc: 'BJJ techniques in nature\'s embrace' },
-                { src: '/loremartialarts/insta10.jpg', title: 'Team Training', desc: 'Building strength together in Antalya' },
-                { src: '/loremartialarts/lore1.png', title: 'Beach Training', desc: 'Training by the Mediterranean Sea' },
-                { src: '/loremartialarts/lore2.png', title: 'Technique Focus', desc: 'Perfecting BJJ techniques outdoors' },
-                { src: '/loremartialarts/lore3.png', title: 'Park Sessions', desc: 'Training in Antalya\'s beautiful parks' },
-                { src: '/loremartialarts/lore4.png', title: 'Community Spirit', desc: 'Building bonds through BJJ' }
-              ].map((image, index) => (
+              {loadingGallery ? (
+                // Loading state
+                Array.from({ length: 6 }).map((_, index) => (
+                  <div key={index} style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    borderRadius: '12px',
+                    height: '280px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    animation: 'fadeIn 1.2s ease-out'
+                  }}>
+                    <div style={{
+                      width: '50px',
+                      height: '50px',
+                      border: '3px solid rgba(245, 245, 220, 0.3)',
+                      borderTop: '3px solid #dc2626',
+                      borderRadius: '50%',
+                      animation: 'spin 1s linear infinite'
+                    }}></div>
+                  </div>
+                ))
+              ) : galleryImages.length === 0 ? (
+                // No images state
+                <div style={{
+                  gridColumn: '1 / -1',
+                  textAlign: 'center',
+                  padding: '60px 20px',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                }}>
+                  <h3 style={{
+                    fontSize: '1.5rem',
+                    marginBottom: '15px',
+                    opacity: 0.8
+                  }}>
+                    Training Gallery Coming Soon
+                  </h3>
+                  <p style={{
+                    fontSize: '1rem',
+                    opacity: 0.6
+                  }}>
+                    Check back soon for our latest training moments!
+                  </p>
+                </div>
+              ) : (
+                galleryImages.map((image, index) => (
                 <div key={index} style={{
                   overflow: 'hidden',
                   animation: `fadeIn 1.2s ease-out ${0.2 + index * 0.2}s both`,
@@ -677,8 +781,8 @@ export default function Home() {
                 }}
                 >
                   <img 
-                    src={image.src}
-                    alt="LORE BJJ Training Session" 
+                    src={image.image_url}
+                    alt={image.title} 
                     loading="lazy"
                     style={{
                       width: '100%',
@@ -697,7 +801,7 @@ export default function Home() {
                         parent.style.justifyContent = 'center';
                         parent.innerHTML = `<div style="color: white; text-align: center; padding: 20px;">
                           <h3>${image.title}</h3>
-                          <p style="opacity: 0.8; margin-top: 10px;">${image.desc}</p>
+                          <p style="opacity: 0.8; margin-top: 10px;">${image.description}</p>
                         </div>`;
                       }
                     }}
@@ -723,10 +827,11 @@ export default function Home() {
                       opacity: 0.9,
                       textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
                       fontFamily: 'Go3v2, serif'
-                    }}>{image.desc}</p>
+                    }}>{image.description}</p>
                   </div>
                 </div>
-              ))}
+                ))
+              )}
             </div>
 
             {/* Follow Us Button */}
