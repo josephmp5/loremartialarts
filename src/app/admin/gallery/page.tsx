@@ -45,6 +45,11 @@ export default function GalleryManagement() {
   }, [user])
 
   const fetchImages = async () => {
+    if (!supabase) {
+      setLoadingImages(false)
+      return
+    }
+    
     const { data, error } = await supabase
       .from('training_gallery')
       .select('*')
@@ -58,7 +63,7 @@ export default function GalleryManagement() {
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    if (!file) return
+    if (!file || !supabase) return
 
     // Check file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
@@ -104,6 +109,12 @@ export default function GalleryManagement() {
     e.preventDefault()
     setSaving(true)
     setError('')
+
+    if (!supabase) {
+      setError('Database not available')
+      setSaving(false)
+      return
+    }
 
     try {
       if (editingImage) {
@@ -172,6 +183,11 @@ export default function GalleryManagement() {
       return
     }
 
+    if (!supabase) {
+      setError('Database not available')
+      return
+    }
+
     try {
       const { error } = await supabase
         .from('training_gallery')
@@ -189,6 +205,11 @@ export default function GalleryManagement() {
   }
 
   const toggleActive = async (id: string, currentStatus: boolean) => {
+    if (!supabase) {
+      setError('Database not available')
+      return
+    }
+    
     try {
       const { error } = await supabase
         .from('training_gallery')

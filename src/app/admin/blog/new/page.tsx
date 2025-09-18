@@ -40,6 +40,8 @@ export default function NewBlogPost() {
   }, [user])
 
   const fetchCategories = async () => {
+    if (!supabase) return
+    
     const { data } = await supabase
       .from('blog_categories')
       .select('*')
@@ -67,7 +69,7 @@ export default function NewBlogPost() {
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    if (!file) return
+    if (!file || !supabase) return
 
     // Check file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
@@ -113,6 +115,12 @@ export default function NewBlogPost() {
     e.preventDefault()
     setSaving(true)
     setError('')
+
+    if (!supabase) {
+      setError('Database not available')
+      setSaving(false)
+      return
+    }
 
     try {
       const { error } = await supabase

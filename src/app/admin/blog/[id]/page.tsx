@@ -56,6 +56,12 @@ export default function EditBlogPost() {
   }, [user, params.id])
 
   const fetchPost = async () => {
+    if (!supabase) {
+      setError('Database not available')
+      setLoadingPost(false)
+      return
+    }
+    
     const { data, error } = await supabase
       .from('blog_posts')
       .select(`
@@ -83,6 +89,8 @@ export default function EditBlogPost() {
   }
 
   const fetchCategories = async () => {
+    if (!supabase) return
+    
     const { data } = await supabase
       .from('blog_categories')
       .select('*')
@@ -110,7 +118,7 @@ export default function EditBlogPost() {
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    if (!file) return
+    if (!file || !supabase) return
 
     // Check file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
@@ -156,6 +164,12 @@ export default function EditBlogPost() {
     e.preventDefault()
     setSaving(true)
     setError('')
+
+    if (!supabase) {
+      setError('Database not available')
+      setSaving(false)
+      return
+    }
 
     try {
       // Update the blog post
@@ -213,6 +227,11 @@ export default function EditBlogPost() {
 
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this blog post? This action cannot be undone.')) {
+      return
+    }
+
+    if (!supabase) {
+      setError('Database not available')
       return
     }
 

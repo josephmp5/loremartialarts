@@ -48,6 +48,8 @@ export default function AdminDashboard() {
   }, [user])
 
   const fetchBlogPosts = async () => {
+    if (!supabase) return
+    
     const { data, error } = await supabase
       .from('blog_posts')
       .select('*')
@@ -64,6 +66,8 @@ export default function AdminDashboard() {
   }
 
   const fetchContactSubmissions = async () => {
+    if (!supabase) return
+    
     const { data, error } = await supabase
       .from('contact_submissions')
       .select('*')
@@ -79,6 +83,8 @@ export default function AdminDashboard() {
   }
 
   const togglePostStatus = async (id: string, currentStatus: boolean) => {
+    if (!supabase) return
+    
     const { error } = await supabase
       .from('blog_posts')
       .update({ published: !currentStatus })
@@ -90,6 +96,8 @@ export default function AdminDashboard() {
   }
 
   const markAsRead = async (id: string) => {
+    if (!supabase) return
+    
     const { error } = await supabase
       .from('contact_submissions')
       .update({ read: true })
