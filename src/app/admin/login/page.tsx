@@ -35,7 +35,7 @@ export default function AdminLogin() {
       alignItems: 'center',
       justifyContent: 'center',
       background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-      fontFamily: 'Go3v2, serif'
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       <div style={{
         background: 'rgba(255, 255, 255, 0.1)',

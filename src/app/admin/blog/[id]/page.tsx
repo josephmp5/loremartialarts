@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
+import RichTextEditor from '@/components/RichTextEditor'
 
 interface Category {
   id: string
@@ -260,7 +261,7 @@ export default function EditBlogPost() {
         justifyContent: 'center',
         background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
         color: '#f5f5dc',
-        fontFamily: 'Go3v2, serif'
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
       }}>
         Loading...
       </div>
@@ -276,7 +277,7 @@ export default function EditBlogPost() {
         justifyContent: 'center',
         background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
         color: '#f5f5dc',
-        fontFamily: 'Go3v2, serif'
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
       }}>
         <div style={{ textAlign: 'center' }}>
           <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>404</h1>
@@ -310,7 +311,7 @@ export default function EditBlogPost() {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
       color: '#f5f5dc',
-      fontFamily: 'Go3v2, serif'
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       {/* Header */}
       <header style={{
@@ -608,34 +609,12 @@ export default function EditBlogPost() {
               fontSize: '1.1rem',
               fontWeight: '600'
             }}>
-              Content * (HTML)
+              Content *
             </label>
-            <textarea
+            <RichTextEditor
               value={formData.content}
-              onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-              rows={15}
-              required
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                background: 'rgba(255, 255, 255, 0.1)',
-                color: '#f5f5dc',
-                fontSize: '1rem',
-                outline: 'none',
-                transition: 'all 0.3s ease',
-                resize: 'vertical',
-                fontFamily: 'monospace'
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = '#dc2626'
-                e.target.style.background = 'rgba(255, 255, 255, 0.15)'
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                e.target.style.background = 'rgba(255, 255, 255, 0.1)'
-              }}
+              onChange={(value) => setFormData(prev => ({ ...prev, content: value }))}
+              placeholder="Write your blog post content here..."
             />
             <p style={{
               fontSize: '0.9rem',
