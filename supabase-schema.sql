@@ -140,6 +140,77 @@ INSERT INTO training_gallery (title, description, image_url, display_order) VALU
   ('Community Spirit', 'Building bonds through BJJ', '/lore4.png', 6)
 ON CONFLICT DO NOTHING;
 
+-- Create site_content table for managing all text content
+CREATE TABLE IF NOT EXISTS site_content (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  section VARCHAR(100) NOT NULL,
+  key VARCHAR(100) NOT NULL,
+  title VARCHAR(500),
+  content TEXT,
+  content_type VARCHAR(50) DEFAULT 'text', -- text, html, url, json
+  display_order INTEGER DEFAULT 0,
+  active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(section, key)
+);
+
+-- Enable RLS
+ALTER TABLE site_content ENABLE ROW LEVEL SECURITY;
+
+-- Create policies for site_content (public read, admin write)
+CREATE POLICY "Site content is viewable by everyone" ON site_content
+  FOR SELECT USING (active = true);
+
+CREATE POLICY "Only authenticated users can manage site content" ON site_content
+  FOR ALL USING (auth.role() = 'authenticated');
+
+-- Insert default site content
+INSERT INTO site_content (section, key, title, content, content_type) VALUES
+  -- Hero Section
+  ('hero', 'main_title', 'LORE BJJ', 'LORE BJJ', 'text'),
+  ('hero', 'subtitle', 'Brazilian Jiu-Jitsu in Antalya', 'Brazilian Jiu-Jitsu in Antalya', 'text'),
+  
+  -- About Section
+  ('about', 'section_title', 'About Our Team', 'About Our Team', 'text'),
+  ('about', 'intro_text', 'We are not a traditional gym...', 'We are not a traditional gym. We are Antalya''s premier nomadic BJJ family that trains in nature''s embrace.', 'text'),
+  ('about', 'philosophy_title', 'Our Philosophy', 'Our Philosophy', 'text'),
+  ('about', 'philosophy_text', 'We believe in the freedom of outdoor BJJ training in Antalya. No walls, no restrictions, just pure BJJ in nature''s embrace. Our nomadic lifestyle connects us with the ancient warrior traditions while exploring Antalya''s beautiful landscapes.', 'We believe in the freedom of outdoor BJJ training in Antalya. No walls, no restrictions, just pure BJJ in nature''s embrace. Our nomadic lifestyle connects us with the ancient warrior traditions while exploring Antalya''s beautiful landscapes.', 'text'),
+  ('about', 'training_title', 'Antalya BJJ Training', 'Antalya BJJ Training', 'text'),
+  ('about', 'training_text', 'Our BJJ training in Antalya adapts to nature''s conditions. From soft grass to sandy beaches, we learn to flow with any surface, making us more versatile and adaptable fighters in Antalya''s diverse outdoor environments.', 'Our BJJ training in Antalya adapts to nature''s conditions. From soft grass to sandy beaches, we learn to flow with any surface, making us more versatile and adaptable fighters in Antalya''s diverse outdoor environments.', 'text'),
+  ('about', 'community_title', 'Antalya BJJ Community', 'Antalya BJJ Community', 'text'),
+  ('about', 'community_text', 'We welcome all levels to our Antalya BJJ community, from beginners to advanced practitioners. Our team supports each other''s growth in a free, outdoor environment across Antalya''s beautiful training locations.', 'We welcome all levels to our Antalya BJJ community, from beginners to advanced practitioners. Our team supports each other''s growth in a free, outdoor environment across Antalya''s beautiful training locations.', 'text'),
+  
+  -- YouTube Section
+  ('youtube', 'section_title', 'Latest Training Video', 'Latest Training Video', 'text'),
+  ('youtube', 'subtitle', 'Stay connected with our outdoor BJJ adventures', 'Stay connected with our outdoor BJJ adventures', 'text'),
+  ('youtube', 'video_url', 'YouTube Video URL', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'url'),
+  ('youtube', 'video_description', 'Join us on our latest outdoor BJJ adventure! Watch as we train in Antalya''s beautiful landscapes, share techniques, and build our nomadic community. Experience the freedom of outdoor martial arts.', 'Join us on our latest outdoor BJJ adventure! Watch as we train in Antalya''s beautiful landscapes, share techniques, and build our nomadic community. Experience the freedom of outdoor martial arts.', 'text'),
+  
+  -- Gallery Section
+  ('gallery', 'section_title', 'Training Moments', 'Training Moments', 'text'),
+  ('gallery', 'subtitle', 'Capturing the spirit of outdoor BJJ training in Antalya', 'Capturing the spirit of outdoor BJJ training in Antalya', 'text'),
+  ('gallery', 'empty_message', 'Training Gallery Coming Soon', 'Training Gallery Coming Soon', 'text'),
+  
+  -- Locations Section
+  ('locations', 'section_title', 'Training Locations', 'Training Locations', 'text'),
+  ('locations', 'subtitle', 'Discover our outdoor training spots across Antalya''s beautiful landscapes', 'Discover our outdoor training spots across Antalya''s beautiful landscapes', 'text'),
+  ('locations', 'schedule_title', 'Training Schedule', 'Training Schedule', 'text'),
+  
+  -- Contact Section
+  ('contact', 'main_text', 'Ready to experience outdoor BJJ training? Contact us to join our next session.', 'Ready to experience outdoor BJJ training? Contact us to join our next session.', 'text'),
+  ('contact', 'button_text', 'Contact Us', 'Contact Us', 'text'),
+  ('contact', 'instagram_url', 'https://instagram.com/lorebjj', 'https://instagram.com/lorebjj', 'url'),
+  
+  -- Navigation
+  ('navigation', 'home_text', 'HOME', 'HOME', 'text'),
+  ('navigation', 'about_text', 'ABOUT', 'ABOUT', 'text'),
+  ('navigation', 'locations_text', 'LOCATIONS', 'LOCATIONS', 'text'),
+  ('navigation', 'gallery_text', 'GALLERY', 'GALLERY', 'text'),
+  ('navigation', 'youtube_text', 'YOUTUBE', 'YOUTUBE', 'text'),
+  ('navigation', 'blog_text', 'BLOG', 'BLOG', 'text')
+ON CONFLICT (section, key) DO NOTHING;
+
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_blog_posts_published ON blog_posts(published);
 CREATE INDEX IF NOT EXISTS idx_blog_posts_slug ON blog_posts(slug);
