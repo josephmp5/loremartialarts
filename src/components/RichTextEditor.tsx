@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
-// Dynamically import JoditEditor with no SSR - simpler approach
-const JoditEditor = dynamic(() => import('jodit-react'), {
+// Use a simple, reliable markdown editor
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
   ssr: false,
 })
 
@@ -20,31 +20,6 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
   useEffect(() => {
     setIsClient(true)
   }, [])
-
-  // Debounced onChange to prevent focus issues
-  const handleChange = useCallback((content: string) => {
-    // Use setTimeout to prevent focus stealing
-    setTimeout(() => onChange(content), 0)
-  }, [onChange])
-
-  // Simple, working config with dark theme
-  const config = {
-    readonly: false,
-    placeholder: placeholder || 'Start writing your blog post...',
-    height: 400,
-    buttons: 'bold,italic,underline,|,ul,ol,|,outdent,indent,|,font,fontsize,|,brush,paragraph,|,image,link,|,align,|,undo,redo,|,hr,eraser,fullsize',
-    removeButtons: ['about', 'print'],
-    showCharsCounter: false,
-    showWordsCounter: false,
-    showXPathInStatusbar: false,
-    theme: 'dark',
-    style: {
-      background: '#2c1810',
-      color: '#f5f5dc',
-      fontFamily: 'Arial, sans-serif',
-      fontSize: '14px',
-    },
-  }
 
   if (!isClient) {
     return (
@@ -65,41 +40,53 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
 
   return (
     <>
-      <style jsx>{`
-        :global(.jodit-container) {
-          background: #2c1810 !important;
+      <style jsx global>{`
+        .w-md-editor {
+          background-color: #2c1810 !important;
           border: 1px solid rgba(255, 255, 255, 0.3) !important;
+          border-radius: 8px !important;
         }
-        :global(.jodit-workplace) {
-          background: #2c1810 !important;
-        }
-        :global(.jodit-wysiwyg) {
-          background: #2c1810 !important;
+        .w-md-editor-text-textarea, 
+        .w-md-editor-text-input, 
+        .w-md-editor-text {
+          background-color: #2c1810 !important;
           color: #f5f5dc !important;
           font-family: Arial, sans-serif !important;
           font-size: 14px !important;
+          border: none !important;
         }
-        :global(.jodit-toolbar) {
-          background: rgba(44, 24, 16, 0.9) !important;
+        .w-md-editor-toolbar {
+          background-color: rgba(44, 24, 16, 0.9) !important;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
         }
-        :global(.jodit-toolbar-button) {
+        .w-md-editor-toolbar-divider {
+          background-color: rgba(255, 255, 255, 0.2) !important;
+        }
+        .w-md-editor-toolbar button {
           color: #f5f5dc !important;
         }
-        :global(.jodit-toolbar-button:hover) {
-          background: rgba(255, 255, 255, 0.1) !important;
+        .w-md-editor-toolbar button:hover {
+          background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        .w-md-editor-preview {
+          background-color: #2c1810 !important;
+          color: #f5f5dc !important;
         }
       `}</style>
+      
       <div style={{
         border: '1px solid rgba(255, 255, 255, 0.3)',
         borderRadius: '8px',
         background: 'rgba(255, 255, 255, 0.05)',
         overflow: 'hidden'
       }}>
-        <JoditEditor
-          value={value}
-          config={config}
-          onChange={handleChange}
+        <MDEditor
+          value={value || ''}
+          onChange={(val) => onChange(val || '')}
+          height={400}
+          preview="edit"
+          hideToolbar={false}
+          visibleDragBar={false}
         />
         
         {/* Helper text */}
@@ -110,7 +97,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           borderTop: '1px solid rgba(255, 255, 255, 0.1)',
           background: 'rgba(0, 0, 0, 0.1)'
         }}>
-          ✨ <strong>100% Free Editor:</strong> Format text visually - bold, headings, lists, images all work like Word. No API keys, no limits, no costs!
+          ✨ <strong>Simple Markdown Editor:</strong> Use **bold**, *italic*, # headers, - lists. Clean, fast, and works perfectly!
         </div>
       </div>
     </>
