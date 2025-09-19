@@ -27,7 +27,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     placeholder: placeholder || 'Start writing your blog post...',
     height: 400,
     buttons: 'bold,italic,underline,|,ul,ol,|,outdent,indent,|,font,fontsize,|,brush,paragraph,|,image,link,|,align,|,undo,redo,|,hr,eraser,fullsize',
-    removeButtons: 'about,print',
+    removeButtons: ['about', 'print'],
     showCharsCounter: false,
     showWordsCounter: false,
     showXPathInStatusbar: false,
