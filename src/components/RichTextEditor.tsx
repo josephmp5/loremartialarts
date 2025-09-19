@@ -43,35 +43,39 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     <>
       <style jsx global>{`
         .w-md-editor {
-          background-color: #2c1810 !important;
-          border: 1px solid rgba(255, 255, 255, 0.3) !important;
+          background-color: #f8f9fa !important;
+          border: 1px solid #dee2e6 !important;
           border-radius: 8px !important;
         }
         
         .w-md-editor textarea {
-          background-color: #2c1810 !important;
-          color: #ffffff !important;
+          background-color: #f8f9fa !important;
+          color: #212529 !important;
           font-family: Arial, sans-serif !important;
           font-size: 14px !important;
           border: none !important;
         }
         
         .w-md-editor textarea::placeholder {
-          color: rgba(255, 255, 255, 0.5) !important;
+          color: #6c757d !important;
         }
         
         .w-md-editor-toolbar {
-          background-color: rgba(44, 24, 16, 0.9) !important;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+          background-color: #e9ecef !important;
+          border-bottom: 1px solid #dee2e6 !important;
         }
         
         .w-md-editor-toolbar button {
-          color: #f5f5dc !important;
+          color: #495057 !important;
+        }
+        
+        .w-md-editor-toolbar button:hover {
+          background-color: #dee2e6 !important;
         }
         
         .w-md-editor-preview {
-          background-color: #2c1810 !important;
-          color: #f5f5dc !important;
+          background-color: #f8f9fa !important;
+          color: #212529 !important;
         }
       `}</style>
       
