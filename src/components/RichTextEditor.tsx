@@ -1,12 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
-
-// Use a simple, reliable markdown editor
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
-  ssr: false,
-})
 
 interface RichTextEditorProps {
   value: string
@@ -38,87 +32,43 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     )
   }
 
-
   return (
-    <>
-      <style jsx global>{`
-        .w-md-editor {
-          background-color: #f8f9fa !important;
-          border: 1px solid #dee2e6 !important;
-          border-radius: 8px !important;
-        }
-        
-        .w-md-editor textarea,
-        .w-md-editor .w-md-editor-text-textarea textarea,
-        .w-md-editor .w-md-editor-text-input textarea,
-        .w-md-editor .w-md-editor-text textarea,
-        .w-md-editor-text-textarea,
-        .w-md-editor-text-input,
-        .w-md-editor-text {
-          background-color: #f8f9fa !important;
-          color: #212529 !important;
-          font-family: Arial, sans-serif !important;
-          font-size: 14px !important;
-          border: none !important;
-        }
-        
-        .w-md-editor textarea::placeholder,
-        .w-md-editor .w-md-editor-text-textarea::placeholder,
-        .w-md-editor .w-md-editor-text-input::placeholder {
-          color: #6c757d !important;
-        }
-        
-        .w-md-editor-toolbar {
-          background-color: #e9ecef !important;
-          border-bottom: 1px solid #dee2e6 !important;
-        }
-        
-        .w-md-editor-toolbar button {
-          color: #495057 !important;
-        }
-        
-        .w-md-editor-toolbar button:hover {
-          background-color: #dee2e6 !important;
-        }
-        
-        .w-md-editor-preview {
-          background-color: #f8f9fa !important;
-          color: #212529 !important;
-        }
-        
-        /* Force dark text on everything */
-        .w-md-editor * {
-          color: #212529 !important;
-        }
-      `}</style>
+    <div style={{
+      border: '1px solid rgba(255, 255, 255, 0.3)',
+      borderRadius: '8px',
+      background: 'rgba(255, 255, 255, 0.95)',
+      overflow: 'hidden'
+    }}>
+      <textarea
+        value={value || ''}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder || 'Write your blog post content here...\n\nYou can use Markdown:\n**bold text**\n*italic text*\n# Header\n- Bullet points\n\nJust write naturally!'}
+        style={{
+          width: '100%',
+          height: '400px',
+          padding: '16px',
+          border: 'none',
+          outline: 'none',
+          resize: 'none',
+          fontSize: '14px',
+          fontFamily: 'Arial, sans-serif',
+          lineHeight: '1.6',
+          backgroundColor: 'transparent',
+          color: '#212529',
+          background: 'transparent'
+        }}
+      />
       
+      {/* Helper text */}
       <div style={{
-        border: '1px solid rgba(255, 255, 255, 0.3)',
-        borderRadius: '8px',
-        background: 'rgba(255, 255, 255, 0.05)',
-        overflow: 'hidden'
+        padding: '8px 16px',
+        fontSize: '11px',
+        color: '#6c757d',
+        borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+        background: 'rgba(0, 0, 0, 0.02)'
       }}>
-        <MDEditor
-          value={value || ''}
-          onChange={(val) => onChange(val || '')}
-          height={400}
-          preview="edit"
-          hideToolbar={false}
-          visibleDragbar={false}
-          data-color-mode="light"
-        />
-        
-        {/* Helper text */}
-        <div style={{
-          padding: '8px 12px',
-          fontSize: '11px',
-          color: 'rgba(245, 245, 220, 0.6)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-          background: 'rgba(0, 0, 0, 0.1)'
-        }}>
-          ✨ <strong>Simple Markdown Editor:</strong> Use **bold**, *italic*, # headers, - lists. Clean, fast, and works perfectly!
-        </div>
+        ✨ <strong>Simple Text Editor:</strong> Write your content naturally! Supports basic formatting.
       </div>
-    </>
+    </div>
   )
 }
