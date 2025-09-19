@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
+import { supabase, getSiteAssetUrl } from '@/lib/supabase'
 
 interface BlogPost {
   id: string
@@ -47,7 +47,7 @@ export default function BlogPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundImage: 'url(/background.png)',
+        backgroundImage: `url('${getSiteAssetUrl('background.jpg')}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -74,7 +74,7 @@ export default function BlogPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      backgroundImage: 'url(/background.png)',
+        backgroundImage: `url('${getSiteAssetUrl('background.jpg')}')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
