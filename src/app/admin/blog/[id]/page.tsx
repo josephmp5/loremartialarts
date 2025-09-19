@@ -207,8 +207,8 @@ export default function EditBlogPost() {
         .eq('post_id', params.id)
 
       // Then, insert new categories
-      if (formData.category_ids.length > 0) {
-        const categoryInserts = formData.category_ids.map(categoryId => ({
+      if (selectedCategories.length > 0) {
+        const categoryInserts = selectedCategories.map(categoryId => ({
           post_id: params.id,
           category_id: categoryId
         }))
@@ -537,7 +537,7 @@ export default function EditBlogPost() {
                   gap: '8px',
                   padding: '8px 16px',
                   borderRadius: '6px',
-                  background: formData.category_ids.includes(category.id) 
+                  background: selectedCategories.includes(category.id) 
                     ? 'rgba(220, 38, 38, 0.8)' 
                     : 'rgba(255, 255, 255, 0.1)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -546,18 +546,12 @@ export default function EditBlogPost() {
                 }}>
                   <input
                     type="checkbox"
-                    checked={formData.category_ids.includes(category.id)}
+                    checked={selectedCategories.includes(category.id)}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        setFormData(prev => ({
-                          ...prev,
-                          category_ids: [...prev.category_ids, category.id]
-                        }))
+                        setSelectedCategories(prev => [...prev, category.id])
                       } else {
-                        setFormData(prev => ({
-                          ...prev,
-                          category_ids: prev.category_ids.filter(id => id !== category.id)
-                        }))
+                        setSelectedCategories(prev => prev.filter(id => id !== category.id))
                       }
                     }}
                     style={{ margin: 0 }}
