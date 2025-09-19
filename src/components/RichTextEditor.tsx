@@ -2,7 +2,6 @@
 
 import JoditEditor from 'jodit-react'
 import { useRef } from 'react'
-import type { IJoditEditorProps } from 'jodit-react'
 
 interface RichTextEditorProps {
   value: string
