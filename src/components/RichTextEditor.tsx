@@ -86,7 +86,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           height={400}
           preview="edit"
           hideToolbar={false}
-          visibleDragBar={false}
+          visibleDragbar={false}
         />
         
         {/* Helper text */}
