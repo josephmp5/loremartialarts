@@ -96,7 +96,7 @@ export default function ImageMigration() {
 
       // Get public URL
       const { data: urlData } = supabase.storage
-        .from('gallery-images')
+        .from(bucket)
         .getPublicUrl(fileName)
 
       // Update status to completed

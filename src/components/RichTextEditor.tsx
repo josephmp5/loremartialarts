@@ -48,7 +48,10 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         }
         .w-md-editor-text-textarea, 
         .w-md-editor-text-input, 
-        .w-md-editor-text {
+        .w-md-editor-text,
+        .w-md-editor-text textarea,
+        .w-md-editor .w-md-editor-text-textarea,
+        .w-md-editor .w-md-editor-text-input {
           background-color: #2c1810 !important;
           color: #ffffff !important;
           font-family: Arial, sans-serif !important;
@@ -58,6 +61,12 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         .w-md-editor-text-textarea::placeholder,
         .w-md-editor-text-input::placeholder {
           color: rgba(255, 255, 255, 0.5) !important;
+        }
+        /* Force text color in all possible states */
+        .w-md-editor-text-textarea:focus,
+        .w-md-editor-text-input:focus,
+        .w-md-editor-text:focus {
+          color: #ffffff !important;
         }
         .w-md-editor-toolbar {
           background-color: rgba(44, 24, 16, 0.9) !important;
