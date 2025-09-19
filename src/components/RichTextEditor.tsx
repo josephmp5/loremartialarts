@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useCallback } from 'react'
 
 interface RichTextEditorProps {
   value: string
@@ -10,55 +10,55 @@ interface RichTextEditorProps {
 
 export default function RichTextEditor({ value, onChange, placeholder }: RichTextEditorProps) {
   const [showPreview, setShowPreview] = useState(false)
+  const editorRef = useRef<HTMLDivElement>(null)
 
-  const insertText = (before: string, after: string = '') => {
-    const textarea = document.querySelector('textarea[data-rich-editor="true"]') as HTMLTextAreaElement
-    if (!textarea) return
+  const handleEditorChange = useCallback(() => {
+    if (editorRef.current) {
+      const content = editorRef.current.innerHTML
+      onChange(content)
+    }
+  }, [onChange])
 
-    const start = textarea.selectionStart
-    const end = textarea.selectionEnd
-    const selectedText = textarea.value.substring(start, end)
-    const newText = before + selectedText + after
-
-    const newValue = textarea.value.substring(0, start) + newText + textarea.value.substring(end)
-    onChange(newValue)
-
-    // Restore cursor position
-    setTimeout(() => {
-      textarea.focus()
-      textarea.setSelectionRange(start + before.length, start + before.length + selectedText.length)
-    }, 0)
+  const execCommand = (command: string, value?: string) => {
+    document.execCommand(command, false, value)
+    handleEditorChange()
+    editorRef.current?.focus()
   }
 
   const insertLink = () => {
     const url = prompt('Enter URL:')
     if (url) {
-      const text = prompt('Enter link text:') || url
-      insertText(`<a href="${url}">`, `${text}</a>`)
+      execCommand('createLink', url)
     }
   }
 
   const insertImage = () => {
     const url = prompt('Enter image URL:')
     if (url) {
-      insertText(`<img src="${url}" alt="Image" style="max-width: 100%; height: auto;" />`)
+      execCommand('insertImage', url)
     }
   }
 
-  const toolbarButtons = [
-    { command: 'bold', icon: 'B', title: 'Bold', before: '<strong>', after: '</strong>' },
-    { command: 'italic', icon: 'I', title: 'Italic', before: '<em>', after: '</em>' },
-    { command: 'underline', icon: 'U', title: 'Underline', before: '<u>', after: '</u>' },
+  const toolbarButtons: Array<{
+    command: string
+    icon?: string
+    title?: string
+    value?: string
+    action?: () => void
+  }> = [
+    { command: 'bold', icon: 'B', title: 'Bold' },
+    { command: 'italic', icon: 'I', title: 'Italic' },
+    { command: 'underline', icon: 'U', title: 'Underline' },
     { command: 'separator' },
-    { command: 'h1', icon: 'H1', title: 'Heading 1', before: '<h1>', after: '</h1>' },
-    { command: 'h2', icon: 'H2', title: 'Heading 2', before: '<h2>', after: '</h2>' },
-    { command: 'h3', icon: 'H3', title: 'Heading 3', before: '<h3>', after: '</h3>' },
+    { command: 'formatBlock', icon: 'H1', title: 'Heading 1', value: 'h1' },
+    { command: 'formatBlock', icon: 'H2', title: 'Heading 2', value: 'h2' },
+    { command: 'formatBlock', icon: 'H3', title: 'Heading 3', value: 'h3' },
     { command: 'separator' },
-    { command: 'ul', icon: '•', title: 'Bullet List', before: '<ul>\n<li>', after: '</li>\n</ul>' },
-    { command: 'ol', icon: '1.', title: 'Numbered List', before: '<ol>\n<li>', after: '</li>\n</ol>' },
+    { command: 'insertUnorderedList', icon: '•', title: 'Bullet List' },
+    { command: 'insertOrderedList', icon: '1.', title: 'Numbered List' },
     { command: 'separator' },
-    { command: 'p', icon: 'P', title: 'Paragraph', before: '<p>', after: '</p>' },
-    { command: 'br', icon: '↵', title: 'Line Break', before: '<br />', after: '' },
+    { command: 'formatBlock', icon: 'P', title: 'Paragraph', value: 'p' },
+    { command: 'insertLineBreak', icon: '↵', title: 'Line Break' },
     { command: 'separator' },
     { command: 'custom', action: insertLink, icon: '🔗', title: 'Insert Link' },
     { command: 'custom', action: insertImage, icon: '🖼', title: 'Insert Image' }
@@ -71,6 +71,57 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
       background: 'rgba(255, 255, 255, 0.05)',
       overflow: 'hidden'
     }}>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          [contenteditable]:empty::before {
+            content: attr(data-placeholder);
+            color: rgba(245, 245, 220, 0.5);
+            pointer-events: none;
+            font-style: italic;
+          }
+          [contenteditable] h1 {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0.67em 0;
+          }
+          [contenteditable] h2 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0.75em 0;
+          }
+          [contenteditable] h3 {
+            font-size: 1.17em;
+            font-weight: bold;
+            margin: 0.83em 0;
+          }
+          [contenteditable] p {
+            margin: 1em 0;
+          }
+          [contenteditable] ul, [contenteditable] ol {
+            margin: 1em 0;
+            padding-left: 40px;
+          }
+          [contenteditable] strong {
+            font-weight: bold;
+          }
+          [contenteditable] em {
+            font-style: italic;
+          }
+          [contenteditable] u {
+            text-decoration: underline;
+          }
+          [contenteditable] a {
+            color: #60a5fa;
+            text-decoration: underline;
+          }
+          [contenteditable] img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+          }
+        `
+      }} />
       {/* Toolbar */}
       <div style={{
         display: 'flex',
@@ -103,8 +154,10 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
               onClick={() => {
                 if (button.command === 'custom' && button.action) {
                   button.action()
-                } else if (button.before && button.after !== undefined) {
-                  insertText(button.before, button.after)
+                } else if (button.value) {
+                  execCommand(button.command, button.value)
+                } else {
+                  execCommand(button.command)
                 }
               }}
               style={{
@@ -166,11 +219,13 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
             dangerouslySetInnerHTML={{ __html: value }}
           />
         ) : (
-          <textarea
-            data-rich-editor="true"
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder={placeholder}
+          <div
+            ref={editorRef}
+            contentEditable
+            suppressContentEditableWarning
+            onInput={handleEditorChange}
+            onBlur={handleEditorChange}
+            dangerouslySetInnerHTML={{ __html: value }}
             style={{
               width: '100%',
               padding: '12px',
@@ -180,9 +235,9 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
               background: 'transparent',
               color: '#f5f5dc',
               lineHeight: '1.6',
-              fontFamily: 'system-ui, -apple-system, sans-serif',
-              resize: 'vertical'
+              fontFamily: 'system-ui, -apple-system, sans-serif'
             }}
+            data-placeholder={placeholder}
           />
         )}
       </div>
@@ -195,7 +250,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         borderTop: '1px solid rgba(255, 255, 255, 0.1)',
         background: 'rgba(0, 0, 0, 0.1)'
       }}>
-        Write your content and use the toolbar buttons to add HTML formatting. Click Preview to see the final result.
+        Type your content directly. Select text and use toolbar buttons to format it (bold, headings, lists, etc.). Click Preview to see exactly how it will appear on your blog.
       </div>
     </div>
   )
