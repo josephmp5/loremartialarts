@@ -36,9 +36,9 @@ export default function EditBlogPost() {
     content: '',
     excerpt: '',
     featured_image_url: '',
-    published: false,
-    category_ids: [] as string[]
+    published: false
   })
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [saving, setSaving] = useState(false)
   const [loadingPost, setLoadingPost] = useState(true)
   const [error, setError] = useState('')
@@ -82,9 +82,9 @@ export default function EditBlogPost() {
         content: data.content,
         excerpt: data.excerpt || '',
         featured_image_url: data.featured_image_url || '',
-        published: data.published,
-        category_ids: data.blog_post_categories?.map((c: any) => c.category_id) || []
+        published: data.published
       })
+      setSelectedCategories(data.blog_post_categories?.map((c: any) => c.category_id) || [])
     }
     setLoadingPost(false)
   }

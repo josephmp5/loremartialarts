@@ -22,9 +22,9 @@ export default function NewBlogPost() {
     content: '',
     excerpt: '',
     featured_image_url: '',
-    published: false,
-    category_ids: [] as string[]
+    published: false
   })
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -130,18 +130,40 @@ export default function NewBlogPost() {
     }
 
     try {
-      const { error } = await supabase
+      // First, create the blog post
+      const { data: postData, error: postError } = await supabase
         .from('blog_posts')
         .insert({
           ...formData,
           author_id: user?.id
         })
+        .select()
+        .single()
 
-      if (error) {
-        setError(error.message)
-      } else {
-        router.push('/admin')
+      if (postError) {
+        setError(postError.message)
+        setSaving(false)
+        return
       }
+
+      // Then, create category associations if any categories are selected
+      if (selectedCategories.length > 0 && postData) {
+        const categoryAssociations = selectedCategories.map(categoryId => ({
+          post_id: postData.id,
+          category_id: categoryId
+        }))
+
+        const { error: categoryError } = await supabase
+          .from('blog_post_categories')
+          .insert(categoryAssociations)
+
+        if (categoryError) {
+          console.warn('Failed to associate categories:', categoryError.message)
+          // Don't fail the whole operation for category association errors
+        }
+      }
+
+      router.push('/admin')
     } catch (err) {
       setError('Failed to create blog post')
     }
@@ -374,18 +396,12 @@ export default function NewBlogPost() {
                 }}>
                   <input
                     type="checkbox"
-                    checked={formData.category_ids.includes(category.id)}
+                    checked={selectedCategories.includes(category.id)}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        setFormData(prev => ({
-                          ...prev,
-                          category_ids: [...prev.category_ids, category.id]
-                        }))
+                        setSelectedCategories(prev => [...prev, category.id])
                       } else {
-                        setFormData(prev => ({
-                          ...prev,
-                          category_ids: prev.category_ids.filter(id => id !== category.id)
-                        }))
+                        setSelectedCategories(prev => prev.filter(id => id !== category.id))
                       }
                     }}
                     style={{ margin: 0 }}
