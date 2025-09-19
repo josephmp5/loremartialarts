@@ -139,12 +139,15 @@ export default function EditBlogPost() {
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`
       const filePath = `blog-images/${fileName}`
 
+      console.log('Attempting to upload:', fileName, 'to bucket: blog-images')
+
       const { error: uploadError } = await supabase.storage
         .from('blog-images')
         .upload(filePath, file)
 
       if (uploadError) {
-        setError('Failed to upload image')
+        console.error('Upload error:', uploadError)
+        setError(`Failed to upload image: ${uploadError.message}`)
         return
       }
 
@@ -152,12 +155,15 @@ export default function EditBlogPost() {
         .from('blog-images')
         .getPublicUrl(filePath)
 
+      console.log('Upload successful, public URL:', data.publicUrl)
+
       setFormData(prev => ({
         ...prev,
         featured_image_url: data.publicUrl
       }))
     } catch (err) {
-      setError('Failed to upload image')
+      console.error('Upload exception:', err)
+      setError(`Failed to upload image: ${err instanceof Error ? err.message : 'Unknown error'}`)
     }
   }
 
