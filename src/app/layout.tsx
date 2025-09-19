@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { getSiteAssetUrl } from "@/lib/supabase";
+import BackgroundImage from "@/components/BackgroundImage";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +23,8 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         
         {/* Preload critical images for faster loading */}
-        <link rel="preload" href="/loremartialarts/logo.png" as="image" type="image/png" />
-        <link rel="preload" href="/loremartialarts/background.jpg" as="image" type="image/jpeg" />
+        <link rel="preload" href={getSiteAssetUrl('logo.png')} as="image" type="image/png" />
+        <link rel="preload" href={getSiteAssetUrl('background.jpg')} as="image" type="image/jpeg" />
         
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -34,6 +36,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={inter.className} style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
+        <BackgroundImage />
         <AuthProvider>
           <div id="__next" style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
             {children}

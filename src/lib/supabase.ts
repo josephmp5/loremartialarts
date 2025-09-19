@@ -21,3 +21,22 @@ export const supabaseAdmin = supabaseUrl && process.env.SUPABASE_SERVICE_ROLE_KE
       }
     )
   : null
+
+// Helper functions for Supabase storage URLs
+export const getStorageUrl = (bucket: string, path: string): string => {
+  if (!supabaseUrl) return `/${path}` // fallback to local path
+  return `${supabaseUrl}/storage/v1/object/public/${bucket}/${path}`
+}
+
+// Specific helpers for different asset types
+export const getSiteAssetUrl = (filename: string): string => {
+  return getStorageUrl('site-assets', filename)
+}
+
+export const getGalleryImageUrl = (filename: string): string => {
+  return getStorageUrl('gallery-images', filename)
+}
+
+export const getBlogImageUrl = (filename: string): string => {
+  return getStorageUrl('blog-images', filename)
+}

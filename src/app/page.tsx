@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getSiteAssetUrl } from '@/lib/supabase';
 import { fetchSiteContent, getContent, ContentBySection } from '@/lib/content';
 
 interface GalleryImage {
@@ -206,7 +206,7 @@ export default function Home() {
                 pointerEvents: 'auto'
               }}>
                 <img 
-                  src="/logo.png" 
+                  src={getSiteAssetUrl('logo.png')} 
                   alt="LORE BJJ Logo" 
                   loading="eager"
                   style={{

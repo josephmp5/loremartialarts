@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
-import { supabase } from '@/lib/supabase'
+import { supabase, getGalleryImageUrl } from '@/lib/supabase'
 
 interface GalleryImage {
   id: string
@@ -48,12 +48,12 @@ export default function GalleryManagement() {
     if (!supabase) {
       // Show hardcoded images when Supabase is not available
       const hardcodedImages = [
-        { id: 'static-1', title: 'Outdoor Training', description: 'BJJ techniques in nature\'s embrace', image_url: '/insta1.png', display_order: 1, active: true, created_at: new Date().toISOString() },
-        { id: 'static-2', title: 'Team Training', description: 'Building strength together in Antalya', image_url: '/insta10.jpg', display_order: 2, active: true, created_at: new Date().toISOString() },
-        { id: 'static-3', title: 'Beach Training', description: 'Training by the Mediterranean Sea', image_url: '/lore1.png', display_order: 3, active: true, created_at: new Date().toISOString() },
-        { id: 'static-4', title: 'Technique Focus', description: 'Perfecting BJJ techniques outdoors', image_url: '/lore2.png', display_order: 4, active: true, created_at: new Date().toISOString() },
-        { id: 'static-5', title: 'Park Sessions', description: 'Training in Antalya\'s beautiful parks', image_url: '/lore3.png', display_order: 5, active: true, created_at: new Date().toISOString() },
-        { id: 'static-6', title: 'Community Spirit', description: 'Building bonds through BJJ', image_url: '/lore4.png', display_order: 6, active: true, created_at: new Date().toISOString() }
+        { id: 'static-1', title: 'Outdoor Training', description: 'BJJ techniques in nature\'s embrace', image_url: getGalleryImageUrl('insta1.png'), display_order: 1, active: true, created_at: new Date().toISOString() },
+        { id: 'static-2', title: 'Team Training', description: 'Building strength together in Antalya', image_url: getGalleryImageUrl('insta10.jpg'), display_order: 2, active: true, created_at: new Date().toISOString() },
+        { id: 'static-3', title: 'Beach Training', description: 'Training by the Mediterranean Sea', image_url: getGalleryImageUrl('lore1.png'), display_order: 3, active: true, created_at: new Date().toISOString() },
+        { id: 'static-4', title: 'Technique Focus', description: 'Perfecting BJJ techniques outdoors', image_url: getGalleryImageUrl('lore2.png'), display_order: 4, active: true, created_at: new Date().toISOString() },
+        { id: 'static-5', title: 'Park Sessions', description: 'Training in Antalya\'s beautiful parks', image_url: getGalleryImageUrl('lore3.png'), display_order: 5, active: true, created_at: new Date().toISOString() },
+        { id: 'static-6', title: 'Community Spirit', description: 'Building bonds through BJJ', image_url: getGalleryImageUrl('lore4.png'), display_order: 6, active: true, created_at: new Date().toISOString() }
       ]
       setImages(hardcodedImages)
       setLoadingImages(false)
@@ -70,12 +70,12 @@ export default function GalleryManagement() {
     } else {
       // If no database images, show existing hardcoded images with option to import
       const hardcodedImages = [
-        { id: 'static-1', title: 'Outdoor Training', description: 'BJJ techniques in nature\'s embrace', image_url: '/insta1.png', display_order: 1, active: true, created_at: new Date().toISOString() },
-        { id: 'static-2', title: 'Team Training', description: 'Building strength together in Antalya', image_url: '/insta10.jpg', display_order: 2, active: true, created_at: new Date().toISOString() },
-        { id: 'static-3', title: 'Beach Training', description: 'Training by the Mediterranean Sea', image_url: '/lore1.png', display_order: 3, active: true, created_at: new Date().toISOString() },
-        { id: 'static-4', title: 'Technique Focus', description: 'Perfecting BJJ techniques outdoors', image_url: '/lore2.png', display_order: 4, active: true, created_at: new Date().toISOString() },
-        { id: 'static-5', title: 'Park Sessions', description: 'Training in Antalya\'s beautiful parks', image_url: '/lore3.png', display_order: 5, active: true, created_at: new Date().toISOString() },
-        { id: 'static-6', title: 'Community Spirit', description: 'Building bonds through BJJ', image_url: '/lore4.png', display_order: 6, active: true, created_at: new Date().toISOString() }
+        { id: 'static-1', title: 'Outdoor Training', description: 'BJJ techniques in nature\'s embrace', image_url: getGalleryImageUrl('insta1.png'), display_order: 1, active: true, created_at: new Date().toISOString() },
+        { id: 'static-2', title: 'Team Training', description: 'Building strength together in Antalya', image_url: getGalleryImageUrl('insta10.jpg'), display_order: 2, active: true, created_at: new Date().toISOString() },
+        { id: 'static-3', title: 'Beach Training', description: 'Training by the Mediterranean Sea', image_url: getGalleryImageUrl('lore1.png'), display_order: 3, active: true, created_at: new Date().toISOString() },
+        { id: 'static-4', title: 'Technique Focus', description: 'Perfecting BJJ techniques outdoors', image_url: getGalleryImageUrl('lore2.png'), display_order: 4, active: true, created_at: new Date().toISOString() },
+        { id: 'static-5', title: 'Park Sessions', description: 'Training in Antalya\'s beautiful parks', image_url: getGalleryImageUrl('lore3.png'), display_order: 5, active: true, created_at: new Date().toISOString() },
+        { id: 'static-6', title: 'Community Spirit', description: 'Building bonds through BJJ', image_url: getGalleryImageUrl('lore4.png'), display_order: 6, active: true, created_at: new Date().toISOString() }
       ]
       setImages(hardcodedImages)
     }
@@ -239,12 +239,12 @@ export default function GalleryManagement() {
 
     try {
       const hardcodedImages = [
-        { title: 'Outdoor Training', description: 'BJJ techniques in nature\'s embrace', image_url: '/insta1.png', display_order: 1, active: true },
-        { title: 'Team Training', description: 'Building strength together in Antalya', image_url: '/insta10.jpg', display_order: 2, active: true },
-        { title: 'Beach Training', description: 'Training by the Mediterranean Sea', image_url: '/lore1.png', display_order: 3, active: true },
-        { title: 'Technique Focus', description: 'Perfecting BJJ techniques outdoors', image_url: '/lore2.png', display_order: 4, active: true },
-        { title: 'Park Sessions', description: 'Training in Antalya\'s beautiful parks', image_url: '/lore3.png', display_order: 5, active: true },
-        { title: 'Community Spirit', description: 'Building bonds through BJJ', image_url: '/lore4.png', display_order: 6, active: true }
+        { title: 'Outdoor Training', description: 'BJJ techniques in nature\'s embrace', image_url: getGalleryImageUrl('insta1.png'), display_order: 1, active: true },
+        { title: 'Team Training', description: 'Building strength together in Antalya', image_url: getGalleryImageUrl('insta10.jpg'), display_order: 2, active: true },
+        { title: 'Beach Training', description: 'Training by the Mediterranean Sea', image_url: getGalleryImageUrl('lore1.png'), display_order: 3, active: true },
+        { title: 'Technique Focus', description: 'Perfecting BJJ techniques outdoors', image_url: getGalleryImageUrl('lore2.png'), display_order: 4, active: true },
+        { title: 'Park Sessions', description: 'Training in Antalya\'s beautiful parks', image_url: getGalleryImageUrl('lore3.png'), display_order: 5, active: true },
+        { title: 'Community Spirit', description: 'Building bonds through BJJ', image_url: getGalleryImageUrl('lore4.png'), display_order: 6, active: true }
       ]
 
       const { error } = await supabase
