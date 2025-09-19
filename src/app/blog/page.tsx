@@ -47,15 +47,19 @@ export default function BlogPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-        color: '#f5f5dc',
+        backgroundImage: 'url(/background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        color: '#2c1810',
         fontFamily: 'Go3v2, serif'
       }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{
             width: '50px',
             height: '50px',
-            border: '3px solid rgba(245, 245, 220, 0.3)',
+            border: '3px solid rgba(139, 69, 19, 0.3)',
             borderTop: '3px solid #dc2626',
             borderRadius: '50%',
             animation: 'spin 1s linear infinite',
@@ -70,8 +74,12 @@ export default function BlogPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-      color: '#f5f5dc',
+      backgroundImage: 'url(/background.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed',
+      color: '#2c1810',
       fontFamily: 'Go3v2, serif'
     }}>
       <style dangerouslySetInnerHTML={{
@@ -90,11 +98,11 @@ export default function BlogPage() {
 
       {/* Header */}
       <header style={{
-        background: 'rgba(0, 0, 0, 0.3)',
-        backdropFilter: 'blur(10px)',
+        background: 'rgba(139, 69, 19, 0.2)',
+        backdropFilter: 'blur(5px)',
         padding: '40px',
         textAlign: 'center',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+        borderBottom: '2px solid rgba(139, 69, 19, 0.3)'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h1 style={{
@@ -148,9 +156,9 @@ export default function BlogPage() {
           <div style={{
             textAlign: 'center',
             padding: '80px 20px',
-            background: 'rgba(255, 255, 255, 0.05)',
+            background: 'rgba(139, 69, 19, 0.1)',
             borderRadius: '12px',
-            border: '1px solid rgba(255, 255, 255, 0.1)'
+            border: '2px solid rgba(139, 69, 19, 0.3)'
           }}>
             <h2 style={{
               fontSize: '2rem',
@@ -176,21 +184,21 @@ export default function BlogPage() {
               <article
                 key={post.id}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(10px)',
+                  background: 'rgba(139, 69, 19, 0.1)',
+                  backdropFilter: 'blur(5px)',
                   borderRadius: '12px',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  border: '2px solid rgba(139, 69, 19, 0.3)',
                   overflow: 'hidden',
                   transition: 'all 0.3s ease',
                   animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)'
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)'
+                  e.currentTarget.style.background = 'rgba(139, 69, 19, 0.15)'
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                  e.currentTarget.style.background = 'rgba(139, 69, 19, 0.1)'
                 }}
               >
                 {post.featured_image_url && (
@@ -295,11 +303,11 @@ export default function BlogPage() {
 
       {/* Footer */}
       <footer style={{
-        background: 'rgba(0, 0, 0, 0.3)',
-        backdropFilter: 'blur(10px)',
+        background: 'rgba(139, 69, 19, 0.2)',
+        backdropFilter: 'blur(5px)',
         padding: '40px',
         textAlign: 'center',
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+        borderTop: '2px solid rgba(139, 69, 19, 0.3)',
         marginTop: '60px'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -316,18 +324,18 @@ export default function BlogPage() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                color: '#e8e8d0',
+                color: '#2c1810',
                 textDecoration: 'none',
                 padding: '10px 20px',
                 borderRadius: '6px',
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: 'rgba(139, 69, 19, 0.3)',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
+                e.currentTarget.style.background = 'rgba(139, 69, 19, 0.5)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.background = 'rgba(139, 69, 19, 0.3)'
               }}
             >
               Follow on Instagram
@@ -335,18 +343,18 @@ export default function BlogPage() {
             <a
               href="mailto:contact@lorebjj.com"
               style={{
-                color: '#e8e8d0',
+                color: '#2c1810',
                 textDecoration: 'none',
                 padding: '10px 20px',
                 borderRadius: '6px',
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: 'rgba(139, 69, 19, 0.3)',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
+                e.currentTarget.style.background = 'rgba(139, 69, 19, 0.5)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.background = 'rgba(139, 69, 19, 0.3)'
               }}
             >
               Contact Us
