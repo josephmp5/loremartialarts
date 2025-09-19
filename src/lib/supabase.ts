@@ -30,7 +30,9 @@ export const getStorageUrl = (bucket: string, path: string): string => {
 
 // Specific helpers for different asset types
 export const getSiteAssetUrl = (filename: string): string => {
-  return getStorageUrl('site-assets', filename)
+  const url = getStorageUrl('site-assets', filename)
+  console.log(`getSiteAssetUrl(${filename}):`, url)
+  return url
 }
 
 export const getGalleryImageUrl = (filename: string): string => {

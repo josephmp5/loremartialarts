@@ -214,6 +214,18 @@ export default function Home() {
                     height: 'auto',
                     display: 'block'
                   }}
+                  onLoad={() => console.log('Logo loaded successfully')}
+                  onError={(e) => {
+                    console.error('Logo failed to load:', e);
+                    console.error('Logo URL:', getSiteAssetUrl('logo.png'));
+                    const img = e.target as HTMLImageElement;
+                    img.style.display = 'none';
+                    // Show fallback text
+                    const parent = img.parentElement;
+                    if (parent) {
+                      parent.innerHTML = '<div style="color: #f5f5dc; font-size: 2rem; font-weight: bold; text-align: center;">LORE BJJ</div>';
+                    }
+                  }}
                 />
               </div>
               {/* Left Side Navigation */}
