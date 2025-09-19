@@ -359,6 +359,48 @@ export default function Home() {
                   CAMPS
                 </button>
               </div>
+
+              {/* BLOG Button - Bottom Center */}
+              <div style={{
+                position: 'absolute',
+                bottom: '15%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                pointerEvents: 'auto',
+                zIndex: 10
+              }}>
+                <a
+                  href="/blog"
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: '#dc2626',
+                    padding: '12px 24px',
+                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
+                    border: 'none',
+                    fontWeight: 'normal',
+                    fontFamily: 'Manga, serif',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    animation: 'fadeIn 1s ease-out 1.3s both',
+                    textDecoration: 'none',
+                    display: 'inline-block'
+                  }}
+                  onMouseEnter={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'scale(1.1)';
+                    btn.style.color = '#ef4444';
+                  }}
+                  onMouseLeave={(e) => {
+                    const btn = e.target as HTMLElement;
+                    btn.style.transform = 'scale(1)';
+                    btn.style.color = '#dc2626';
+                  }}
+                >
+                  BLOG
+                </a>
+              </div>
             </div>
           </div>
         </section>
