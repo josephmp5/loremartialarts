@@ -86,14 +86,15 @@ export default function GalleryManagement() {
       setError('')
       const fileExt = file.name.split('.').pop()
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`
-      const filePath = `gallery-images/${fileName}`
+      const filePath = fileName
 
       const { error: uploadError } = await supabase.storage
         .from('gallery-images')
         .upload(filePath, file)
 
       if (uploadError) {
-        setError('Failed to upload image')
+        console.error('Upload error:', uploadError)
+        setError(`Failed to upload image: ${uploadError.message}`)
         return
       }
 
@@ -101,12 +102,15 @@ export default function GalleryManagement() {
         .from('gallery-images')
         .getPublicUrl(filePath)
 
+      console.log('Upload successful, public URL:', data.publicUrl)
+
       setFormData(prev => ({
         ...prev,
         image_url: data.publicUrl
       }))
     } catch (err) {
-      setError('Failed to upload image')
+      console.error('Upload exception:', err)
+      setError(`Failed to upload image: ${err instanceof Error ? err.message : 'Unknown error'}`)
     }
   }
 
