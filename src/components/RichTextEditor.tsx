@@ -38,12 +38,6 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     showWordsCounter: false,
     showXPathInStatusbar: false,
     theme: 'dark',
-    events: {
-      afterInit: function () {
-        // Prevent focus issues
-        this.editor.focus();
-      }
-    },
     style: {
       background: '#2c1810',
       color: '#f5f5dc',
