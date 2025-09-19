@@ -66,6 +66,15 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
       background: 'rgba(255, 255, 255, 0.05)',
       overflow: 'hidden'
     }}>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          [contenteditable][data-placeholder]:empty::before {
+            content: attr(data-placeholder);
+            color: rgba(245, 245, 220, 0.5);
+            pointer-events: none;
+          }
+        `
+      }} />
       {/* Toolbar */}
       <div style={{
         display: 'flex',
@@ -176,7 +185,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
               lineHeight: '1.6',
               fontFamily: 'system-ui, -apple-system, sans-serif'
             }}
-            placeholder={placeholder}
+            data-placeholder={placeholder}
           />
         )}
       </div>
