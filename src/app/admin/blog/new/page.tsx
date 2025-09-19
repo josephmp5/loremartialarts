@@ -387,7 +387,7 @@ export default function NewBlogPost() {
                   gap: '8px',
                   padding: '8px 16px',
                   borderRadius: '6px',
-                  background: formData.category_ids.includes(category.id) 
+                  background: selectedCategories.includes(category.id) 
                     ? 'rgba(220, 38, 38, 0.8)' 
                     : 'rgba(255, 255, 255, 0.1)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
