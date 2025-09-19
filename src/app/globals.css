@@ -165,9 +165,7 @@ body {
   overflow-x: hidden !important;
   
   /* FULL BACKGROUND COVERAGE - NO WHITE SPACES */
-  background: #1a1a2e center center/cover no-repeat fixed !important;
-  
-  /* Fallback for very large background */
+  /* Background will be set dynamically by BackgroundImage component */
   background-color: #1a1a2e !important;
 }
 
