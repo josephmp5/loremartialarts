@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 
 // Dynamically import JoditEditor with no SSR - simpler approach
@@ -21,6 +21,12 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     setIsClient(true)
   }, [])
 
+  // Debounced onChange to prevent focus issues
+  const handleChange = useCallback((content: string) => {
+    // Use setTimeout to prevent focus stealing
+    setTimeout(() => onChange(content), 0)
+  }, [onChange])
+
   // Simple, working config with dark theme
   const config = {
     readonly: false,
@@ -32,11 +38,17 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     showWordsCounter: false,
     showXPathInStatusbar: false,
     theme: 'dark',
-    editorCssClass: 'dark-editor',
+    events: {
+      afterInit: function () {
+        // Prevent focus issues
+        this.editor.focus();
+      }
+    },
     style: {
       background: '#2c1810',
       color: '#f5f5dc',
-      font: '14px Go3v2, serif',
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '14px',
     },
   }
 
@@ -70,7 +82,8 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         :global(.jodit-wysiwyg) {
           background: #2c1810 !important;
           color: #f5f5dc !important;
-          font-family: 'Go3v2', serif !important;
+          font-family: Arial, sans-serif !important;
+          font-size: 14px !important;
         }
         :global(.jodit-toolbar) {
           background: rgba(44, 24, 16, 0.9) !important;
@@ -92,7 +105,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         <JoditEditor
           value={value}
           config={config}
-          onChange={(content: string) => onChange(content)}
+          onChange={handleChange}
         />
         
         {/* Helper text */}
