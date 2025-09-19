@@ -360,10 +360,10 @@ export default function Home() {
                 </button>
               </div>
 
-              {/* BLOG Button - Bottom Center */}
+              {/* BLOG Button - Top Center */}
               <div style={{
                 position: 'absolute',
-                bottom: '15%',
+                top: '10%',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 pointerEvents: 'auto',
