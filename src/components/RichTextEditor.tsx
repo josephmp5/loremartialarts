@@ -17,8 +17,6 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     readonly: false,
     placeholder: placeholder || 'Start writing your blog post...',
     height: 400,
-    theme: 'dark',
-    toolbarButtonSize: 'small' as const,
     buttons: [
       'bold', 'italic', 'underline', '|',
       'ul', 'ol', '|',
@@ -34,13 +32,6 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     showCharsCounter: false,
     showWordsCounter: false,
     showXPathInStatusbar: false,
-    style: {
-      font: '14px Go3v2, serif',
-      color: '#2c1810',
-      background: '#f5f5dc'
-    },
-    enter: 'P' as const,
-    defaultActionOnPaste: 'insert_clear_html' as const,
   }
 
   return (
