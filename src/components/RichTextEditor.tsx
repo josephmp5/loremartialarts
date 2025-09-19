@@ -46,28 +46,53 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           border: 1px solid rgba(255, 255, 255, 0.3) !important;
           border-radius: 8px !important;
         }
+        
+        /* Comprehensive text area styling */
         .w-md-editor-text-textarea, 
         .w-md-editor-text-input, 
         .w-md-editor-text,
         .w-md-editor-text textarea,
         .w-md-editor .w-md-editor-text-textarea,
-        .w-md-editor .w-md-editor-text-input {
+        .w-md-editor .w-md-editor-text-input,
+        .w-md-editor textarea,
+        .w-md-editor input,
+        .w-md-editor .w-md-editor-text-textarea textarea,
+        .w-md-editor .w-md-editor-text-input textarea {
           background-color: #2c1810 !important;
           color: #ffffff !important;
           font-family: Arial, sans-serif !important;
           font-size: 14px !important;
           border: none !important;
         }
+        
+        /* Placeholder styling */
         .w-md-editor-text-textarea::placeholder,
-        .w-md-editor-text-input::placeholder {
+        .w-md-editor-text-input::placeholder,
+        .w-md-editor textarea::placeholder {
           color: rgba(255, 255, 255, 0.5) !important;
         }
-        /* Force text color in all possible states */
+        
+        /* Force white text in all states */
         .w-md-editor-text-textarea:focus,
         .w-md-editor-text-input:focus,
-        .w-md-editor-text:focus {
+        .w-md-editor-text:focus,
+        .w-md-editor textarea:focus,
+        .w-md-editor input:focus,
+        .w-md-editor .w-md-editor-text-textarea:focus,
+        .w-md-editor .w-md-editor-text-input:focus {
           color: #ffffff !important;
+          background-color: #2c1810 !important;
         }
+        
+        /* Additional selectors to ensure text visibility */
+        .w-md-editor .w-md-editor-text-textarea textarea,
+        .w-md-editor .w-md-editor-text-input textarea,
+        .w-md-editor-text textarea {
+          color: #ffffff !important;
+          background-color: #2c1810 !important;
+        }
+        
+        /* Toolbar styling */
         .w-md-editor-toolbar {
           background-color: rgba(44, 24, 16, 0.9) !important;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -81,9 +106,16 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         .w-md-editor-toolbar button:hover {
           background-color: rgba(255, 255, 255, 0.1) !important;
         }
+        
+        /* Preview styling */
         .w-md-editor-preview {
           background-color: #2c1810 !important;
           color: #f5f5dc !important;
+        }
+        
+        /* Override any conflicting styles */
+        .w-md-editor * {
+          color: inherit !important;
         }
       `}</style>
       
