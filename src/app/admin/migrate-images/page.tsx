@@ -18,14 +18,27 @@ export default function ImageMigration() {
   const { user, loading } = useAuth()
   const router = useRouter()
   const [images, setImages] = useState<ImageMigration[]>([
+    // Main images
     { filename: 'background.jpg', publicPath: '/background.jpg', size: '~500KB', status: 'pending' },
+    { filename: 'background-original.jpg', publicPath: '/background-original.jpg', size: '~800KB', status: 'pending' },
     { filename: 'logo.png', publicPath: '/logo.png', size: '~50KB', status: 'pending' },
+    
+    // Training gallery images
     { filename: 'insta1.png', publicPath: '/insta1.png', size: '~200KB', status: 'pending' },
     { filename: 'insta10.jpg', publicPath: '/insta10.jpg', size: '~300KB', status: 'pending' },
     { filename: 'lore1.png', publicPath: '/lore1.png', size: '~250KB', status: 'pending' },
     { filename: 'lore2.png', publicPath: '/lore2.png', size: '~250KB', status: 'pending' },
     { filename: 'lore3.png', publicPath: '/lore3.png', size: '~250KB', status: 'pending' },
-    { filename: 'lore4.png', publicPath: '/lore4.png', size: '~250KB', status: 'pending' }
+    { filename: 'lore4.png', publicPath: '/lore4.png', size: '~250KB', status: 'pending' },
+    
+    // Fonts (convert to CDN)
+    { filename: 'go3v2.ttf', publicPath: '/fonts/go3v2.ttf', size: '~100KB', status: 'pending' },
+    { filename: 'Manga.otf', publicPath: '/fonts/Manga.otf', size: '~80KB', status: 'pending' },
+    { filename: 'Manga Bold.otf', publicPath: '/fonts/Manga Bold.otf', size: '~85KB', status: 'pending' },
+    { filename: 'Manga Italic.otf', publicPath: '/fonts/Manga Italic.otf', size: '~82KB', status: 'pending' },
+    { filename: 'Manga Bold Italic.otf', publicPath: '/fonts/Manga Bold Italic.otf', size: '~87KB', status: 'pending' },
+    { filename: 'Manga Hollow.otf', publicPath: '/fonts/Manga Hollow.otf', size: '~75KB', status: 'pending' },
+    { filename: 'Manga Hollow Italic.otf', publicPath: '/fonts/Manga Hollow Italic.otf', size: '~78KB', status: 'pending' }
   ])
   const [migrating, setMigrating] = useState(false)
   const [error, setError] = useState('')
@@ -57,14 +70,23 @@ export default function ImageMigration() {
       const blob = await response.blob()
       const file = new File([blob], image.filename, { type: blob.type })
 
-      // Upload to Supabase storage
-      const fileExt = image.filename.split('.').pop()
+      // Determine bucket based on file type
+      const fileExt = image.filename.split('.').pop()?.toLowerCase()
       const fileName = `${Date.now()}-${image.filename}`
       
+      let bucket = 'gallery-images'
+      if (image.filename === 'background.jpg' || image.filename === 'background-original.jpg') {
+        bucket = 'site-assets'
+      } else if (image.filename === 'logo.png') {
+        bucket = 'site-assets'
+      } else if (fileExt === 'ttf' || fileExt === 'otf') {
+        bucket = 'fonts'
+      }
+      
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('gallery-images')
+        .from(bucket)
         .upload(fileName, file, {
-          cacheControl: '3600',
+          cacheControl: '31536000', // 1 year cache for static assets
           upsert: false
         })
 
@@ -153,6 +175,38 @@ export default function ImageMigration() {
     } catch (err: any) {
       setError('Failed to update database: ' + err.message)
     }
+  }
+
+  const generateCSSUpdates = () => {
+    const completedImages = images.filter(img => img.status === 'completed' && img.supabaseUrl)
+    
+    if (completedImages.length === 0) {
+      setError('No completed images to generate CSS for')
+      return
+    }
+
+    let cssUpdates = '/* Replace these URLs in your CSS files: */\n\n'
+    
+    completedImages.forEach(img => {
+      if (img.filename === 'background.jpg') {
+        cssUpdates += `/* Background image */\n`
+        cssUpdates += `/* OLD: url('/background.jpg') */\n`
+        cssUpdates += `/* NEW: */ url('${img.supabaseUrl}') \n\n`
+      } else if (img.filename.includes('font')) {
+        cssUpdates += `/* Font: ${img.filename} */\n`
+        cssUpdates += `/* OLD: url('/fonts/${img.filename}') */\n`
+        cssUpdates += `/* NEW: */ url('${img.supabaseUrl}') \n\n`
+      }
+    })
+
+    // Copy to clipboard and show alert
+    navigator.clipboard.writeText(cssUpdates).then(() => {
+      alert('CSS updates copied to clipboard! Paste them to see what needs to be updated.')
+    }).catch(() => {
+      // Fallback: show in console
+      console.log(cssUpdates)
+      alert('CSS updates logged to console (F12 to view)')
+    })
   }
 
   if (loading) {
@@ -299,6 +353,23 @@ export default function ImageMigration() {
             }}
           >
             Update Gallery Database
+          </button>
+
+          <button
+            onClick={generateCSSUpdates}
+            disabled={completedCount === 0}
+            style={{
+              background: completedCount === 0 ? 'rgba(59, 130, 246, 0.5)' : 'rgba(59, 130, 246, 0.8)',
+              color: '#f5f5dc',
+              border: 'none',
+              padding: '12px 24px',
+              borderRadius: '8px',
+              cursor: completedCount === 0 ? 'not-allowed' : 'pointer',
+              fontSize: '1rem',
+              fontWeight: '600'
+            }}
+          >
+            📋 Copy CSS Updates
           </button>
         </div>
 

@@ -223,6 +223,8 @@ CREATE INDEX IF NOT EXISTS idx_training_gallery_order ON training_gallery(displa
 -- Create storage buckets for images
 INSERT INTO storage.buckets (id, name, public) VALUES ('blog-images', 'blog-images', true);
 INSERT INTO storage.buckets (id, name, public) VALUES ('gallery-images', 'gallery-images', true);
+INSERT INTO storage.buckets (id, name, public) VALUES ('site-assets', 'site-assets', true);
+INSERT INTO storage.buckets (id, name, public) VALUES ('fonts', 'fonts', true);
 
 -- Create storage policies for blog images
 CREATE POLICY "Anyone can view blog images" ON storage.objects
@@ -249,3 +251,29 @@ CREATE POLICY "Authenticated users can update gallery images" ON storage.objects
 
 CREATE POLICY "Authenticated users can delete gallery images" ON storage.objects
   FOR DELETE USING (bucket_id = 'gallery-images' AND auth.role() = 'authenticated');
+
+-- Create storage policies for site assets (background, logo, etc.)
+CREATE POLICY "Anyone can view site assets" ON storage.objects
+  FOR SELECT USING (bucket_id = 'site-assets');
+
+CREATE POLICY "Authenticated users can upload site assets" ON storage.objects
+  FOR INSERT WITH CHECK (bucket_id = 'site-assets' AND auth.role() = 'authenticated');
+
+CREATE POLICY "Authenticated users can update site assets" ON storage.objects
+  FOR UPDATE USING (bucket_id = 'site-assets' AND auth.role() = 'authenticated');
+
+CREATE POLICY "Authenticated users can delete site assets" ON storage.objects
+  FOR DELETE USING (bucket_id = 'site-assets' AND auth.role() = 'authenticated');
+
+-- Create storage policies for fonts
+CREATE POLICY "Anyone can view fonts" ON storage.objects
+  FOR SELECT USING (bucket_id = 'fonts');
+
+CREATE POLICY "Authenticated users can upload fonts" ON storage.objects
+  FOR INSERT WITH CHECK (bucket_id = 'fonts' AND auth.role() = 'authenticated');
+
+CREATE POLICY "Authenticated users can update fonts" ON storage.objects
+  FOR UPDATE USING (bucket_id = 'fonts' AND auth.role() = 'authenticated');
+
+CREATE POLICY "Authenticated users can delete fonts" ON storage.objects
+  FOR DELETE USING (bucket_id = 'fonts' AND auth.role() = 'authenticated');

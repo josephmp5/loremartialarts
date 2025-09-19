@@ -356,37 +356,6 @@ export default function Home() {
                 >
                   CAMPS
                 </button>
-                <a
-                  href="/blog"
-                  style={{
-                    backgroundColor: 'transparent',
-                    color: '#dc2626',
-                    padding: '12px 24px',
-                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
-                    border: 'none',
-                    fontWeight: 'normal',
-                    fontFamily: 'Manga, serif',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    animation: 'fadeIn 1s ease-out 1.3s both',
-                    textDecoration: 'none',
-                    display: 'inline-block'
-                  }}
-                  onMouseEnter={(e) => {
-                    const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#ef4444';
-                  }}
-                  onMouseLeave={(e) => {
-                    const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1)';
-                    btn.style.color = '#dc2626';
-                  }}
-                >
-                  BLOG
-                </a>
               </div>
             </div>
           </div>
@@ -1056,6 +1025,93 @@ export default function Home() {
               </div>
             </div>
           </section>
+
+        {/* Blog Section */}
+        <section style={{
+          padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
+          position: 'relative',
+          width: '100%',
+          margin: 0,
+          background: 'rgba(0, 0, 0, 0.2)',
+          backdropFilter: 'blur(5px)',
+          textAlign: 'center'
+        }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+            <div style={{
+              textAlign: 'center',
+              marginBottom: 'clamp(60px, 10vw, 100px)'
+            }}>
+              <h2 style={{
+                fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+                fontWeight: '700',
+                marginBottom: 'clamp(20px, 4vw, 30px)',
+                color: '#f5f5dc',
+                fontFamily: 'Go3v2, serif',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+                animation: 'slideInDown 1.5s ease-out',
+                letterSpacing: 'clamp(1px, 0.3vw, 2px)'
+              }}>
+                Latest Stories
+              </h2>
+              <p style={{
+                fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
+                color: '#e8e8d0',
+                maxWidth: '900px',
+                margin: '0 auto',
+                lineHeight: '1.8',
+                fontFamily: 'Chakra Petch, Crimson Text, serif',
+                animation: 'slideInUp 1.5s ease-out 0.3s both',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
+                letterSpacing: '1px',
+                padding: '0 20px'
+              }}>
+                Discover our training insights, techniques, and community stories
+              </p>
+            </div>
+            
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '60px'
+            }}>
+              <a
+                href="/blog"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.8) 0%, rgba(160, 82, 45, 0.9) 100%)',
+                  color: '#f5f5dc',
+                  padding: '20px 40px',
+                  borderRadius: '12px',
+                  textDecoration: 'none',
+                  fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+                  fontWeight: '600',
+                  fontFamily: 'Manga, serif',
+                  textTransform: 'uppercase',
+                  letterSpacing: '2px',
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  border: '2px solid rgba(139, 69, 19, 0.3)',
+                  backdropFilter: 'blur(10px)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                  display: 'inline-block',
+                  animation: 'fadeIn 1.5s ease-out 0.5s both'
+                }}
+                onMouseEnter={(e) => {
+                  const link = e.target as HTMLElement;
+                  link.style.transform = 'translateY(-3px) scale(1.05)';
+                  link.style.background = 'linear-gradient(135deg, rgba(139, 69, 19, 1) 0%, rgba(160, 82, 45, 1) 100%)';
+                  link.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  const link = e.target as HTMLElement;
+                  link.style.transform = 'translateY(0) scale(1)';
+                  link.style.background = 'linear-gradient(135deg, rgba(139, 69, 19, 0.8) 0%, rgba(160, 82, 45, 0.9) 100%)';
+                  link.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+                }}
+              >
+                📖 Read Our Blog
+              </a>
+            </div>
+          </div>
+        </section>
 
         {/* Contact & Footer */}
           <section style={{
