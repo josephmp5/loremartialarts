@@ -399,7 +399,7 @@ export default function NewBlogPost() {
               fontSize: '1.1rem',
               fontWeight: '600'
             }}>
-              Excerpt
+              Excerpt (Short Summary)
             </label>
             <textarea
               value={formData.excerpt}
@@ -426,6 +426,13 @@ export default function NewBlogPost() {
                 e.target.style.background = 'rgba(255, 255, 255, 0.1)'
               }}
             />
+            <p style={{
+              fontSize: '0.9rem',
+              opacity: 0.7,
+              marginTop: '5px'
+            }}>
+              A short summary of your blog post (1-2 sentences). This appears on the blog listing page and in search results.
+            </p>
           </div>
 
           {/* Content */}

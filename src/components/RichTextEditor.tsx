@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 
 interface RichTextEditorProps {
   value: string
@@ -9,51 +9,56 @@ interface RichTextEditorProps {
 }
 
 export default function RichTextEditor({ value, onChange, placeholder }: RichTextEditorProps) {
-  const editorRef = useRef<HTMLDivElement>(null)
   const [showPreview, setShowPreview] = useState(false)
 
-  const formatText = (command: string, value?: string) => {
-    document.execCommand(command, false, value)
-    if (editorRef.current) {
-      onChange(editorRef.current.innerHTML)
-    }
-  }
+  const insertText = (before: string, after: string = '') => {
+    const textarea = document.querySelector('textarea[data-rich-editor="true"]') as HTMLTextAreaElement
+    if (!textarea) return
 
-  const handleInput = () => {
-    if (editorRef.current) {
-      onChange(editorRef.current.innerHTML)
-    }
+    const start = textarea.selectionStart
+    const end = textarea.selectionEnd
+    const selectedText = textarea.value.substring(start, end)
+    const newText = before + selectedText + after
+
+    const newValue = textarea.value.substring(0, start) + newText + textarea.value.substring(end)
+    onChange(newValue)
+
+    // Restore cursor position
+    setTimeout(() => {
+      textarea.focus()
+      textarea.setSelectionRange(start + before.length, start + before.length + selectedText.length)
+    }, 0)
   }
 
   const insertLink = () => {
     const url = prompt('Enter URL:')
     if (url) {
-      formatText('createLink', url)
+      const text = prompt('Enter link text:') || url
+      insertText(`<a href="${url}">`, `${text}</a>`)
     }
   }
 
   const insertImage = () => {
     const url = prompt('Enter image URL:')
     if (url) {
-      formatText('insertImage', url)
+      insertText(`<img src="${url}" alt="Image" style="max-width: 100%; height: auto;" />`)
     }
   }
 
   const toolbarButtons = [
-    { command: 'bold', icon: 'B', title: 'Bold' },
-    { command: 'italic', icon: 'I', title: 'Italic' },
-    { command: 'underline', icon: 'U', title: 'Underline' },
+    { command: 'bold', icon: 'B', title: 'Bold', before: '<strong>', after: '</strong>' },
+    { command: 'italic', icon: 'I', title: 'Italic', before: '<em>', after: '</em>' },
+    { command: 'underline', icon: 'U', title: 'Underline', before: '<u>', after: '</u>' },
     { command: 'separator' },
-    { command: 'formatBlock', value: 'h1', icon: 'H1', title: 'Heading 1' },
-    { command: 'formatBlock', value: 'h2', icon: 'H2', title: 'Heading 2' },
-    { command: 'formatBlock', value: 'h3', icon: 'H3', title: 'Heading 3' },
+    { command: 'h1', icon: 'H1', title: 'Heading 1', before: '<h1>', after: '</h1>' },
+    { command: 'h2', icon: 'H2', title: 'Heading 2', before: '<h2>', after: '</h2>' },
+    { command: 'h3', icon: 'H3', title: 'Heading 3', before: '<h3>', after: '</h3>' },
     { command: 'separator' },
-    { command: 'insertUnorderedList', icon: '•', title: 'Bullet List' },
-    { command: 'insertOrderedList', icon: '1.', title: 'Numbered List' },
+    { command: 'ul', icon: '•', title: 'Bullet List', before: '<ul>\n<li>', after: '</li>\n</ul>' },
+    { command: 'ol', icon: '1.', title: 'Numbered List', before: '<ol>\n<li>', after: '</li>\n</ol>' },
     { command: 'separator' },
-    { command: 'justifyLeft', icon: '⬅', title: 'Align Left' },
-    { command: 'justifyCenter', icon: '⬄', title: 'Align Center' },
-    { command: 'justifyRight', icon: '➡', title: 'Align Right' },
+    { command: 'p', icon: 'P', title: 'Paragraph', before: '<p>', after: '</p>' },
+    { command: 'br', icon: '↵', title: 'Line Break', before: '<br />', after: '' },
     { command: 'separator' },
     { command: 'custom', action: insertLink, icon: '🔗', title: 'Insert Link' },
     { command: 'custom', action: insertImage, icon: '🖼', title: 'Insert Image' }
@@ -66,15 +71,6 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
       background: 'rgba(255, 255, 255, 0.05)',
       overflow: 'hidden'
     }}>
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          [contenteditable][data-placeholder]:empty::before {
-            content: attr(data-placeholder);
-            color: rgba(245, 245, 220, 0.5);
-            pointer-events: none;
-          }
-        `
-      }} />
       {/* Toolbar */}
       <div style={{
         display: 'flex',
@@ -107,10 +103,8 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
               onClick={() => {
                 if (button.command === 'custom' && button.action) {
                   button.action()
-                } else if (button.value) {
-                  formatText(button.command, button.value)
-                } else {
-                  formatText(button.command)
+                } else if (button.before && button.after !== undefined) {
+                  insertText(button.before, button.after)
                 }
               }}
               style={{
@@ -172,20 +166,23 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
             dangerouslySetInnerHTML={{ __html: value }}
           />
         ) : (
-          <div
-            ref={editorRef}
-            contentEditable
-            onInput={handleInput}
-            dangerouslySetInnerHTML={{ __html: value }}
+          <textarea
+            data-rich-editor="true"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder={placeholder}
             style={{
+              width: '100%',
               padding: '12px',
               minHeight: '200px',
+              border: 'none',
               outline: 'none',
+              background: 'transparent',
               color: '#f5f5dc',
               lineHeight: '1.6',
-              fontFamily: 'system-ui, -apple-system, sans-serif'
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              resize: 'vertical'
             }}
-            data-placeholder={placeholder}
           />
         )}
       </div>
@@ -198,7 +195,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         borderTop: '1px solid rgba(255, 255, 255, 0.1)',
         background: 'rgba(0, 0, 0, 0.1)'
       }}>
-        Use the toolbar to format your text. Click Preview to see how it will look.
+        Write your content and use the toolbar buttons to add HTML formatting. Click Preview to see the final result.
       </div>
     </div>
   )
