@@ -1,25 +1,11 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
-// Dynamically import JoditEditor with no SSR
+// Dynamically import JoditEditor with no SSR - simpler approach
 const JoditEditor = dynamic(() => import('jodit-react'), {
   ssr: false,
-  loading: () => (
-    <div style={{
-      height: 400,
-      border: '1px solid rgba(255, 255, 255, 0.3)',
-      borderRadius: '8px',
-      background: 'rgba(255, 255, 255, 0.05)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: 'rgba(245, 245, 220, 0.6)'
-    }}>
-      Loading editor...
-    </div>
-  )
 })
 
 interface RichTextEditorProps {
@@ -29,29 +15,19 @@ interface RichTextEditorProps {
 }
 
 export default function RichTextEditor({ value, onChange, placeholder }: RichTextEditorProps) {
-  const editor = useRef(null)
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
     setIsClient(true)
   }, [])
 
+  // Simple, working config
   const config = {
     readonly: false,
     placeholder: placeholder || 'Start writing your blog post...',
     height: 400,
-    buttons: [
-      'bold', 'italic', 'underline', '|',
-      'ul', 'ol', '|',
-      'outdent', 'indent', '|',
-      'font', 'fontsize', '|',
-      'brush', 'paragraph', '|',
-      'image', 'link', '|',
-      'align', '|',
-      'undo', 'redo', '|',
-      'hr', 'eraser', 'fullsize'
-    ],
-    removeButtons: ['about', 'print'],
+    buttons: 'bold,italic,underline,|,ul,ol,|,outdent,indent,|,font,fontsize,|,brush,paragraph,|,image,link,|,align,|,undo,redo,|,hr,eraser,fullsize',
+    removeButtons: 'about,print',
     showCharsCounter: false,
     showWordsCounter: false,
     showXPathInStatusbar: false,
@@ -82,11 +58,10 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
       overflow: 'hidden'
     }}>
       <JoditEditor
-        ref={editor}
         value={value}
         config={config}
-        onBlur={(content) => onChange(content)}
-        onChange={(content) => onChange(content)}
+        onBlur={(content: string) => onChange(content)}
+        onChange={(content: string) => onChange(content)}
       />
       
       {/* Helper text */}
