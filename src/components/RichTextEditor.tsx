@@ -48,7 +48,13 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           border-radius: 8px !important;
         }
         
-        .w-md-editor textarea {
+        .w-md-editor textarea,
+        .w-md-editor .w-md-editor-text-textarea textarea,
+        .w-md-editor .w-md-editor-text-input textarea,
+        .w-md-editor .w-md-editor-text textarea,
+        .w-md-editor-text-textarea,
+        .w-md-editor-text-input,
+        .w-md-editor-text {
           background-color: #f8f9fa !important;
           color: #212529 !important;
           font-family: Arial, sans-serif !important;
@@ -56,7 +62,9 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           border: none !important;
         }
         
-        .w-md-editor textarea::placeholder {
+        .w-md-editor textarea::placeholder,
+        .w-md-editor .w-md-editor-text-textarea::placeholder,
+        .w-md-editor .w-md-editor-text-input::placeholder {
           color: #6c757d !important;
         }
         
@@ -77,6 +85,11 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           background-color: #f8f9fa !important;
           color: #212529 !important;
         }
+        
+        /* Force dark text on everything */
+        .w-md-editor * {
+          color: #212529 !important;
+        }
       `}</style>
       
       <div style={{
@@ -92,7 +105,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           preview="edit"
           hideToolbar={false}
           visibleDragbar={false}
-          data-color-mode="dark"
+          data-color-mode="light"
         />
         
         {/* Helper text */}
