@@ -372,7 +372,7 @@ export default function AdminDashboard() {
                 e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
-              🚀 Migrate Images
+              🚀 Optimize Images
             </a>
           </div>
         </div>
