@@ -219,13 +219,14 @@ export default function Home() {
               {/* Left Side Navigation */}
               <div style={{
                 position: 'absolute',
-                left: '12%',
+                left: '8%',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 display: 'flex',
                 flexDirection: 'row',
-                gap: '40px',
-                pointerEvents: 'auto'
+                gap: '60px',
+                pointerEvents: 'auto',
+                zIndex: 10
               }}>
                 <button
                   onClick={() => scrollToSection('about')}
@@ -290,13 +291,14 @@ export default function Home() {
               {/* Right Side Navigation */}
               <div style={{
                 position: 'absolute',
-                right: '12%',
+                right: '8%',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 display: 'flex',
                 flexDirection: 'row',
-                gap: '40px',
-                pointerEvents: 'auto'
+                gap: '60px',
+                pointerEvents: 'auto',
+                zIndex: 10
               }}>
                 <button
                   onClick={() => scrollToSection('locations')}

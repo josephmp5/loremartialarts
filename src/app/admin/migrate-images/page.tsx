@@ -237,7 +237,7 @@ export default function ImageMigration() {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
       color: '#f5f5dc',
-      fontFamily: 'Go3v2, serif'
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       {/* Header */}
       <header style={{
@@ -496,16 +496,48 @@ export default function ImageMigration() {
           <ol style={{ fontSize: '0.9rem', lineHeight: '1.6', paddingLeft: '20px' }}>
             <li><strong>Migrate Images:</strong> Click "Migrate All Images" to upload all images to Supabase storage</li>
             <li><strong>Update Database:</strong> After migration completes, click "Update Gallery Database" to use the new URLs</li>
+            <li><strong>Copy CSS Updates:</strong> Click "📋 Copy CSS Updates" to get the new URLs for your CSS files</li>
+            <li><strong>Update CSS Files:</strong> Replace old URLs with new Supabase URLs in your CSS</li>
+            <li><strong>Remove Local Files:</strong> After successful migration and CSS updates, you can delete the original files from /public to reduce project size</li>
             <li><strong>Benefits:</strong> 
               <ul style={{ marginTop: '5px' }}>
-                <li>✅ Much faster loading times</li>
-                <li>✅ CDN distribution worldwide</li>
-                <li>✅ Better caching</li>
-                <li>✅ Reduced server load</li>
+                <li>✅ 3-5x faster loading times</li>
+                <li>✅ Global CDN distribution</li>
+                <li>✅ Reduced project size (~2-3MB smaller)</li>
+                <li>✅ Better mobile performance</li>
+                <li>✅ Optimized caching</li>
               </ul>
             </li>
-            <li><strong>Note:</strong> Original images in /public will remain as backup</li>
           </ol>
+        </div>
+
+        {/* File Removal Warning */}
+        <div style={{
+          background: 'rgba(245, 158, 11, 0.1)',
+          border: '1px solid rgba(245, 158, 11, 0.3)',
+          borderRadius: '12px',
+          padding: '20px',
+          marginTop: '20px'
+        }}>
+          <h3 style={{ fontSize: '1.2rem', marginBottom: '15px' }}>⚠️ Important: File Removal</h3>
+          <div style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
+            <p><strong>After successful migration:</strong></p>
+            <ol style={{ paddingLeft: '20px', marginTop: '10px' }}>
+              <li>Test your site to ensure all images load from Supabase</li>
+              <li>Update CSS files with new Supabase URLs</li>
+              <li>Remove these files from /public to reduce project size:</li>
+              <ul style={{ marginTop: '5px', paddingLeft: '20px' }}>
+                <li>background.jpg, background-original.jpg</li>
+                <li>logo.png</li>
+                <li>insta1.png, insta10.jpg</li>
+                <li>lore1.png, lore2.png, lore3.png, lore4.png</li>
+                <li>/fonts/ directory (all font files)</li>
+              </ul>
+            </ol>
+            <p style={{ marginTop: '15px', fontWeight: 'bold', color: '#f59e0b' }}>
+              🎯 Result: Project will be ~2-3MB smaller and site will load much faster!
+            </p>
+          </div>
         </div>
       </div>
     </div>

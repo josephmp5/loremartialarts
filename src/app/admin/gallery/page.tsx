@@ -307,7 +307,7 @@ export default function GalleryManagement() {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
       color: '#f5f5dc',
-      fontFamily: 'Go3v2, serif'
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       {/* Header */}
       <header style={{
