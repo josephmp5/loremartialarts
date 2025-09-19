@@ -38,26 +38,24 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     )
   }
 
-  return (
-    <>
-      <style jsx global>{`
+  // Force apply styles after component mounts
+  useEffect(() => {
+    const applyStyles = () => {
+      const style = document.createElement('style')
+      style.textContent = `
         .w-md-editor {
           background-color: #2c1810 !important;
           border: 1px solid rgba(255, 255, 255, 0.3) !important;
           border-radius: 8px !important;
         }
         
-        /* Comprehensive text area styling */
-        .w-md-editor-text-textarea, 
-        .w-md-editor-text-input, 
-        .w-md-editor-text,
-        .w-md-editor-text textarea,
-        .w-md-editor .w-md-editor-text-textarea,
-        .w-md-editor .w-md-editor-text-input,
         .w-md-editor textarea,
-        .w-md-editor input,
         .w-md-editor .w-md-editor-text-textarea textarea,
-        .w-md-editor .w-md-editor-text-input textarea {
+        .w-md-editor .w-md-editor-text-input textarea,
+        .w-md-editor .w-md-editor-text textarea,
+        .w-md-editor-text-textarea,
+        .w-md-editor-text-input,
+        .w-md-editor-text {
           background-color: #2c1810 !important;
           color: #ffffff !important;
           font-family: Arial, sans-serif !important;
@@ -65,86 +63,79 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           border: none !important;
         }
         
-        /* Placeholder styling */
-        .w-md-editor-text-textarea::placeholder,
-        .w-md-editor-text-input::placeholder,
-        .w-md-editor textarea::placeholder {
+        .w-md-editor textarea::placeholder,
+        .w-md-editor .w-md-editor-text-textarea::placeholder,
+        .w-md-editor .w-md-editor-text-input::placeholder {
           color: rgba(255, 255, 255, 0.5) !important;
         }
         
-        /* Force white text in all states */
-        .w-md-editor-text-textarea:focus,
-        .w-md-editor-text-input:focus,
-        .w-md-editor-text:focus,
-        .w-md-editor textarea:focus,
-        .w-md-editor input:focus,
-        .w-md-editor .w-md-editor-text-textarea:focus,
-        .w-md-editor .w-md-editor-text-input:focus {
-          color: #ffffff !important;
-          background-color: #2c1810 !important;
-        }
-        
-        /* Additional selectors to ensure text visibility */
-        .w-md-editor .w-md-editor-text-textarea textarea,
-        .w-md-editor .w-md-editor-text-input textarea,
-        .w-md-editor-text textarea {
-          color: #ffffff !important;
-          background-color: #2c1810 !important;
-        }
-        
-        /* Toolbar styling */
         .w-md-editor-toolbar {
           background-color: rgba(44, 24, 16, 0.9) !important;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
         }
-        .w-md-editor-toolbar-divider {
-          background-color: rgba(255, 255, 255, 0.2) !important;
-        }
+        
         .w-md-editor-toolbar button {
           color: #f5f5dc !important;
         }
-        .w-md-editor-toolbar button:hover {
-          background-color: rgba(255, 255, 255, 0.1) !important;
-        }
         
-        /* Preview styling */
         .w-md-editor-preview {
           background-color: #2c1810 !important;
           color: #f5f5dc !important;
         }
         
-        /* Override any conflicting styles */
+        /* Nuclear option - target everything */
         .w-md-editor * {
-          color: inherit !important;
+          color: #ffffff !important;
         }
-      `}</style>
-      
-      <div style={{
-        border: '1px solid rgba(255, 255, 255, 0.3)',
-        borderRadius: '8px',
-        background: 'rgba(255, 255, 255, 0.05)',
-        overflow: 'hidden'
-      }}>
-        <MDEditor
-          value={value || ''}
-          onChange={(val) => onChange(val || '')}
-          height={400}
-          preview="edit"
-          hideToolbar={false}
-          visibleDragbar={false}
-        />
         
-        {/* Helper text */}
-        <div style={{
-          padding: '8px 12px',
-          fontSize: '11px',
-          color: 'rgba(245, 245, 220, 0.6)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-          background: 'rgba(0, 0, 0, 0.1)'
-        }}>
-          ✨ <strong>Simple Markdown Editor:</strong> Use **bold**, *italic*, # headers, - lists. Clean, fast, and works perfectly!
-        </div>
+        .w-md-editor textarea,
+        .w-md-editor input {
+          color: #ffffff !important;
+          background-color: #2c1810 !important;
+        }
+      `
+      document.head.appendChild(style)
+      
+      // Also try to apply styles directly to elements
+      setTimeout(() => {
+        const textareas = document.querySelectorAll('.w-md-editor textarea')
+        textareas.forEach((textarea: any) => {
+          textarea.style.color = '#ffffff'
+          textarea.style.backgroundColor = '#2c1810'
+        })
+      }, 100)
+    }
+    
+    applyStyles()
+  }, [])
+
+  return (
+    <div style={{
+      border: '1px solid rgba(255, 255, 255, 0.3)',
+      borderRadius: '8px',
+      background: 'rgba(255, 255, 255, 0.05)',
+      overflow: 'hidden'
+    }}>
+      <MDEditor
+        value={value || ''}
+        onChange={(val) => onChange(val || '')}
+        height={400}
+        preview="edit"
+        hideToolbar={false}
+        visibleDragbar={false}
+        data-color-mode="dark"
+      />
+      
+      {/* Helper text */}
+      <div style={{
+        padding: '8px 12px',
+        fontSize: '11px',
+        color: 'rgba(245, 245, 220, 0.6)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+        background: 'rgba(0, 0, 0, 0.1)'
+      }}>
+        ✨ <strong>Simple Markdown Editor:</strong> Use **bold**, *italic*, # headers, - lists. Clean, fast, and works perfectly!
       </div>
-    </>
+    </div>
   )
 }
