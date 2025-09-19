@@ -2,6 +2,7 @@
 
 import JoditEditor from 'jodit-react'
 import { useRef } from 'react'
+import type { IJoditEditorProps } from 'jodit-react'
 
 interface RichTextEditorProps {
   value: string
@@ -17,7 +18,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     placeholder: placeholder || 'Start writing your blog post...',
     height: 400,
     theme: 'dark',
-    toolbarButtonSize: 'small',
+    toolbarButtonSize: 'small' as const,
     buttons: [
       'bold', 'italic', 'underline', '|',
       'ul', 'ol', '|',
@@ -38,8 +39,8 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
       color: '#2c1810',
       background: '#f5f5dc'
     },
-    enter: 'P',
-    defaultActionOnPaste: 'insert_clear_html',
+    enter: 'P' as const,
+    defaultActionOnPaste: 'insert_clear_html' as const,
   }
 
   return (
