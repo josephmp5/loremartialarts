@@ -50,10 +50,14 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         .w-md-editor-text-input, 
         .w-md-editor-text {
           background-color: #2c1810 !important;
-          color: #f5f5dc !important;
+          color: #ffffff !important;
           font-family: Arial, sans-serif !important;
           font-size: 14px !important;
           border: none !important;
+        }
+        .w-md-editor-text-textarea::placeholder,
+        .w-md-editor-text-input::placeholder {
+          color: rgba(255, 255, 255, 0.5) !important;
         }
         .w-md-editor-toolbar {
           background-color: rgba(44, 24, 16, 0.9) !important;
