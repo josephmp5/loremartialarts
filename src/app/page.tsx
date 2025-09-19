@@ -209,6 +209,7 @@ export default function Home() {
                   src={getSiteAssetUrl('logo.png')} 
                   alt="LORE BJJ Logo" 
                   loading="eager"
+                  fetchPriority="high"
                   style={{
                     width: '300px',
                     height: 'auto',

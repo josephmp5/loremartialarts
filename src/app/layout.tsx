@@ -23,8 +23,11 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         
         {/* Preload critical images for faster loading */}
-        <link rel="preload" href={getSiteAssetUrl('logo.png')} as="image" type="image/png" />
-        <link rel="preload" href={getSiteAssetUrl('background.jpg')} as="image" type="image/jpeg" />
+        <link rel="preload" href={getSiteAssetUrl('logo.png')} as="image" type="image/png" fetchPriority="high" />
+        <link rel="preload" href={getSiteAssetUrl('background.jpg')} as="image" type="image/jpeg" fetchPriority="high" />
+        
+        {/* DNS prefetch for Supabase CDN */}
+        <link rel="dns-prefetch" href="https://fmkglpsfszlkubobcmhg.supabase.co" />
         
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
