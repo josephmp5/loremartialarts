@@ -40,22 +40,16 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     if (!textarea) return
 
     const start = textarea.selectionStart
-    const lines = value.split('\n')
-    let currentLine = 0
-    let charCount = 0
-
-    for (let i = 0; i < lines.length; i++) {
-      if (charCount + lines[i].length >= start) {
-        currentLine = i
-        break
-      }
-      charCount += lines[i].length + 1 // +1 for newline
-    }
-
-    const lineStart = charCount - lines[currentLine].length
-    const lineEnd = lineStart + lines[currentLine].length
-    const lineText = lines[currentLine]
-
+    const textBeforeCursor = value.substring(0, start)
+    const textAfterCursor = value.substring(start)
+    
+    // Find the start of the current line
+    const lastNewlineIndex = textBeforeCursor.lastIndexOf('\n')
+    const lineStart = lastNewlineIndex + 1
+    const lineEnd = textAfterCursor.indexOf('\n') === -1 ? value.length : start + textAfterCursor.indexOf('\n')
+    
+    const lineText = value.substring(lineStart, lineEnd)
+    
     // Remove existing prefix if present
     let newLineText = lineText
     if (prefix === '# ' && lineText.startsWith('# ')) {
@@ -73,7 +67,8 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
 
     setTimeout(() => {
       textarea.focus()
-      textarea.setSelectionRange(lineStart + newLineText.length, lineStart + newLineText.length)
+      const newCursorPos = lineStart + newLineText.length
+      textarea.setSelectionRange(newCursorPos, newCursorPos)
     }, 0)
   }
 
