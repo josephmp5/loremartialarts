@@ -703,7 +703,7 @@ export default function Home() {
                 color: '#e8e8d0',
                 maxWidth: '900px',
                 margin: '0 auto',
-                                    fontFamily: 'Go3v2, serif',
+                                    fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                 lineHeight: '1.9',
                 animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -755,13 +755,15 @@ export default function Home() {
                   <h3 style={{
                     fontSize: '1.5rem',
                     marginBottom: '15px',
-                    opacity: 0.8
+                    opacity: 0.8,
+                    fontFamily: 'Go3v2, serif'
                   }}>
                     Training Gallery Coming Soon
                   </h3>
                   <p style={{
                     fontSize: '1rem',
-                    opacity: 0.6
+                    opacity: 0.6,
+                    fontFamily: 'Manga, Crimson Text, Chakra Petch, serif'
                   }}>
                     Check back soon for our latest training moments!
                   </p>
@@ -906,7 +908,7 @@ export default function Home() {
                 color: '#e8e8d0',
                   maxWidth: '900px',
                   margin: '0 auto',
-                                      fontFamily: 'Go3v2, serif',
+                                      fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -966,7 +968,7 @@ export default function Home() {
                         <p style={{
                         fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
                           color: '#e8e8d0',
-                    fontFamily: 'Go3v2, serif',
+                    fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                           textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                         }}>{location.address}</p>
                       </div>
@@ -986,7 +988,7 @@ export default function Home() {
                       <p style={{
                       fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                         color: '#e8e8d0',
-                  fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                       }}>{location.time}</p>
                     </div>
@@ -1013,7 +1015,7 @@ export default function Home() {
                             color: '#e8e8d0',
                             padding: '8px 16px',
                           fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-                      fontFamily: 'Go3v2, serif',
+                      fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                             textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
                           }}>
                             {feature}
