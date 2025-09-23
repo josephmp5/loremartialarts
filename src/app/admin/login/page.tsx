@@ -53,7 +53,7 @@ export default function AdminLogin() {
             fontSize: '2rem',
             fontWeight: '700',
             marginBottom: '10px',
-            fontFamily: 'Go3v2, Manga Bold, Manga, serif',
+            fontFamily: 'Go3v2, serif',
             textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
           }}>
             LORE BJJ Admin

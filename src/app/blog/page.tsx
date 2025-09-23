@@ -109,7 +109,7 @@ export default function BlogPage() {
             fontSize: 'clamp(2.5rem, 8vw, 4rem)',
             fontWeight: '700',
             marginBottom: '20px',
-            fontFamily: 'Go3v2, Manga Bold, Manga, serif',
+            fontFamily: 'Go3v2, serif',
             textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
             animation: 'fadeInUp 1s ease-out'
           }}>

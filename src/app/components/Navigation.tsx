@@ -15,7 +15,7 @@ export default function Navigation() {
       left: 0,
       right: 0,
       zIndex: 1000,
-      fontFamily: 'Manga, Crimson Text, serif'
+      fontFamily: 'Crimson Text, serif'
     }}>
       <div style={{ 
         maxWidth: '1152px', 
@@ -30,7 +30,7 @@ export default function Navigation() {
           fontSize: '1.5rem',
           fontWeight: 'bold',
           color: '#fef3c7',
-          fontFamily: 'Go3v2, Manga Bold, Manga, serif',
+          fontFamily: 'Go3v2, serif',
           textShadow: '0 0 1px rgba(44, 24, 16, 0.3), 0 1px 2px rgba(44, 24, 16, 0.2)'
         }}>
           LORE BJJ

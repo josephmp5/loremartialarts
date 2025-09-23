@@ -99,7 +99,7 @@ export default function Home() {
       padding: 0,
       background: 'transparent',
       color: 'white',
-      fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
+      fontFamily: 'Crimson Text, Chakra Petch, serif',
       overflowX: 'hidden',
       position: 'relative'
     }}>
@@ -224,7 +224,7 @@ export default function Home() {
                     // Show fallback text
                     const parent = img.parentElement;
                     if (parent) {
-                      parent.innerHTML = '<div style="color: #f5f5dc; font-size: 2rem; font-weight: bold; text-align: center; font-family: \'Go3v2\', \'Manga Bold\', \'Manga\', serif;">LORE BJJ</div>';
+                      parent.innerHTML = '<div style="color: #f5f5dc; font-size: 2rem; font-weight: bold; text-align: center; font-family: \'Go3v2\', serif;">LORE BJJ</div>';
                     }
                   }}
                 />
@@ -1075,7 +1075,7 @@ export default function Home() {
                 maxWidth: '900px',
                 margin: '0 auto',
                 lineHeight: '1.8',
-                fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
+                fontFamily: 'Crimson Text, Chakra Petch, serif',
                 animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
                 letterSpacing: '1px',
@@ -1153,7 +1153,7 @@ export default function Home() {
               fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
               color: '#e8e8d0',
                 marginBottom: '40px',
-                fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
+                fontFamily: 'Crimson Text, Chakra Petch, serif',
                 lineHeight: '1.8',
                 animation: 'fadeIn 1.5s ease-out 0.3s both',
               textShadow: '1px 1px 2px rgba(0,0,0,0.5)'

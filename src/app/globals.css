@@ -155,7 +155,7 @@ html {
 }
 
 body {
-  font-family: 'Manga', 'Crimson Text', 'Chakra Petch', 'Noto Serif JP', 'Georgia', serif !important;
+  font-family: 'Crimson Text', 'Chakra Petch', 'Noto Serif JP', 'Georgia', serif !important;
   color: #2c1810 !important;
   line-height: 1.6 !important;
   margin: 0 !important;
@@ -169,21 +169,21 @@ body {
   background-color: #1a1a2e !important;
 }
 
-/* Header and Branding Fonts */
+/* Header and Branding Fonts - DISTINCT from body */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Go3v2', 'Manga Bold', 'Manga', 'Chakra Petch', serif !important;
+  font-family: 'Go3v2', serif !important;
   font-weight: bold !important;
 }
 
 /* Logo and Brand Elements */
 .logo, .brand, .site-title {
-  font-family: 'Go3v2', 'Manga Bold', 'Manga', serif !important;
+  font-family: 'Go3v2', serif !important;
   font-weight: bold !important;
 }
 
 /* Navigation */
 nav {
-  font-family: 'Manga', 'Crimson Text', serif !important;
+  font-family: 'Crimson Text', serif !important;
 }
 
 /* Buttons and Interactive Elements */
