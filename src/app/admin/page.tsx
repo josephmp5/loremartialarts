@@ -150,6 +150,7 @@ export default function AdminDashboard() {
             fontSize: '2rem',
             fontWeight: '700',
             margin: 0,
+            fontFamily: 'Go3v2, Manga Bold, Manga, serif',
             textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
           }}>
             LORE BJJ Admin
