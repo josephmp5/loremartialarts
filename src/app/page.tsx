@@ -407,7 +407,7 @@ export default function Home() {
                 color: '#e8e8d0',
                   maxWidth: '900px',
                   margin: '0 auto',
-                                      fontFamily: 'Go3v2, serif',
+                                      fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                   lineHeight: '1.9',
                   animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -448,7 +448,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                                        fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -480,7 +480,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                                        fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -513,7 +513,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                                        fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -555,7 +555,7 @@ export default function Home() {
                 color: '#e8e8d0',
                 maxWidth: '900px',
                 margin: '0 auto',
-                                    fontFamily: 'Go3v2, serif',
+                                    fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                 lineHeight: '1.9',
                 animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
@@ -606,7 +606,7 @@ export default function Home() {
                   <p style={{
                     fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
                     color: 'rgba(255, 255, 255, 0.8)',
-                  fontFamily: 'Go3v2, serif',
+                  fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                     textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
                     maxWidth: '600px',
                     margin: '0 auto',
