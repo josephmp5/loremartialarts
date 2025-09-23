@@ -155,7 +155,7 @@ html {
 }
 
 body {
-  font-family: 'Crimson Text', 'Chakra Petch', 'Noto Serif JP', 'Georgia', serif !important;
+  font-family: 'Manga', 'Crimson Text', 'Chakra Petch', 'Noto Serif JP', 'Georgia', serif !important;
   color: #2c1810 !important;
   line-height: 1.6 !important;
   margin: 0 !important;
@@ -183,7 +183,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Navigation */
 nav {
-  font-family: 'Crimson Text', serif !important;
+  font-family: 'Manga', 'Crimson Text', serif !important;
 }
 
 /* Buttons and Interactive Elements */

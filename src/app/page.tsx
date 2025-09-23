@@ -99,7 +99,7 @@ export default function Home() {
       padding: 0,
       background: 'transparent',
       color: 'white',
-      fontFamily: 'Crimson Text, Chakra Petch, serif',
+      fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
       overflowX: 'hidden',
       position: 'relative'
     }}>
@@ -1075,7 +1075,7 @@ export default function Home() {
                 maxWidth: '900px',
                 margin: '0 auto',
                 lineHeight: '1.8',
-                fontFamily: 'Crimson Text, Chakra Petch, serif',
+                fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                 animation: 'slideInUp 1.5s ease-out 0.3s both',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
                 letterSpacing: '1px',
@@ -1153,7 +1153,7 @@ export default function Home() {
               fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
               color: '#e8e8d0',
                 marginBottom: '40px',
-                fontFamily: 'Crimson Text, Chakra Petch, serif',
+                fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
                 lineHeight: '1.8',
                 animation: 'fadeIn 1.5s ease-out 0.3s both',
               textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
