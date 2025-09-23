@@ -167,12 +167,16 @@ body {
   /* FULL BACKGROUND COVERAGE - NO WHITE SPACES */
   /* Background will be set dynamically by BackgroundImage component */
   background-color: #1a1a2e !important;
+  /* DEBUG: Add a distinctive background to see if this rule is applying */
+  border: 2px solid rgba(0, 255, 0, 0.3) !important;
 }
 
 /* Header and Branding Fonts - DISTINCT from body */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Go3v2', serif !important;
   font-weight: bold !important;
+  /* DEBUG: Add a distinctive background to see if this rule is applying */
+  background-color: rgba(255, 0, 0, 0.1) !important;
 }
 
 /* Logo and Brand Elements */
