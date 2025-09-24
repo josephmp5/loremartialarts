@@ -78,7 +78,7 @@ export default function Home() {
       address: "Konyaaltı, Antalya",
       time: "Every Tuesday & Thursday 20:00",
       features: ["Outdoor training", "Park environment", "Fresh air"],
-      mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.5!2d30.6!3d36.9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzbCsDU0JzAwLjAiTiAzMMKwMzYnMDAuMCJF!5e0!3m2!1str!2str!4v1234567890",
+      mapEmbed: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13876.319305870049!2d30.724678237779546!3d36.86152747044313!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39a96f66c21a3%3A0x5ab1804ecb60e6ac!2zUHJvZi4gRHIuIEVyZGFsIMSwbsO2bsO8IEtlbnQgUGFya8Sx!5e0!3m2!1str!2str!4v1758723843412!5m2!1str!2str",
       icon: "🌳"
     },
     {
@@ -86,7 +86,7 @@ export default function Home() {
       address: "Konyaaltı Sahili, Antalya", 
       time: "Every Saturday 20:00",
       features: ["Beach training", "Sunrise sessions", "Ocean view"],
-      mapEmbed: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13876.319305870049!2d30.724678237779546!3d36.86152747044313!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39a96f66c21a3%3A0x5ab1804ecb60e6ac!2zUHJvZi4gRHIuIEVyZGFsIMSwbsO2bsO8IEtlbnQgUGFya8Sx!5e0!3m2!1str!2str!4v1758723843412!5m2!1str!2str",
+      mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.5!2d30.6!3d36.9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzbCsDU0JzAwLjAiTiAzMMKwMzYnMDAuMCJF!5e0!3m2!1str!2str!4v1234567890",
       icon: "🏖️"
     }
   ];
