@@ -455,7 +455,7 @@ body::before {
   /* Mobile Navigation Layout */
   .hero-navigation-left {
     position: absolute !important;
-    left: 2% !important;
+    left: -5% !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     display: flex !important;
@@ -467,7 +467,7 @@ body::before {
   
   .hero-navigation-right {
     position: absolute !important;
-    right: 2% !important;
+    right: -5% !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     display: flex !important;
