@@ -230,7 +230,7 @@ export default function Home() {
                 />
               </div>
               {/* Left Side Navigation */}
-              <div style={{
+              <div className="hero-navigation-left" style={{
                 position: 'absolute',
                 left: '8%',
                 top: '50%',
@@ -242,6 +242,7 @@ export default function Home() {
                 zIndex: 10
               }}>
                 <button
+                  className="hero-nav-button"
                   onClick={() => scrollToSection('about')}
                   style={{
                     backgroundColor: 'transparent',
@@ -271,6 +272,7 @@ export default function Home() {
                   OUR STORY
                 </button>
                 <button
+                  className="hero-nav-button"
                   onClick={() => scrollToSection('gallery')}
                   style={{
                     backgroundColor: 'transparent',
@@ -302,7 +304,7 @@ export default function Home() {
               </div>
 
               {/* Right Side Navigation */}
-              <div style={{
+              <div className="hero-navigation-right" style={{
                 position: 'absolute',
                 right: '8%',
                 top: '50%',
@@ -314,6 +316,7 @@ export default function Home() {
                 zIndex: 10
               }}>
                 <button
+                  className="hero-nav-button"
                   onClick={() => scrollToSection('locations')}
                   style={{
                     backgroundColor: 'transparent',
@@ -343,6 +346,7 @@ export default function Home() {
                   LOCATIONS
                 </button>
                 <button
+                  className="hero-nav-button"
                   onClick={() => scrollToSection('youtube')}
                   style={{
                     backgroundColor: 'transparent',
