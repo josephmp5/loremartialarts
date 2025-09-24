@@ -86,7 +86,7 @@ export default function Home() {
       address: "Konyaaltı Sahili, Antalya", 
       time: "Every Saturday 20:00",
       features: ["Beach training", "Sunrise sessions", "Ocean view"],
-      mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.5!2d30.6!3d36.9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzbCsDU0JzAwLjAiTiAzMMKwMzYnMDAuMCJF!5e0!3m2!1str!2str!4v1234567890",
+      mapEmbed: "https://www.google.com/maps/embed?pb=!4v1758724118791!6m8!1m7!1s74iBFsP8pAnTiygMJkbVtA!2m2!1d36.84791838431909!2d30.61872532430226!3f161.79626812009323!4f-1.7091294860071997!5f0.7820865974627469",
       icon: "🏖️"
     }
   ];
