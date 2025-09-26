@@ -159,6 +159,16 @@ export default function Home() {
         `
       }} />
 
+      {/* SEO Content for Search Engines */}
+      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', visibility: 'hidden' }}>
+        <h1>Antalya BJJ Training - Brazilian Jiu-Jitsu Classes in Antalya, Turkey</h1>
+        <p>Join LORE BJJ for the best Brazilian Jiu-Jitsu training in Antalya. Our outdoor BJJ classes take place at Erdal İnönü Park and Konyaaltı Beach. Professional BJJ instruction in Antalya with free training sessions for all skill levels.</p>
+        <h2>Antalya Brazilian Jiu-Jitsu Training Locations</h2>
+        <p>Erdal İnönü Park BJJ training every Monday and Thursday. Konyaaltı Beach BJJ sessions every Saturday. Experience authentic Brazilian Jiu-Jitsu in the beautiful outdoor settings of Antalya, Turkey.</p>
+        <h3>Why Choose LORE BJJ in Antalya?</h3>
+        <p>Free BJJ classes in Antalya, professional instruction, outdoor training environment, authentic Brazilian Jiu-Jitsu techniques, beginner-friendly, experienced instructors, community-focused training.</p>
+      </div>
+
       {/* Main Content - NO MARGINS/PADDING CAUSING WHITE SPACE */}
       <div style={{
         animation: 'fadeIn 1s ease-in-out both',
@@ -207,7 +217,7 @@ export default function Home() {
               }}>
                 <img 
                   src={getSiteAssetUrl('logo.png')} 
-                  alt="LORE BJJ Logo" 
+                  alt="LORE BJJ - Antalya Brazilian Jiu-Jitsu Training Logo" 
                   loading="eager"
                   fetchPriority="high"
                   style={{
