@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://loremartialarts.com/</loc>
+    <lastmod>2025-01-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Blog listing page -->
+  <url>
+    <loc>https://loremartialarts.com/blog/</loc>
+    <lastmod>2025-01-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Note: Blog post URLs will be dynamically generated based on published posts -->
+  <!-- Individual blog posts should be added here dynamically or via a sitemap generator -->
+  <!-- Example blog post entry (replace with actual published posts):
+  <url>
+    <loc>https://loremartialarts.com/blog/your-blog-post-slug/</loc>
+    <lastmod>2025-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  -->
+</urlset>

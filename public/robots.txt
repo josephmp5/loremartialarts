@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Allow all search engines to crawl the site
+Allow: /blog/
+Allow: /admin/login/
+
+# Disallow admin areas (except login)
+Disallow: /admin/
+Allow: /admin/login/
+
+# Sitemap location
+Sitemap: https://loremartialarts.com/sitemap.xml
+
+# Crawl delay (optional - helps prevent overloading your server)
+Crawl-delay: 1
