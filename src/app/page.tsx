@@ -453,7 +453,7 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                                        fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Manga, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -462,7 +462,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                                        fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
+                                        fontFamily: 'JMH Typewriter, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -485,7 +485,7 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                                        fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Manga, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -494,7 +494,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                                        fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
+                                        fontFamily: 'JMH Typewriter, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
@@ -518,7 +518,7 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                                        fontFamily: 'Go3v2, serif',
+                                        fontFamily: 'Manga, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -527,7 +527,7 @@ export default function Home() {
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
                     lineHeight: '1.9',
-                                        fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
+                                        fontFamily: 'JMH Typewriter, serif',
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
