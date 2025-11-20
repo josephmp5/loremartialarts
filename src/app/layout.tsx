@@ -39,6 +39,19 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         
+        {/* Google Ads Conversion Tracking */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17727161867"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17727161867');
+            `
+          }}
+        />
+        
         {/* Structured Data for Local Business SEO */}
         <script
           type="application/ld+json"

@@ -1176,6 +1176,36 @@ export default function Home() {
               }}>
                 {getContent(siteContent, 'contact', 'main_text')}
               </p>
+              
+              {/* Phone Number */}
+              <div style={{
+                marginBottom: '40px',
+                animation: 'fadeIn 1.5s ease-out 0.4s both'
+              }}>
+                <a href="tel:05069770077" style={{
+                  color: '#f5f5dc',
+                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                  textDecoration: 'none',
+                  fontFamily: 'Go3v2, serif',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  const link = e.currentTarget;
+                  link.style.color = '#dc2626';
+                  link.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  const link = e.currentTarget;
+                  link.style.color = '#f5f5dc';
+                  link.style.transform = 'scale(1)';
+                }}
+                >
+                  <span style={{ fontSize: '1.4em' }}>📞</span> 0506 977 00 77
+                </a>
+              </div>
               <div style={{
                 display: 'flex',
                 gap: '20px',
