@@ -453,7 +453,7 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                                        fontFamily: 'Manga, serif',
+                                        fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
@@ -485,11 +485,11 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                                        fontFamily: 'Manga, serif',
+                                        fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
-                  }}>Antalya BJJ Training</h3>
+                  }}>{getContent(siteContent, 'about', 'training_title')}</h3>
                   <p style={{
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
@@ -498,8 +498,7 @@ export default function Home() {
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
-                  Our BJJ training in Antalya adapts to nature's conditions. From soft grass to sandy beaches,
-                  we learn to flow with any surface, making us more versatile and adaptable fighters in Antalya's diverse outdoor environments.
+                  {getContent(siteContent, 'about', 'training_text')}
                   </p>
                 </div>
 
@@ -518,11 +517,11 @@ export default function Home() {
                     fontWeight: '700',
                     marginBottom: '25px',
                     color: 'white',
-                                        fontFamily: 'Manga, serif',
+                                        fontFamily: 'Go3v2, serif',
                     textAlign: 'center',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     letterSpacing: '1px'
-                  }}>Antalya BJJ Community</h3>
+                  }}>{getContent(siteContent, 'about', 'community_title')}</h3>
                   <p style={{
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                     color: 'rgba(255, 255, 255, 0.9)',
@@ -531,8 +530,7 @@ export default function Home() {
                     textAlign: 'center',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                   }}>
-                    We welcome all levels to our Antalya BJJ community, from beginners to advanced practitioners. 
-                  Our team supports each other's growth in a free, outdoor environment across Antalya's beautiful training locations.
+                    {getContent(siteContent, 'about', 'community_text')}
                   </p>
                 </div>
               </div>
