@@ -411,7 +411,7 @@ export default function Home() {
                   fontWeight: '700',
                   marginBottom: '40px',
                 color: '#f5f5dc',
-                                      fontFamily: 'Go3v2, serif',
+                                      fontFamily: 'Manga, serif',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                   animation: 'slideInDown 1.5s ease-out',
                 letterSpacing: 'clamp(1px, 0.3vw, 2px)'

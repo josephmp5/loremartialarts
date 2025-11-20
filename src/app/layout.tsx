@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://loremartialarts.com",
   },
+  icons: {
+    icon: '/sitelogo.jpg',
+  },
 };
 
 export default function RootLayout({
