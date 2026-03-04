@@ -601,7 +601,7 @@ export default function Home() {
               </h2>
             </div>
             <a
-              href="https://www.instagram.com/loremartialarts/"
+              href={getContent(siteContent, 'social', 'instagram_url') || 'https://www.instagram.com/loremartialarts/'}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline"
@@ -768,7 +768,7 @@ export default function Home() {
                 marginBottom: '16px',
               }}
             >
-              Latest Vlog
+              {getContent(siteContent, 'youtube', 'section_title') || 'Latest Vlog'}
             </h2>
             <p
               style={{
@@ -781,37 +781,53 @@ export default function Home() {
                 margin: '0 auto',
               }}
             >
-              Watch us train in the open air, travel to camps, and build the community.
+              {getContent(siteContent, 'youtube', 'subtitle') || 'Watch us train in the open air, travel to camps, and build the community.'}
             </p>
           </div>
 
-          <div
-            className="reveal-on-scroll"
-            style={{
-              position: 'relative',
-              overflow: 'hidden',
-              marginBottom: '32px',
-              border: '1px solid #1A1A1A',
-            }}
-          >
-            <img
-              src="https://img.youtube.com/vi/PoCnx58dYZk/maxresdefault.jpg"
-              alt="Latest vlog thumbnail"
-              loading="lazy"
-              style={{ width: '100%', display: 'block', objectFit: 'cover' }}
-            />
-          </div>
+          {(() => {
+            const videoId = getContent(siteContent, 'youtube', 'video_id') || 'PoCnx58dYZk';
+            const instagramUrl = getContent(siteContent, 'social', 'instagram_url') || 'https://www.instagram.com/loremartialarts/';
+            return (
+              <>
+                <div
+                  className="reveal-on-scroll"
+                  style={{
+                    position: 'relative',
+                    overflow: 'hidden',
+                    marginBottom: '32px',
+                    border: '1px solid #1A1A1A',
+                  }}
+                >
+                  <img
+                    src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                    alt="Latest vlog thumbnail"
+                    loading="lazy"
+                    style={{ width: '100%', display: 'block', objectFit: 'cover' }}
+                  />
+                </div>
 
-          <div style={{ textAlign: 'center' }}>
-            <a
-              href="https://www.youtube.com/watch?v=PoCnx58dYZk&t=1s"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-gold"
-            >
-              Watch Latest Vlog
-            </a>
-          </div>
+                <div style={{ textAlign: 'center', display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <a
+                    href={`https://www.youtube.com/watch?v=${videoId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-gold"
+                  >
+                    Watch Latest Vlog
+                  </a>
+                  <a
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-outline"
+                  >
+                    Instagram
+                  </a>
+                </div>
+              </>
+            );
+          })()}
         </div>
       </section>
 
@@ -982,64 +998,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          BLOG CTA
-      ═══════════════════════════════════════ */}
-      <section
-        style={{
-          padding: 'clamp(80px, 12vw, 120px) clamp(24px, 6vw, 80px)',
-          background: '#0A0A0A',
-          borderTop: '1px solid #141414',
-        }}
-      >
-        <div
-          style={{ maxWidth: '640px', margin: '0 auto', textAlign: 'center' }}
-          className="reveal-on-scroll"
-        >
-          <span
-            style={{
-              display: 'block',
-              fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: '0.62rem',
-              fontWeight: 500,
-              letterSpacing: '0.26em',
-              textTransform: 'uppercase',
-              color: '#C4922A',
-              marginBottom: '18px',
-            }}
-          >
-            — Knowledge
-          </span>
-          <h2
-            style={{
-              fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 'clamp(2.2rem, 5vw, 3.4rem)',
-              fontWeight: 600,
-              color: '#EDE9E0',
-              lineHeight: 1.06,
-              marginBottom: '20px',
-            }}
-          >
-            Latest Stories
-          </h2>
-          <p
-            style={{
-              fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: 'clamp(0.9rem, 1.8vw, 0.98rem)',
-              fontWeight: 300,
-              color: '#8A857D',
-              lineHeight: 1.85,
-              marginBottom: '40px',
-            }}
-          >
-            Technique breakdowns, training insights, and community stories from the mat.
-          </p>
-          <a href="/blog" className="btn-gold">
-            Read the Blog
-          </a>
         </div>
       </section>
 

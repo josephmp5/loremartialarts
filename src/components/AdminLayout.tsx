@@ -3,9 +3,8 @@
 import { useAuth } from '@/contexts/AuthContext';
 
 const navItems = [
-  { label: 'Dashboard',  href: '/admin',          icon: '▣' },
+  { label: 'Dashboard',  href: '/admin',           icon: '▣' },
   { label: 'Content',    href: '/admin/content',   icon: '✎' },
-  { label: 'Blog',       href: '/admin/blog/new',  icon: '◈' },
   { label: 'Gallery',    href: '/admin/gallery',   icon: '◻' },
   { label: 'Locations',  href: '/admin/locations', icon: '◎' },
 ];

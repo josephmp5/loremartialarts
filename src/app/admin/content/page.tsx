@@ -45,12 +45,13 @@ export default function ContentManagement() {
 
   const sectionNames: { [key: string]: string } = {
     hero: 'Hero Section',
-    about: 'About Section',
-    youtube: 'YouTube Section',
+    about: 'About / Our Story',
+    youtube: 'YouTube / Vlog',
     gallery: 'Gallery Section',
-    locations: 'Locations Section',
-    contact: 'Contact Section',
-    navigation: 'Navigation Menu'
+    locations: 'Locations',
+    contact: 'Contact / Footer',
+    social: 'Social Links',
+    navigation: 'Navigation',
   }
 
   useEffect(() => {
