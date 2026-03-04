@@ -17,26 +17,113 @@ const locations = [
   {
     name: "Erdal İnönü Park",
     address: "Konyaaltı, Antalya",
-    time: "Every Tuesday & Thursday — 20:00",
+    time: "Tuesday & Thursday — 20:00",
     features: ["Outdoor", "Park", "Free"],
-    mapEmbed:
-      "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13876.319305870049!2d30.724678237779546!3d36.86152747044313!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39a96f66c21a3%3A0x5ab1804ecb60e6ac!2zUHJvZi4gRHIuIEVyZGFsIMSwbsO2bsO8IEtlbnQgUGFya8Wx!5e0!3m2!1str!2str!4v1758723843412!5m2!1str!2str",
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13876.319305870049!2d30.724678237779546!3d36.86152747044313!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39a96f66c21a3%3A0x5ab1804ecb60e6ac!2zUHJvZi4gRHIuIEVyZGFsIMSwbsO2bsO8IEtlbnQgUGFya8Wx!5e0!3m2!1str!2str!4v1758723843412!5m2!1str!2str",
   },
   {
     name: "Konyaaltı Beach",
     address: "Konyaaltı Sahili, Antalya",
-    time: "Every Saturday — 20:00",
+    time: "Saturday — 20:00",
     features: ["Beach", "Ocean view", "Free"],
-    mapEmbed:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5917.067834386882!2d30.619716250488217!3d36.84404483028264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c3930b9036fa3b%3A0xbfcc82d429337e53!2sKonyaalt%C4%B1%20Plajlar!5e0!3m2!1str!2str!4v1758724463039!5m2!1str!2str",
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5917.067834386882!2d30.619716250488217!3d36.84404483028264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c3930b9036fa3b%3A0xbfcc82d429337e53!2sKonyaalt%C4%B1%20Plajlar!5e0!3m2!1str!2str!4v1758724463039!5m2!1str!2str",
   },
 ];
 
 const MANIFESTO = [
-  { line: "The mat does not care about your past.", sub: "Everyone starts at zero." },
-  { line: "Technique outlasts strength.", sub: "It is the weapon of the patient." },
-  { line: "Show up. Every time.", sub: "The belt is earned on the floor." },
+  { line: "The mat does not\ncare about your past.", sub: "Everyone starts at zero." },
+  { line: "Technique\noutlasts strength.", sub: "It is the weapon of the patient." },
+  { line: "Show up.\nEvery time.", sub: "The belt is earned on the floor." },
 ];
+
+const MARQUEE_ITEMS = [
+  "Antalya BJJ", "×", "Outdoor Training", "×", "Free Sessions", "×",
+  "Konyaaltı Beach", "×", "Erdal İnönü Park", "×", "All Levels Welcome", "×",
+  "Gi & No-Gi", "×", "Since 2020", "×",
+];
+
+// ─── Animated stat counter ───────────────────────────────────────────────────
+function AnimatedStat({
+  target,
+  suffix = '',
+  label,
+  isText = false,
+  textValue = '',
+}: {
+  target?: number;
+  suffix?: string;
+  label: string;
+  isText?: boolean;
+  textValue?: string;
+}) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isText || !target) return;
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        obs.disconnect();
+        const s = performance.now();
+        const dur = 1700;
+        const tick = (now: number) => {
+          const t = Math.min(1, (now - s) / dur);
+          const ease = 1 - Math.pow(1 - t, 3);
+          setCount(Math.round(target * ease));
+          if (t < 1) requestAnimationFrame(tick);
+          else setCount(target);
+        };
+        requestAnimationFrame(tick);
+      },
+      { threshold: 0.5 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target, isText]);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        flex: 1,
+        textAlign: 'center',
+        padding: 'clamp(40px, 6vw, 64px) clamp(16px, 3vw, 40px)',
+        borderRight: '1px solid #141414',
+        minWidth: '120px',
+      }}
+    >
+      <div
+        style={{
+          fontFamily: 'Cormorant Garamond, serif',
+          fontSize: 'clamp(3rem, 7vw, 5.5rem)',
+          fontWeight: 300,
+          color: '#EDE9E0',
+          lineHeight: 1,
+          marginBottom: '10px',
+          letterSpacing: '-0.02em',
+        }}
+      >
+        {isText ? textValue : `${count}${suffix}`}
+      </div>
+      <div
+        style={{
+          fontFamily: 'Space Grotesk, sans-serif',
+          fontSize: '0.58rem',
+          fontWeight: 500,
+          letterSpacing: '0.24em',
+          textTransform: 'uppercase',
+          color: '#C4922A',
+        }}
+      >
+        {label}
+      </div>
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function Home() {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
@@ -50,7 +137,7 @@ export default function Home() {
     fetchGalleryImages();
   }, []);
 
-  // Manifesto scroll progress
+  // Manifesto scroll — cosine crossfade so there is NEVER a gap
   useEffect(() => {
     const onScroll = () => {
       const el = manifestoRef.current;
@@ -72,22 +159,19 @@ export default function Home() {
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            (e.target as HTMLElement).classList.add('revealed');
+            e.target.classList.add('revealed');
             obs.unobserve(e.target);
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     );
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, [siteContent, galleryImages]);
 
   const fetchGalleryImages = async () => {
-    if (!supabase) {
-      setLoadingGallery(false);
-      return;
-    }
+    if (!supabase) { setLoadingGallery(false); return; }
     try {
       const { data } = await supabase
         .from('training_gallery')
@@ -102,39 +186,36 @@ export default function Home() {
     }
   };
 
-  const scrollTo = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-
-  // Manifesto opacity per statement
-  const getManifestoOpacity = (i: number) => {
-    const fadeW = 0.07;
-    const start = i / 3;
-    const end = (i + 1) / 3;
-    const fadeIn = i === 0 ? 1 : Math.max(0, Math.min(1, (mProgress - start) / fadeW));
-    const fadeOut = i === 2 ? 1 : Math.max(0, Math.min(1, (end - mProgress) / fadeW));
-    return Math.max(0, Math.min(1, fadeIn * fadeOut));
+  // Cosine crossfade — statement i is always visible near its center progress
+  const mOpacity = (i: number) => {
+    const centers = [0, 0.5, 1.0];
+    const hw = 0.38;
+    const dist = Math.abs(mProgress - centers[i]);
+    if (dist >= hw) return 0;
+    return (Math.cos((dist / hw) * Math.PI) + 1) / 2;
   };
 
-  const getManifestoY = (i: number) => {
-    const fadeW = 0.07;
-    const start = i / 3;
-    const fadeIn = i === 0 ? 1 : Math.max(0, Math.min(1, (mProgress - start) / fadeW));
-    return (1 - fadeIn) * 28;
+  const mY = (i: number) => {
+    const centers = [0, 0.5, 1.0];
+    return (mProgress - centers[i]) * -22;
   };
+
+  const videoId = getContent(siteContent, 'youtube', 'video_id') || 'PoCnx58dYZk';
+  const instagramUrl = getContent(siteContent, 'social', 'instagram_url') || 'https://www.instagram.com/loremartialarts/';
 
   return (
     <div className="page-container">
-      {/* SEO hidden */}
+      {/* SEO */}
       <div style={{ position: 'absolute', left: '-9999px', visibility: 'hidden' }}>
-        <h1>Antalya BJJ Training - Brazilian Jiu-Jitsu Classes in Antalya, Turkey</h1>
-        <p>Join LORE BJJ for outdoor Brazilian Jiu-Jitsu training in Antalya at Erdal İnönü Park and Konyaaltı Beach.</p>
+        <h1>Antalya BJJ Training — Brazilian Jiu-Jitsu in Antalya, Turkey</h1>
+        <p>LORE BJJ — free outdoor Brazilian Jiu-Jitsu at Erdal İnönü Park and Konyaaltı Beach.</p>
       </div>
 
       <Navigation />
 
-      {/* ═══════════════════════════════════════
-          HERO — particle canvas + LORE
-      ═══════════════════════════════════════ */}
+      {/* ════════════════════════════════════════════
+          HERO
+      ════════════════════════════════════════════ */}
       <section
         style={{
           height: '100vh',
@@ -143,10 +224,9 @@ export default function Home() {
           overflow: 'hidden',
         }}
       >
-        {/* Particle canvas */}
         <ParticleCanvas />
 
-        {/* Giant backdrop LORE text */}
+        {/* Giant ghost text — gives depth to the particles */}
         <div
           aria-hidden="true"
           style={{
@@ -155,72 +235,64 @@ export default function Home() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 0,
             pointerEvents: 'none',
             userSelect: 'none',
+            zIndex: 0,
           }}
         >
           <span
             style={{
               fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 'clamp(160px, 28vw, 440px)',
+              fontSize: 'clamp(160px, 30vw, 500px)',
               fontWeight: 700,
-              color: 'rgba(255,255,255,0.022)',
+              color: 'rgba(255,255,255,0.02)',
               lineHeight: 0.85,
               letterSpacing: '-0.04em',
-              display: 'block',
             }}
           >
             LORE
           </span>
         </div>
 
-        {/* Hero content */}
+        {/* Hero content — bottom of viewport */}
         <div
           style={{
             position: 'absolute',
-            bottom: '11vh',
+            bottom: '72px',
             left: 0,
             right: 0,
             zIndex: 2,
             textAlign: 'center',
             padding: '0 clamp(24px, 6vw, 80px)',
-            animation: 'fadeUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) both',
-            animationDelay: '0.6s',
+            animation: 'fadeUp 1.2s cubic-bezier(0.22,1,0.36,1) both',
+            animationDelay: '0.5s',
           }}
         >
           <p
             style={{
               fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: '0.62rem',
+              fontSize: '0.6rem',
               fontWeight: 500,
-              letterSpacing: '0.32em',
+              letterSpacing: '0.34em',
               textTransform: 'uppercase',
               color: '#C4922A',
-              marginBottom: '28px',
+              marginBottom: '24px',
             }}
           >
             Antalya · Brazilian Jiu-Jitsu
           </p>
 
-          <div style={{ marginBottom: '16px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <img
               src={getSiteAssetUrl('logo.png')}
               alt="LORE BJJ"
               loading="eager"
-              style={{
-                maxWidth: 'clamp(180px, 26vw, 320px)',
-                height: 'auto',
-                display: 'block',
-                margin: '0 auto',
-                filter: 'brightness(0) invert(1)',
-              }}
+              style={{ maxWidth: 'clamp(160px, 22vw, 300px)', height: 'auto', display: 'block', margin: '0 auto', filter: 'brightness(0) invert(1)' }}
               onError={(e) => {
                 const img = e.target as HTMLImageElement;
                 img.style.display = 'none';
                 const el = document.createElement('div');
-                el.innerHTML =
-                  '<span style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(4rem,14vw,9rem);font-weight:700;color:#EDE9E0;line-height:0.9;letter-spacing:-0.02em;display:block;">LORE</span>';
+                el.innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(4rem,12vw,8rem);font-weight:700;color:#EDE9E0;line-height:0.9;letter-spacing:-0.02em;display:block;">LORE</span>';
                 img.parentElement?.appendChild(el);
               }}
             />
@@ -229,77 +301,75 @@ export default function Home() {
           <p
             style={{
               fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: 'clamp(0.68rem, 1.4vw, 0.82rem)',
+              fontSize: 'clamp(0.65rem, 1.3vw, 0.78rem)',
               fontWeight: 300,
               letterSpacing: '0.22em',
-              color: 'rgba(237,233,224,0.35)',
+              color: 'rgba(237,233,224,0.3)',
               textTransform: 'uppercase',
-              marginBottom: '52px',
             }}
           >
             Train · Grow · Belong
           </p>
-
-          <button
-            onClick={() => scrollTo('manifesto')}
-            style={{
-              background: 'none',
-              border: '1px solid rgba(196,146,42,0.4)',
-              color: '#C4922A',
-              fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: '0.68rem',
-              fontWeight: 500,
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              padding: '12px 28px',
-              cursor: 'pointer',
-              transition: 'border-color 0.25s ease, color 0.25s ease, background 0.25s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = '#C4922A';
-              e.currentTarget.style.background = 'rgba(196,146,42,0.08)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(196,146,42,0.4)';
-              e.currentTarget.style.background = 'none';
-            }}
-          >
-            Discover
-          </button>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll line */}
         <div
           style={{
             position: 'absolute',
-            bottom: '0',
+            bottom: 0,
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            animation: 'fadeIn 2s ease both',
+            animation: 'fadeIn 2.5s ease both',
             animationDelay: '2s',
           }}
         >
-          <div
-            style={{
-              width: '1px',
-              height: '56px',
-              background: 'linear-gradient(to bottom, transparent, rgba(196,146,42,0.5))',
-            }}
-          />
+          <div style={{ width: '1px', height: '48px', background: 'linear-gradient(to bottom, transparent, rgba(196,146,42,0.45))' }} />
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          MANIFESTO — pinned scroll
-      ═══════════════════════════════════════ */}
+      {/* ════════════════════════════════════════════
+          MARQUEE STRIP
+      ════════════════════════════════════════════ */}
+      <div
+        style={{
+          background: '#000',
+          borderTop: '1px solid rgba(255,255,255,0.05)',
+          borderBottom: '1px solid rgba(255,255,255,0.05)',
+          overflow: 'hidden',
+          padding: '13px 0',
+        }}
+      >
+        <div className="marquee-track">
+          {[0, 1].map((rep) => (
+            <span key={rep} style={{ display: 'inline-flex', whiteSpace: 'nowrap' }}>
+              {MARQUEE_ITEMS.map((text, i) => (
+                <span
+                  key={i}
+                  style={{
+                    padding: '0 clamp(14px, 2vw, 24px)',
+                    fontFamily: 'Space Grotesk, sans-serif',
+                    fontSize: '0.6rem',
+                    fontWeight: 400,
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: text === '×' ? '#C4922A' : 'rgba(237,233,224,0.22)',
+                  }}
+                >
+                  {text}
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════
+          MANIFESTO — 200vh pinned, cosine crossfade
+      ════════════════════════════════════════════ */}
       <section
         ref={manifestoRef}
-        id="manifesto"
-        style={{ height: '300vh', background: '#000', position: 'relative' }}
+        style={{ height: '200vh', background: '#000', position: 'relative' }}
       >
         <div
           style={{
@@ -312,90 +382,97 @@ export default function Home() {
             overflow: 'hidden',
           }}
         >
-          {/* Thin gold horizontal rule */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translateX(-50%) translateY(-50%)',
-              width: '1px',
-              height: '60px',
-              background: 'linear-gradient(to bottom, transparent, rgba(196,146,42,0.15), transparent)',
-              zIndex: 0,
-            }}
-          />
+          {/* Large background number */}
+          {MANIFESTO.map((_, i) => (
+            <span
+              key={`num-${i}`}
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                fontFamily: 'Cormorant Garamond, serif',
+                fontSize: 'clamp(160px, 30vw, 380px)',
+                fontWeight: 700,
+                color: 'rgba(196,146,42,0.04)',
+                lineHeight: 1,
+                letterSpacing: '-0.05em',
+                userSelect: 'none',
+                pointerEvents: 'none',
+                opacity: mOpacity(i),
+                transition: 'opacity 0.1s linear',
+              }}
+            >
+              0{i + 1}
+            </span>
+          ))}
 
-          {MANIFESTO.map(({ line, sub }, i) => {
-            const opacity = getManifestoOpacity(i);
-            const translateY = getManifestoY(i);
-            return (
-              <div
-                key={i}
+          {/* Statement text */}
+          {MANIFESTO.map(({ line, sub }, i) => (
+            <div
+              key={i}
+              style={{
+                position: 'absolute',
+                textAlign: 'center',
+                padding: '0 clamp(32px, 8vw, 120px)',
+                maxWidth: '860px',
+                width: '100%',
+                opacity: mOpacity(i),
+                transform: `translateY(${mY(i)}px)`,
+                transition: 'opacity 0.08s linear, transform 0.08s linear',
+                pointerEvents: mOpacity(i) < 0.05 ? 'none' : 'auto',
+              }}
+            >
+              <p
                 style={{
-                  position: 'absolute',
-                  textAlign: 'center',
-                  padding: '0 clamp(32px, 8vw, 120px)',
-                  opacity,
-                  transform: `translateY(${translateY}px)`,
-                  transition: 'opacity 0.12s linear, transform 0.12s linear',
-                  maxWidth: '900px',
-                  width: '100%',
-                  pointerEvents: opacity < 0.1 ? 'none' : 'auto',
+                  fontFamily: 'Cormorant Garamond, serif',
+                  fontSize: 'clamp(2.2rem, 5.5vw, 4.8rem)',
+                  fontWeight: 300,
+                  fontStyle: 'italic',
+                  color: '#EDE9E0',
+                  lineHeight: 1.15,
+                  marginBottom: '24px',
+                  whiteSpace: 'pre-line',
+                  letterSpacing: '-0.01em',
                 }}
               >
-                <p
-                  style={{
-                    fontFamily: 'Cormorant Garamond, serif',
-                    fontSize: 'clamp(2rem, 5vw, 4.2rem)',
-                    fontWeight: 300,
-                    fontStyle: 'italic',
-                    color: '#EDE9E0',
-                    lineHeight: 1.2,
-                    marginBottom: '20px',
-                    letterSpacing: '-0.01em',
-                  }}
-                >
-                  {line}
-                </p>
-                <p
-                  style={{
-                    fontFamily: 'Space Grotesk, sans-serif',
-                    fontSize: 'clamp(0.72rem, 1.5vw, 0.82rem)',
-                    fontWeight: 300,
-                    letterSpacing: '0.18em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(196,146,42,0.7)',
-                  }}
-                >
-                  {sub}
-                </p>
-              </div>
-            );
-          })}
+                {line}
+              </p>
+              <p
+                style={{
+                  fontFamily: 'Space Grotesk, sans-serif',
+                  fontSize: 'clamp(0.68rem, 1.4vw, 0.78rem)',
+                  fontWeight: 300,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(196,146,42,0.65)',
+                }}
+              >
+                {sub}
+              </p>
+            </div>
+          ))}
 
-          {/* Progress indicators */}
+          {/* Progress dashes */}
           <div
             style={{
               position: 'absolute',
-              bottom: '48px',
+              bottom: '52px',
               left: '50%',
               transform: 'translateX(-50%)',
               display: 'flex',
-              gap: '10px',
+              gap: '8px',
               alignItems: 'center',
             }}
           >
             {MANIFESTO.map((_, i) => {
-              const active = mProgress >= i / 3 && mProgress < (i + 1) / 3;
-              const past = mProgress >= (i + 1) / 3;
+              const op = mOpacity(i);
+              const active = op > 0.5;
               return (
                 <div
                   key={i}
                   style={{
-                    width: active ? '20px' : '4px',
                     height: '1px',
-                    background: active ? '#C4922A' : past ? 'rgba(196,146,42,0.4)' : 'rgba(255,255,255,0.15)',
+                    width: active ? '24px' : '6px',
+                    background: active ? '#C4922A' : 'rgba(255,255,255,0.15)',
                     transition: 'width 0.3s ease, background 0.3s ease',
                   }}
                 />
@@ -405,171 +482,216 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          ABOUT
-      ═══════════════════════════════════════ */}
-      <section id="about" style={{ padding: 'clamp(80px, 12vw, 140px) clamp(24px, 6vw, 80px)', background: '#0A0A0A' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div
-            className="reveal-on-scroll"
-            style={{
-              maxWidth: '660px',
-              marginBottom: 'clamp(64px, 10vw, 100px)',
-              transitionDelay: '0s',
-            }}
-          >
+      {/* ════════════════════════════════════════════
+          STATS
+      ════════════════════════════════════════════ */}
+      <section
+        style={{
+          background: '#060606',
+          borderTop: '1px solid #141414',
+          borderBottom: '1px solid #141414',
+          overflow: 'hidden',
+        }}
+      >
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <AnimatedStat target={3}   suffix="+"  label="Years Active" />
+          <AnimatedStat target={2}         label="Locations" />
+          <AnimatedStat target={150} suffix="+"  label="Practitioners" />
+          <AnimatedStat isText textValue="Free" label="Forever" />
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════
+          ABOUT — editorial two-column
+      ════════════════════════════════════════════ */}
+      <section
+        id="about"
+        style={{
+          padding: 'clamp(100px, 14vw, 160px) clamp(24px, 6vw, 80px)',
+          background: '#0A0A0A',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Background watermark */}
+        <span
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            right: '-0.05em',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            fontFamily: 'Cormorant Garamond, serif',
+            fontSize: 'clamp(120px, 22vw, 320px)',
+            fontWeight: 700,
+            color: 'rgba(196,146,42,0.03)',
+            lineHeight: 1,
+            letterSpacing: '-0.04em',
+            userSelect: 'none',
+            pointerEvents: 'none',
+          }}
+        >
+          LORE
+        </span>
+
+        <div
+          style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1.1fr) minmax(0, 0.9fr)',
+            gap: 'clamp(48px, 8vw, 100px)',
+            alignItems: 'start',
+          }}
+        >
+          {/* Left — big quote */}
+          <div className="reveal-on-scroll">
             <span
               style={{
                 display: 'block',
                 fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '0.62rem',
+                fontSize: '0.6rem',
                 fontWeight: 500,
                 letterSpacing: '0.26em',
                 textTransform: 'uppercase',
                 color: '#C4922A',
-                marginBottom: '24px',
+                marginBottom: '32px',
               }}
             >
               — Our History
             </span>
-            <h2
+            <blockquote
               style={{
                 fontFamily: 'Cormorant Garamond, serif',
-                fontSize: 'clamp(2.6rem, 6vw, 4.5rem)',
-                fontWeight: 600,
+                fontSize: 'clamp(2.4rem, 5.5vw, 4.2rem)',
+                fontWeight: 300,
+                fontStyle: 'italic',
                 color: '#EDE9E0',
-                lineHeight: 1.06,
-                marginBottom: '24px',
+                lineHeight: 1.18,
+                margin: '0 0 36px',
+                letterSpacing: '-0.01em',
               }}
             >
               {getContent(siteContent, 'about', 'section_title') ||
-                'The Art.\nThe Craft.\nThe Lineage.'}
-            </h2>
+                '"Every roll is a\nconversation.\nThe mat never lies."'}
+            </blockquote>
             <p
               style={{
                 fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: 'clamp(0.9rem, 1.8vw, 1rem)',
+                fontSize: 'clamp(0.88rem, 1.7vw, 0.98rem)',
                 fontWeight: 300,
                 color: '#8A857D',
-                lineHeight: 1.85,
+                lineHeight: 1.9,
+                maxWidth: '480px',
               }}
             >
               {getContent(siteContent, 'about', 'intro_text') ||
-                'Brazilian Jiu-Jitsu is more than a martial art — it is a living language of leverage, patience, and problem-solving. At LORE, we carry that tradition forward on the open mats of Antalya.'}
+                'Brazilian Jiu-Jitsu is a living language of leverage, patience, and problem-solving. At LORE, we carry that tradition forward on the open mats of Antalya.'}
             </p>
           </div>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '1px',
-              background: '#1A1A1A',
-            }}
-          >
+          {/* Right — three pillars */}
+          <div style={{ paddingTop: 'clamp(0px, 4vw, 60px)' }}>
             {[
               {
                 num: '01',
                 title: getContent(siteContent, 'about', 'philosophy_title') || 'Philosophy',
-                body:
-                  getContent(siteContent, 'about', 'philosophy_text') ||
-                  'Jiu-jitsu teaches you to be comfortable in uncomfortable positions. That mindset extends far beyond the mat.',
-                delay: '0s',
+                body: getContent(siteContent, 'about', 'philosophy_text') || 'Jiu-jitsu teaches you to be comfortable in uncomfortable positions — a lesson that extends far beyond the mat.',
+                delay: '0.05s',
               },
               {
                 num: '02',
                 title: getContent(siteContent, 'about', 'training_title') || 'Training',
-                body:
-                  getContent(siteContent, 'about', 'training_text') ||
-                  'We train outdoors — in parks, on beaches — because the art was born in open air. No walls. No limits.',
-                delay: '0.12s',
+                body: getContent(siteContent, 'about', 'training_text') || 'We train outdoors — in parks, on beaches — because the art was born in open air. No walls. No ceiling.',
+                delay: '0.18s',
               },
               {
                 num: '03',
                 title: getContent(siteContent, 'about', 'community_title') || 'Community',
-                body:
-                  getContent(siteContent, 'about', 'community_text') ||
-                  'A team that rolls together, grows together. We welcome every level — first class to black belt.',
-                delay: '0.24s',
+                body: getContent(siteContent, 'about', 'community_text') || 'A team that rolls together grows together. White belt to black belt — every level is welcome.',
+                delay: '0.31s',
               },
             ].map(({ num, title, body, delay }) => (
               <div
                 key={num}
                 className="reveal-on-scroll"
                 style={{
-                  background: '#0A0A0A',
-                  padding: 'clamp(32px, 5vw, 56px)',
-                  borderTop: '2px solid transparent',
-                  transition:
-                    'border-color 0.3s ease, opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1)',
+                  borderTop: '1px solid #1A1A1A',
+                  padding: 'clamp(24px, 3.5vw, 36px) 0',
                   transitionDelay: delay,
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.borderTopColor = '#C4922A')}
-                onMouseLeave={(e) => (e.currentTarget.style.borderTopColor = 'transparent')}
               >
-                <span
+                <div
                   style={{
-                    display: 'block',
-                    fontFamily: 'Cormorant Garamond, serif',
-                    fontSize: '4rem',
-                    fontWeight: 300,
-                    color: '#C4922A',
-                    lineHeight: 1,
-                    marginBottom: '24px',
-                    opacity: 0.45,
+                    display: 'flex',
+                    gap: '20px',
+                    alignItems: 'flex-start',
                   }}
                 >
-                  {num}
-                </span>
-                <h3
-                  style={{
-                    fontFamily: 'Cormorant Garamond, serif',
-                    fontSize: 'clamp(1.6rem, 3vw, 2.1rem)',
-                    fontWeight: 600,
-                    color: '#EDE9E0',
-                    marginBottom: '16px',
-                    lineHeight: 1.1,
-                  }}
-                >
-                  {title}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: 'Space Grotesk, sans-serif',
-                    fontSize: 'clamp(0.88rem, 1.6vw, 0.95rem)',
-                    fontWeight: 300,
-                    color: '#8A857D',
-                    lineHeight: 1.85,
-                  }}
-                >
-                  {body}
-                </p>
+                  <span
+                    style={{
+                      fontFamily: 'Cormorant Garamond, serif',
+                      fontSize: '1rem',
+                      fontWeight: 400,
+                      color: '#C4922A',
+                      opacity: 0.5,
+                      flexShrink: 0,
+                      paddingTop: '4px',
+                      letterSpacing: '0.05em',
+                    }}
+                  >
+                    {num}
+                  </span>
+                  <div>
+                    <h3
+                      style={{
+                        fontFamily: 'Cormorant Garamond, serif',
+                        fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)',
+                        fontWeight: 600,
+                        color: '#EDE9E0',
+                        marginBottom: '10px',
+                        lineHeight: 1.1,
+                      }}
+                    >
+                      {title}
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: 'Space Grotesk, sans-serif',
+                        fontSize: 'clamp(0.84rem, 1.5vw, 0.92rem)',
+                        fontWeight: 300,
+                        color: '#8A857D',
+                        lineHeight: 1.85,
+                      }}
+                    >
+                      {body}
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
+            <div style={{ borderTop: '1px solid #1A1A1A' }} />
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          GALLERY
-      ═══════════════════════════════════════ */}
-      <section
-        id="gallery"
-        style={{
-          padding: 'clamp(80px, 12vw, 140px) clamp(24px, 6vw, 80px)',
-          background: '#060606',
-        }}
-      >
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      {/* ════════════════════════════════════════════
+          GALLERY — auto-scrolling filmstrip
+      ════════════════════════════════════════════ */}
+      {!loadingGallery && galleryImages.length > 0 && (
+        <section id="gallery" style={{ background: '#060606', paddingBottom: 0, overflow: 'hidden' }}>
+          {/* Section label */}
           <div
             className="reveal-on-scroll"
             style={{
-              marginBottom: 'clamp(48px, 8vw, 80px)',
+              padding: 'clamp(64px, 8vw, 100px) clamp(24px, 6vw, 80px) clamp(36px, 5vw, 52px)',
               display: 'flex',
               alignItems: 'flex-end',
               justifyContent: 'space-between',
               flexWrap: 'wrap',
               gap: '20px',
+              maxWidth: '1200px',
+              margin: '0 auto',
             }}
           >
             <div>
@@ -577,12 +699,12 @@ export default function Home() {
                 style={{
                   display: 'block',
                   fontFamily: 'Space Grotesk, sans-serif',
-                  fontSize: '0.62rem',
+                  fontSize: '0.6rem',
                   fontWeight: 500,
                   letterSpacing: '0.26em',
                   textTransform: 'uppercase',
                   color: '#C4922A',
-                  marginBottom: '18px',
+                  marginBottom: '16px',
                 }}
               >
                 — Training Moments
@@ -590,165 +712,61 @@ export default function Home() {
               <h2
                 style={{
                   fontFamily: 'Cormorant Garamond, serif',
-                  fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
+                  fontSize: 'clamp(2.2rem, 5vw, 3.8rem)',
                   fontWeight: 600,
                   color: '#EDE9E0',
                   lineHeight: 1.06,
-                  marginBottom: 0,
                 }}
               >
                 On the Mat. On the Shore.
               </h2>
             </div>
-            <a
-              href={getContent(siteContent, 'social', 'instagram_url') || 'https://www.instagram.com/loremartialarts/'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-outline"
-            >
+            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
               Instagram
             </a>
           </div>
 
-          {loadingGallery ? (
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-                gap: '2px',
-              }}
-            >
-              {Array.from({ length: 6 }).map((_, i) => (
+          {/* Filmstrip */}
+          <div style={{ overflow: 'hidden' }}>
+            <div className="filmstrip-track">
+              {[...galleryImages, ...galleryImages].map((img, i) => (
                 <div
                   key={i}
                   style={{
-                    height: '280px',
-                    background: '#111',
-                    animation: `fadeIn 0.4s ease ${i * 0.07}s both`,
-                  }}
-                />
-              ))}
-            </div>
-          ) : galleryImages.length === 0 ? (
-            <div
-              style={{
-                textAlign: 'center',
-                padding: '80px 20px',
-                borderTop: '1px solid #1A1A1A',
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: 'Space Grotesk, sans-serif',
-                  fontSize: '0.95rem',
-                  color: '#8A857D',
-                }}
-              >
-                Gallery coming soon — check our Instagram for the latest.
-              </p>
-            </div>
-          ) : (
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-                gap: '2px',
-              }}
-            >
-              {galleryImages.map((image, index) => (
-                <div
-                  key={image.id}
-                  className="reveal-on-scroll"
-                  style={{
-                    position: 'relative',
+                    width: 'clamp(260px, 32vw, 440px)',
+                    height: 'clamp(220px, 28vw, 380px)',
+                    flexShrink: 0,
+                    marginRight: '2px',
                     overflow: 'hidden',
-                    aspectRatio: '4/3',
-                    background: '#111',
-                    transitionDelay: `${(index % 3) * 0.1}s`,
-                  }}
-                  onMouseEnter={(e) => {
-                    const overlay = e.currentTarget.querySelector<HTMLElement>('.g-overlay');
-                    const img = e.currentTarget.querySelector<HTMLElement>('img');
-                    if (overlay) overlay.style.opacity = '1';
-                    if (img) img.style.transform = 'scale(1.06)';
-                  }}
-                  onMouseLeave={(e) => {
-                    const overlay = e.currentTarget.querySelector<HTMLElement>('.g-overlay');
-                    const img = e.currentTarget.querySelector<HTMLElement>('img');
-                    if (overlay) overlay.style.opacity = '0';
-                    if (img) img.style.transform = 'scale(1)';
                   }}
                 >
                   <img
-                    src={image.image_url}
-                    alt={image.title}
+                    src={img.image_url}
+                    alt={img.title}
                     loading="lazy"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block',
-                      transition: 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)',
-                    }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   />
-                  <div
-                    className="g-overlay"
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'flex-end',
-                      padding: '24px',
-                      opacity: 0,
-                      transition: 'opacity 0.35s ease',
-                    }}
-                  >
-                    <h3
-                      style={{
-                        fontFamily: 'Cormorant Garamond, serif',
-                        fontSize: '1.25rem',
-                        fontWeight: 600,
-                        color: '#EDE9E0',
-                        marginBottom: '4px',
-                      }}
-                    >
-                      {image.title}
-                    </h3>
-                    {image.description && (
-                      <p
-                        style={{
-                          fontFamily: 'Space Grotesk, sans-serif',
-                          fontSize: '0.78rem',
-                          color: '#8A857D',
-                        }}
-                      >
-                        {image.description}
-                      </p>
-                    )}
-                  </div>
                 </div>
               ))}
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
-      {/* ═══════════════════════════════════════
+      {/* ════════════════════════════════════════════
           YOUTUBE
-      ═══════════════════════════════════════ */}
-      <section id="youtube" style={{ padding: 'clamp(80px, 12vw, 140px) clamp(24px, 6vw, 80px)', background: '#0A0A0A' }}>
-        <div style={{ maxWidth: '780px', margin: '0 auto' }}>
-          <div
-            className="reveal-on-scroll"
-            style={{ textAlign: 'center', marginBottom: '52px' }}
-          >
+      ════════════════════════════════════════════ */}
+      <section
+        id="youtube"
+        style={{ padding: 'clamp(100px, 14vw, 160px) clamp(24px, 6vw, 80px)', background: '#0A0A0A' }}
+      >
+        <div style={{ maxWidth: '760px', margin: '0 auto' }}>
+          <div className="reveal-on-scroll" style={{ textAlign: 'center', marginBottom: '52px' }}>
             <span
               style={{
                 display: 'block',
                 fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '0.62rem',
+                fontSize: '0.6rem',
                 fontWeight: 500,
                 letterSpacing: '0.26em',
                 textTransform: 'uppercase',
@@ -761,7 +779,7 @@ export default function Home() {
             <h2
               style={{
                 fontFamily: 'Cormorant Garamond, serif',
-                fontSize: 'clamp(2.2rem, 5vw, 3.4rem)',
+                fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
                 fontWeight: 600,
                 color: '#EDE9E0',
                 lineHeight: 1.06,
@@ -773,81 +791,55 @@ export default function Home() {
             <p
               style={{
                 fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: 'clamp(0.88rem, 1.8vw, 0.96rem)',
+                fontSize: 'clamp(0.88rem, 1.7vw, 0.96rem)',
                 fontWeight: 300,
                 color: '#8A857D',
-                lineHeight: 1.8,
-                maxWidth: '480px',
+                lineHeight: 1.85,
+                maxWidth: '440px',
                 margin: '0 auto',
               }}
             >
-              {getContent(siteContent, 'youtube', 'subtitle') || 'Watch us train in the open air, travel to camps, and build the community.'}
+              {getContent(siteContent, 'youtube', 'subtitle') || 'Training, travel, and life on the mat.'}
             </p>
           </div>
 
-          {(() => {
-            const videoId = getContent(siteContent, 'youtube', 'video_id') || 'PoCnx58dYZk';
-            const instagramUrl = getContent(siteContent, 'social', 'instagram_url') || 'https://www.instagram.com/loremartialarts/';
-            return (
-              <>
-                <div
-                  className="reveal-on-scroll"
-                  style={{
-                    position: 'relative',
-                    overflow: 'hidden',
-                    marginBottom: '32px',
-                    border: '1px solid #1A1A1A',
-                  }}
-                >
-                  <img
-                    src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                    alt="Latest vlog thumbnail"
-                    loading="lazy"
-                    style={{ width: '100%', display: 'block', objectFit: 'cover' }}
-                  />
-                </div>
+          <div
+            className="reveal-on-scroll"
+            style={{ marginBottom: '28px', border: '1px solid #141414', overflow: 'hidden' }}
+          >
+            <img
+              src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+              alt="Latest vlog"
+              loading="lazy"
+              style={{ width: '100%', display: 'block' }}
+            />
+          </div>
 
-                <div style={{ textAlign: 'center', display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <a
-                    href={`https://www.youtube.com/watch?v=${videoId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-gold"
-                  >
-                    Watch Latest Vlog
-                  </a>
-                  <a
-                    href={instagramUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-outline"
-                  >
-                    Instagram
-                  </a>
-                </div>
-              </>
-            );
-          })()}
+          <div style={{ textAlign: 'center', display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer" className="btn-gold">
+              Watch Latest Vlog
+            </a>
+            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
+              Instagram
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
+      {/* ════════════════════════════════════════════
           LOCATIONS
-      ═══════════════════════════════════════ */}
+      ════════════════════════════════════════════ */}
       <section
         id="locations"
-        style={{ padding: 'clamp(80px, 12vw, 140px) clamp(24px, 6vw, 80px)', background: '#060606' }}
+        style={{ padding: 'clamp(100px, 14vw, 160px) clamp(24px, 6vw, 80px)', background: '#060606' }}
       >
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div
-            className="reveal-on-scroll"
-            style={{ marginBottom: 'clamp(48px, 8vw, 80px)' }}
-          >
+          <div className="reveal-on-scroll" style={{ marginBottom: 'clamp(48px, 8vw, 80px)' }}>
             <span
               style={{
                 display: 'block',
                 fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '0.62rem',
+                fontSize: '0.6rem',
                 fontWeight: 500,
                 letterSpacing: '0.26em',
                 textTransform: 'uppercase',
@@ -860,11 +852,11 @@ export default function Home() {
             <h2
               style={{
                 fontFamily: 'Cormorant Garamond, serif',
-                fontSize: 'clamp(2.6rem, 6vw, 4.5rem)',
+                fontSize: 'clamp(2.6rem, 6vw, 4.8rem)',
                 fontWeight: 600,
                 color: '#EDE9E0',
                 lineHeight: 1.06,
-                marginBottom: '20px',
+                marginBottom: '18px',
               }}
             >
               {getContent(siteContent, 'locations', 'section_title') || 'Training Grounds'}
@@ -872,22 +864,22 @@ export default function Home() {
             <p
               style={{
                 fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: 'clamp(0.9rem, 1.8vw, 1rem)',
+                fontSize: 'clamp(0.88rem, 1.7vw, 0.98rem)',
                 fontWeight: 300,
                 color: '#8A857D',
-                maxWidth: '520px',
+                maxWidth: '480px',
                 lineHeight: 1.85,
               }}
             >
               {getContent(siteContent, 'locations', 'subtitle') ||
-                "We take the mat to Antalya's most iconic outdoor spaces. No gym fees. Just jiu-jitsu."}
+                "Antalya's most iconic outdoor spaces. No gym fees. Just jiu-jitsu."}
             </p>
           </div>
 
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
               gap: '2px',
             }}
           >
@@ -908,7 +900,7 @@ export default function Home() {
                     fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)',
                     fontWeight: 600,
                     color: '#EDE9E0',
-                    marginBottom: '8px',
+                    marginBottom: '6px',
                     lineHeight: 1.1,
                   }}
                 >
@@ -917,7 +909,7 @@ export default function Home() {
                 <p
                   style={{
                     fontFamily: 'Space Grotesk, sans-serif',
-                    fontSize: '0.8rem',
+                    fontSize: '0.78rem',
                     color: '#8A857D',
                     letterSpacing: '0.04em',
                     marginBottom: '24px',
@@ -926,18 +918,12 @@ export default function Home() {
                   {loc.address}
                 </p>
 
-                <div
-                  style={{
-                    paddingTop: '20px',
-                    borderTop: '1px solid #1A1A1A',
-                    marginBottom: '24px',
-                  }}
-                >
+                <div style={{ paddingTop: '18px', borderTop: '1px solid #1A1A1A', marginBottom: '22px' }}>
                   <span
                     style={{
                       display: 'block',
                       fontFamily: 'Space Grotesk, sans-serif',
-                      fontSize: '0.6rem',
+                      fontSize: '0.58rem',
                       fontWeight: 500,
                       letterSpacing: '0.2em',
                       textTransform: 'uppercase',
@@ -947,32 +933,23 @@ export default function Home() {
                   >
                     Schedule
                   </span>
-                  <p
-                    style={{
-                      fontFamily: 'Space Grotesk, sans-serif',
-                      fontSize: '0.9rem',
-                      color: '#EDE9E0',
-                    }}
-                  >
+                  <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.9rem', color: '#EDE9E0' }}>
                     {loc.time}
                   </p>
                 </div>
 
-                <div
-                  style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}
-                >
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '24px' }}>
                   {loc.features.map((f) => (
                     <span
                       key={f}
                       style={{
                         fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: '0.68rem',
-                        fontWeight: 400,
-                        letterSpacing: '0.08em',
+                        fontSize: '0.65rem',
                         color: '#C4922A',
                         background: 'rgba(196,146,42,0.07)',
-                        border: '1px solid rgba(196,146,42,0.18)',
-                        padding: '4px 12px',
+                        border: '1px solid rgba(196,146,42,0.16)',
+                        padding: '4px 10px',
+                        letterSpacing: '0.06em',
                       }}
                     >
                       {f}
@@ -984,12 +961,8 @@ export default function Home() {
                   <iframe
                     src={loc.mapEmbed}
                     width="100%"
-                    height="240"
-                    style={{
-                      border: 0,
-                      display: 'block',
-                      filter: 'grayscale(40%) contrast(1.1) brightness(0.7)',
-                    }}
+                    height="230"
+                    style={{ border: 0, display: 'block', filter: 'grayscale(50%) contrast(1.1) brightness(0.65)' }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
@@ -1001,104 +974,190 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          CONTACT / FOOTER
-      ═══════════════════════════════════════ */}
+      {/* ════════════════════════════════════════════
+          JOIN — full-screen CTA
+      ════════════════════════════════════════════ */}
       <section
+        id="join"
+        style={{
+          minHeight: '100vh',
+          background: '#000',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+          padding: 'clamp(80px, 12vw, 120px) clamp(24px, 6vw, 80px)',
+        }}
+      >
+        {/* Background watermark */}
+        <span
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            bottom: '-0.15em',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontFamily: 'Cormorant Garamond, serif',
+            fontSize: 'clamp(120px, 24vw, 400px)',
+            fontWeight: 700,
+            color: 'rgba(196,146,42,0.03)',
+            lineHeight: 1,
+            letterSpacing: '-0.04em',
+            userSelect: 'none',
+            pointerEvents: 'none',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          LORE
+        </span>
+
+        <div
+          className="reveal-on-scroll"
+          style={{
+            textAlign: 'center',
+            position: 'relative',
+            zIndex: 1,
+            maxWidth: '800px',
+          }}
+        >
+          <span
+            style={{
+              display: 'block',
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: '0.6rem',
+              fontWeight: 500,
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase',
+              color: '#C4922A',
+              marginBottom: '36px',
+            }}
+          >
+            Antalya · Brazilian Jiu-Jitsu · Free Training
+          </span>
+
+          <h2
+            style={{
+              fontFamily: 'Cormorant Garamond, serif',
+              fontSize: 'clamp(3.5rem, 11vw, 9rem)',
+              fontWeight: 300,
+              color: '#EDE9E0',
+              lineHeight: 0.95,
+              letterSpacing: '-0.02em',
+              marginBottom: '48px',
+              whiteSpace: 'pre-line',
+            }}
+          >
+            {'Ready\nto roll?'}
+          </h2>
+
+          <p
+            style={{
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: 'clamp(0.9rem, 1.8vw, 1.05rem)',
+              fontWeight: 300,
+              color: '#8A857D',
+              lineHeight: 1.85,
+              maxWidth: '420px',
+              margin: '0 auto 52px',
+            }}
+          >
+            {getContent(siteContent, 'contact', 'main_text') ||
+              'Show up to any session. No experience needed — just the will to learn. The first class is always free.'}
+          </p>
+
+          <a
+            href="https://wa.me/905069770077"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold"
+            style={{ fontSize: '0.78rem', padding: '16px 40px' }}
+          >
+            Message on WhatsApp
+          </a>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════
+          FOOTER
+      ════════════════════════════════════════════ */}
+      <footer
         id="contact"
         style={{
-          padding: 'clamp(80px, 12vw, 140px) clamp(24px, 6vw, 80px) clamp(48px, 6vw, 72px)',
           background: '#060606',
           borderTop: '1px solid #141414',
+          padding: 'clamp(48px, 7vw, 80px) clamp(24px, 6vw, 80px) clamp(32px, 4vw, 48px)',
         }}
       >
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-              gap: 'clamp(48px, 8vw, 80px)',
-              marginBottom: 'clamp(60px, 8vw, 80px)',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: 'clamp(36px, 6vw, 60px)',
+              marginBottom: 'clamp(40px, 6vw, 60px)',
             }}
           >
             {/* Brand */}
-            <div className="reveal-on-scroll">
-              <h2
+            <div>
+              <h3
                 style={{
                   fontFamily: 'Cormorant Garamond, serif',
-                  fontSize: 'clamp(2.2rem, 4vw, 3rem)',
+                  fontSize: 'clamp(2rem, 4vw, 2.8rem)',
                   fontWeight: 600,
                   color: '#EDE9E0',
-                  lineHeight: 1.0,
-                  marginBottom: '10px',
+                  lineHeight: 1,
+                  marginBottom: '8px',
                 }}
               >
                 LORE BJJ
-              </h2>
+              </h3>
               <p
                 style={{
                   fontFamily: 'Space Grotesk, sans-serif',
-                  fontSize: '0.65rem',
-                  fontWeight: 400,
+                  fontSize: '0.62rem',
                   letterSpacing: '0.22em',
                   textTransform: 'uppercase',
                   color: '#C4922A',
-                  marginBottom: '20px',
                 }}
               >
                 Antalya, Turkey
               </p>
-              <p
-                style={{
-                  fontFamily: 'Space Grotesk, sans-serif',
-                  fontSize: 'clamp(0.88rem, 1.6vw, 0.95rem)',
-                  fontWeight: 300,
-                  color: '#8A857D',
-                  lineHeight: 1.85,
-                  maxWidth: '300px',
-                }}
-              >
-                {getContent(siteContent, 'contact', 'main_text') ||
-                  'Open mats, open minds. Come train with us — no experience needed, just the will to learn.'}
-              </p>
             </div>
 
             {/* Contact */}
-            <div className="reveal-on-scroll" style={{ transitionDelay: '0.1s' }}>
+            <div>
               <span
                 style={{
                   display: 'block',
                   fontFamily: 'Space Grotesk, sans-serif',
-                  fontSize: '0.6rem',
+                  fontSize: '0.58rem',
                   fontWeight: 500,
                   letterSpacing: '0.2em',
                   textTransform: 'uppercase',
                   color: '#3A3530',
-                  marginBottom: '24px',
+                  marginBottom: '20px',
                 }}
               >
                 Contact
               </span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {[
-                  { label: 'Phone', href: 'tel:05069770077', text: '0506 977 00 77' },
-                  { label: 'Email', href: 'mailto:contact@lorebjj.com', text: 'contact@lorebjj.com' },
-                  {
-                    label: 'Instagram',
-                    href: 'https://www.instagram.com/loremartialarts/',
-                    text: '@loremartialarts',
-                  },
+                  { label: 'Phone',     href: 'tel:05069770077',                                text: '0506 977 00 77' },
+                  { label: 'Email',     href: 'mailto:contact@lorebjj.com',                    text: 'contact@lorebjj.com' },
+                  { label: 'Instagram', href: instagramUrl,                                     text: '@loremartialarts' },
                 ].map(({ label, href, text }) => (
                   <div key={label}>
                     <span
                       style={{
                         display: 'block',
                         fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: '0.6rem',
-                        letterSpacing: '0.16em',
+                        fontSize: '0.58rem',
+                        letterSpacing: '0.14em',
                         textTransform: 'uppercase',
                         color: '#3A3530',
-                        marginBottom: '4px',
+                        marginBottom: '3px',
                       }}
                     >
                       {label}
@@ -1109,8 +1168,7 @@ export default function Home() {
                       rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                       style={{
                         fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: '0.9rem',
-                        fontWeight: 400,
+                        fontSize: '0.88rem',
                         color: '#EDE9E0',
                         textDecoration: 'none',
                         transition: 'color 0.2s ease',
@@ -1125,21 +1183,13 @@ export default function Home() {
               </div>
             </div>
 
-            {/* CTA */}
-            <div
-              className="reveal-on-scroll"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                transitionDelay: '0.2s',
-              }}
-            >
+            {/* Sessions */}
+            <div>
               <span
                 style={{
                   display: 'block',
                   fontFamily: 'Space Grotesk, sans-serif',
-                  fontSize: '0.6rem',
+                  fontSize: '0.58rem',
                   fontWeight: 500,
                   letterSpacing: '0.2em',
                   textTransform: 'uppercase',
@@ -1147,30 +1197,20 @@ export default function Home() {
                   marginBottom: '20px',
                 }}
               >
-                Get Started
+                Sessions
               </span>
-              <p
-                style={{
-                  fontFamily: 'Space Grotesk, sans-serif',
-                  fontSize: 'clamp(0.88rem, 1.6vw, 0.95rem)',
-                  fontWeight: 300,
-                  color: '#8A857D',
-                  lineHeight: 1.85,
-                  marginBottom: '28px',
-                }}
-              >
-                Show up to any session. The first class is always free. Gi or no-gi, beginner or
-                experienced — you are welcome.
-              </p>
-              <a
-                href="https://wa.me/905069770077"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gold"
-                style={{ alignSelf: 'flex-start' }}
-              >
-                Message on WhatsApp
-              </a>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {locations.map((loc) => (
+                  <div key={loc.name}>
+                    <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.82rem', color: '#EDE9E0', marginBottom: '2px' }}>
+                      {loc.name}
+                    </p>
+                    <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.72rem', color: '#8A857D' }}>
+                      {loc.time}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -1178,27 +1218,21 @@ export default function Home() {
           <div
             style={{
               borderTop: '1px solid #141414',
-              paddingTop: '28px',
+              paddingTop: '24px',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
               flexWrap: 'wrap',
-              gap: '12px',
+              gap: '10px',
             }}
           >
-            <p
-              style={{
-                fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '0.7rem',
-                color: '#3A3530',
-              }}
-            >
+            <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.68rem', color: '#3A3530' }}>
               © {new Date().getFullYear()} LORE BJJ · Antalya, Turkey
             </p>
             <p
               style={{
                 fontFamily: 'Cormorant Garamond, serif',
-                fontSize: '0.92rem',
+                fontSize: '0.9rem',
                 fontStyle: 'italic',
                 color: '#3A3530',
               }}
@@ -1207,7 +1241,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }

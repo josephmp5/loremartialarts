@@ -368,6 +368,45 @@ select.input option {
   position: relative;
 }
 
+/* ---- Grain overlay ---- */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23g)'/></svg>");
+  background-size: 200px;
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* ---- Marquee ---- */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 24s linear infinite;
+  will-change: transform;
+}
+
+/* ---- Filmstrip (gallery) ---- */
+@keyframes filmstripScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.filmstrip-track {
+  display: flex;
+  width: max-content;
+  animation: filmstripScroll 45s linear infinite;
+  will-change: transform;
+}
+.filmstrip-track:hover {
+  animation-play-state: paused;
+}
+
 /* ---- Scroll Reveal ---- */
 .reveal-on-scroll {
   opacity: 0;
@@ -390,5 +429,9 @@ select.input option {
   .admin-main {
     margin-left: 0;
     padding: 20px;
+  }
+  /* About two-column → single column */
+  #about > div > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
   }
 }
