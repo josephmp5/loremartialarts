@@ -368,6 +368,20 @@ select.input option {
   position: relative;
 }
 
+/* ---- Scroll Reveal ---- */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ---- Mobile ---- */
 @media (max-width: 768px) {
   .admin-sidebar {
