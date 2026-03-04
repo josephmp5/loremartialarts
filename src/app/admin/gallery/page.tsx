@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase, getGalleryImageUrl } from '@/lib/supabase'
+import AdminLayout from '@/components/AdminLayout'
 
 interface GalleryImage {
   id: string
@@ -256,12 +257,8 @@ export default function GalleryManagement() {
   }
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-      color: '#f5f5dc',
-      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-    }}>
+    <AdminLayout active="Gallery">
+    <div>
       {/* Header */}
       <header style={{
         background: 'rgba(0, 0, 0, 0.3)',
@@ -753,5 +750,6 @@ export default function GalleryManagement() {
         )}
       </div>
     </div>
+    </AdminLayout>
   )
 }

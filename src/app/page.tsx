@@ -1,1268 +1,725 @@
 "use client";
 import { useState, useEffect } from 'react';
+import Navigation from './components/Navigation';
 import { supabase, getSiteAssetUrl } from '@/lib/supabase';
 import { fetchSiteContent, getContent, ContentBySection } from '@/lib/content';
 
 interface GalleryImage {
-  id: string
-  title: string
-  description: string
-  image_url: string
-  display_order: number
+  id: string;
+  title: string;
+  description: string;
+  image_url: string;
+  display_order: number;
 }
 
+const locations = [
+  {
+    name: "Erdal İnönü Park",
+    address: "Konyaaltı, Antalya",
+    time: "Every Tuesday & Thursday — 20:00",
+    features: ["Outdoor", "Park environment", "Free"],
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13876.319305870049!2d30.724678237779546!3d36.86152747044313!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39a96f66c21a3%3A0x5ab1804ecb60e6ac!2zUHJvZi4gRHIuIEVyZGFsIMSwbsO2bsO8IEtlbnQgUGFya8Sx!5e0!3m2!1str!2str!4v1758723843412!5m2!1str!2str",
+  },
+  {
+    name: "Konyaaltı Beach",
+    address: "Konyaaltı Sahili, Antalya",
+    time: "Every Saturday — 20:00",
+    features: ["Beach", "Ocean view", "Free"],
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5917.067834386882!2d30.619716250488217!3d36.84404483028264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c3930b9036fa3b%3A0xbfcc82d429337e53!2sKonyaalt%C4%B1%20Plajlar!5e0!3m2!1str!2str!4v1758724463039!5m2!1str!2str",
+  },
+];
+
 export default function Home() {
-  const [showContent, setShowContent] = useState(true);
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [loadingGallery, setLoadingGallery] = useState(true);
   const [siteContent, setSiteContent] = useState<ContentBySection>({});
-  const [contentLoading, setContentLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowContent(true);
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
+    fetchSiteContent().then(setSiteContent).catch(console.error);
     fetchGalleryImages();
-    fetchContent();
   }, []);
-
-  const fetchContent = async () => {
-    try {
-      const content = await fetchSiteContent();
-      setSiteContent(content);
-    } catch (err) {
-      console.error('Error loading site content:', err);
-    } finally {
-      setContentLoading(false);
-    }
-  };
 
   const fetchGalleryImages = async () => {
-    if (!supabase) {
-      setLoadingGallery(false);
-      return;
-    }
-    
+    if (!supabase) { setLoadingGallery(false); return; }
     try {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('training_gallery')
         .select('*')
         .eq('active', true)
         .order('display_order', { ascending: true });
-
-      if (data) {
-        setGalleryImages(data);
-      }
+      if (data) setGalleryImages(data);
     } catch (err) {
-      console.error('Error fetching gallery images:', err);
+      console.error('Error fetching gallery:', err);
     } finally {
       setLoadingGallery(false);
     }
   };
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const scrollTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
+  /* ─── inline style helpers ─── */
+  const S = {
+    section: (bg = 'transparent'): React.CSSProperties => ({
+      padding: 'clamp(80px, 12vw, 140px) clamp(24px, 6vw, 80px)',
+      background: bg,
+      position: 'relative',
+      width: '100%',
+    }),
+    container: (): React.CSSProperties => ({
+      maxWidth: '1200px',
+      margin: '0 auto',
+    }),
+    sectionLabel: (): React.CSSProperties => ({
+      display: 'block',
+      fontFamily: 'Space Grotesk, sans-serif',
+      fontSize: '0.65rem',
+      fontWeight: 500,
+      letterSpacing: '0.22em',
+      textTransform: 'uppercase' as const,
+      color: '#C4922A',
+      marginBottom: '20px',
+    }),
+    h2: (size = 'clamp(2.8rem, 7vw, 5rem)'): React.CSSProperties => ({
+      fontFamily: 'Cormorant Garamond, serif',
+      fontSize: size,
+      fontWeight: 600,
+      color: '#EDE9E0',
+      lineHeight: 1.05,
+      marginBottom: '24px',
+    }),
+    body: (): React.CSSProperties => ({
+      fontFamily: 'Space Grotesk, sans-serif',
+      fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
+      fontWeight: 300,
+      color: '#8A857D',
+      lineHeight: 1.8,
+    }),
   };
 
-  const locations = [
-    {
-      name: "Erdal Inönü Park",
-      address: "Konyaaltı, Antalya",
-      time: "Every Tuesday & Thursday 20:00",
-      features: ["Outdoor training", "Park environment", "Fresh air"],
-      mapEmbed: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13876.319305870049!2d30.724678237779546!3d36.86152747044313!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39a96f66c21a3%3A0x5ab1804ecb60e6ac!2zUHJvZi4gRHIuIEVyZGFsIMSwbsO2bsO8IEtlbnQgUGFya8Sx!5e0!3m2!1str!2str!4v1758723843412!5m2!1str!2str",
-      icon: "🌳"
-    },
-    {
-      name: "Konyaaltı Beach",
-      address: "Konyaaltı Sahili, Antalya", 
-      time: "Every Saturday 20:00",
-      features: ["Beach training", "Sunrise sessions", "Ocean view"],
-      mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5917.067834386882!2d30.619716250488217!3d36.84404483028264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c3930b9036fa3b%3A0xbfcc82d429337e53!2sKonyaalt%C4%B1%20Plajlar!5e0!3m2!1str!2str!4v1758724463039!5m2!1str!2str",
-      icon: "🏖️"
-    }
-  ];
-
   return (
-    <div className="page-container" style={{
-      width: '100%',
-      minHeight: '100vh',
-      margin: 0,
-      padding: 0,
-      background: 'transparent',
-      color: 'white',
-      fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-      overflowX: 'hidden',
-      position: 'relative'
-    }}>
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          @keyframes logoFadeIn {
-            0% { opacity: 0; transform: scale(0.8) rotate(-2deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
-          }
-          
-          @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-8px) rotate(1deg); }
-            50% { transform: translateY(-12px) rotate(0deg); }
-            75% { transform: translateY(-8px) rotate(-1deg); }
-          }
-          
-          @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-          }
-          
-          @keyframes slideInDown {
-            0% { opacity: 0; transform: translateY(-40px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-          }
-          
-          @keyframes slideInUp {
-            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-          }
-          
-          @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-          }
-          
-          @keyframes scaleIn {
-            0% { opacity: 0; transform: scale(0.85) rotate(-1deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
-          }
-          
-          @keyframes softPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-          }
-          
-          @keyframes mapReveal {
-            0% { opacity: 0; transform: scale(0.8) rotate(-2deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
-          }
-
-          @keyframes menuFadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-        `
-      }} />
-
-      {/* SEO Content for Search Engines */}
-      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', visibility: 'hidden' }}>
+    <div className="page-container">
+      {/* SEO hidden content */}
+      <div style={{ position: 'absolute', left: '-9999px', visibility: 'hidden' }}>
         <h1>Antalya BJJ Training - Brazilian Jiu-Jitsu Classes in Antalya, Turkey</h1>
-        <p>Join LORE BJJ for the best Brazilian Jiu-Jitsu training in Antalya. Our outdoor BJJ classes take place at Erdal İnönü Park and Konyaaltı Beach. Professional BJJ instruction in Antalya with free training sessions for all skill levels.</p>
-        <h2>Antalya Brazilian Jiu-Jitsu Training Locations</h2>
-        <p>Erdal İnönü Park BJJ training every Monday and Thursday. Konyaaltı Beach BJJ sessions every Saturday. Experience authentic Brazilian Jiu-Jitsu in the beautiful outdoor settings of Antalya, Turkey.</p>
-        <h3>Why Choose LORE BJJ in Antalya?</h3>
-        <p>Free BJJ classes in Antalya, professional instruction, outdoor training environment, authentic Brazilian Jiu-Jitsu techniques, beginner-friendly, experienced instructors, community-focused training.</p>
+        <p>Join LORE BJJ for outdoor Brazilian Jiu-Jitsu training in Antalya at Erdal İnönü Park and Konyaaltı Beach.</p>
       </div>
 
-      {/* Main Content - NO MARGINS/PADDING CAUSING WHITE SPACE */}
-      <div style={{
-        animation: 'fadeIn 1s ease-in-out both',
+      <Navigation />
+
+      {/* ═══ HERO ═══ */}
+      <section style={{
+        minHeight: '100vh',
         width: '100%',
-        margin: 0,
-        padding: 0
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        overflow: 'hidden',
       }}>
-        {/* Hero Section - EXACTLY LIKE THE IMAGE */}
-        <section style={{
-          minHeight: '100vh',
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '0 clamp(20px, 5vw, 40px)',
+        {/* Background */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `url(${getSiteAssetUrl('background.jpg')})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          zIndex: 0,
+        }} />
+        {/* Dark overlay — heavier at bottom */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to bottom, rgba(12,12,12,0.55) 0%, rgba(12,12,12,0.7) 60%, rgba(12,12,12,0.95) 100%)',
+          zIndex: 1,
+        }} />
+
+        {/* Content */}
+        <div style={{
           position: 'relative',
-          margin: 0,
-          background: 'transparent'
+          zIndex: 2,
+          textAlign: 'center',
+          padding: '0 clamp(24px, 6vw, 80px)',
+          animation: 'fadeUp 0.9s ease both',
+        }}>
+          {/* Brand mark */}
+          <p style={{
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontSize: '0.65rem',
+            fontWeight: 500,
+            letterSpacing: '0.35em',
+            textTransform: 'uppercase',
+            color: '#C4922A',
+            marginBottom: '32px',
+          }}>
+            Antalya · Brazilian Jiu-Jitsu
+          </p>
+
+          {/* Logo image, fallback to text */}
+          <div style={{ marginBottom: '12px' }}>
+            <img
+              src={getSiteAssetUrl('logo.png')}
+              alt="LORE BJJ"
+              loading="eager"
+              style={{ maxWidth: 'clamp(200px, 30vw, 340px)', height: 'auto', display: 'block', margin: '0 auto' }}
+              onError={e => {
+                const img = e.target as HTMLImageElement;
+                img.style.display = 'none';
+                const el = document.createElement('div');
+                el.innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(5rem,18vw,12rem);font-weight:700;color:#EDE9E0;line-height:0.9;letter-spacing:-0.02em;">LORE</span>';
+                img.parentElement?.appendChild(el);
+              }}
+            />
+          </div>
+
+          {/* Tagline */}
+          <p style={{
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)',
+            fontWeight: 300,
+            letterSpacing: '0.18em',
+            color: '#8A857D',
+            textTransform: 'uppercase',
+            marginBottom: '56px',
+          }}>
+            Train · Grow · Belong
+          </p>
+
+          {/* Hero nav links */}
+          <div style={{
+            display: 'flex',
+            gap: 'clamp(20px, 4vw, 48px)',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+          }}>
+            {[
+              { label: 'Our Story', id: 'about' },
+              { label: 'Gallery',   id: 'gallery' },
+              { label: 'Locations', id: 'locations' },
+              { label: 'Camps',     id: 'youtube' },
+            ].map(({ label, id }) => (
+              <button
+                key={id}
+                onClick={() => scrollTo(id)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontFamily: 'Space Grotesk, sans-serif',
+                  fontSize: '0.72rem',
+                  fontWeight: 400,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: '#8A857D',
+                  cursor: 'pointer',
+                  padding: '4px 0',
+                  transition: 'color 0.2s ease',
+                  position: 'relative',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#EDE9E0')}
+                onMouseLeave={e => (e.currentTarget.style.color = '#8A857D')}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div style={{
+          position: 'absolute',
+          bottom: '36px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '8px',
+          opacity: 0.4,
         }}>
           <div style={{
-            textAlign: 'center',
-            maxWidth: '1200px',
-            animation: 'fadeInUp 1.2s ease-out',
-            position: 'relative',
-            zIndex: 2,
-            width: '100%'
+            width: '1px',
+            height: '48px',
+            background: 'linear-gradient(to bottom, transparent, #EDE9E0)',
+          }} />
+        </div>
+      </section>
+
+      {/* ═══ ABOUT ═══ */}
+      <section id="about" style={S.section('#111111')}>
+        <div style={S.container()}>
+          <div style={{ maxWidth: '700px', marginBottom: 'clamp(60px, 10vw, 100px)' }}>
+            <span style={S.sectionLabel()}>— Our History</span>
+            <h2 style={S.h2()}>
+              {getContent(siteContent, 'about', 'section_title') || 'The Art. The Craft. The Lineage.'}
+            </h2>
+            <p style={S.body()}>
+              {getContent(siteContent, 'about', 'intro_text') || 'Brazilian Jiu-Jitsu is more than a martial art — it is a living language of leverage, patience, and problem-solving. At LORE, we carry that tradition forward.'}
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: 'clamp(1px, 0.2vw, 1px)',
+            background: '#1E1E1E',
           }}>
-            {/* Navigation Tabs Positioned Around Logo */}
-            <div style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '100%',
-              height: '100%',
-              pointerEvents: 'none'
-            }}>
-              {/* Central Logo */}
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                zIndex: 10,
-                pointerEvents: 'auto'
-              }}>
-                <img 
-                  src={getSiteAssetUrl('logo.png')} 
-                  alt="LORE BJJ - Antalya Brazilian Jiu-Jitsu Training Logo" 
-                  loading="eager"
-                  fetchPriority="high"
-                  style={{
-                    width: '300px',
-                    height: 'auto',
-                    display: 'block'
-                  }}
-                  onLoad={() => console.log('Logo loaded successfully')}
-                  onError={(e) => {
-                    console.error('Logo failed to load:', e);
-                    console.error('Logo URL:', getSiteAssetUrl('logo.png'));
-                    const img = e.target as HTMLImageElement;
-                    img.style.display = 'none';
-                    // Show fallback text
-                    const parent = img.parentElement;
-                    if (parent) {
-                      parent.innerHTML = '<div style="color: #f5f5dc; font-size: 2rem; font-weight: bold; text-align: center; font-family: \'Go3v2\', serif;">LORE BJJ</div>';
-                    }
-                  }}
-                />
-              </div>
-              {/* Left Side Navigation */}
-              <div className="hero-navigation-left" style={{
-                position: 'absolute',
-                left: '8%',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                display: 'flex',
-                flexDirection: 'row',
-                gap: '60px',
-                pointerEvents: 'auto',
-                zIndex: 10
-              }}>
-                <button
-                  className="hero-nav-button"
-                  onClick={() => scrollToSection('about')}
-                  style={{
-                    backgroundColor: 'transparent',
-                    color: '#dc2626',
-                    padding: '12px 24px',
-                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
-                    border: 'none',
-                    fontWeight: 'normal',
-                    fontFamily: 'Manga, serif',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    animation: 'fadeIn 1s ease-out 0.5s both'
-                  }}
-                  onMouseEnter={(e) => {
-                    const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#ef4444';
-                  }}
-                  onMouseLeave={(e) => {
-                    const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1)';
-                    btn.style.color = '#dc2626';
-                  }}
-                >
-                  OUR STORY
-                </button>
-                <button
-                  className="hero-nav-button"
-                  onClick={() => scrollToSection('gallery')}
-                  style={{
-                    backgroundColor: 'transparent',
-                    color: '#dc2626',
-                    padding: '12px 24px',
-                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
-                    border: 'none',
-                    fontWeight: 'normal',
-                    fontFamily: 'Manga, serif',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    animation: 'fadeIn 1s ease-out 0.7s both'
-                  }}
-                  onMouseEnter={(e) => {
-                    const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#ef4444';
-                  }}
-                  onMouseLeave={(e) => {
-                    const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1)';
-                    btn.style.color = '#dc2626';
-                  }}
-                >
-                  GALLERY
-                </button>
-              </div>
-
-              {/* Right Side Navigation */}
-              <div className="hero-navigation-right" style={{
-                position: 'absolute',
-                right: '8%',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                display: 'flex',
-                flexDirection: 'row',
-                gap: '60px',
-                pointerEvents: 'auto',
-                zIndex: 10
-              }}>
-                <button
-                  className="hero-nav-button"
-                  onClick={() => scrollToSection('locations')}
-                  style={{
-                    backgroundColor: 'transparent',
-                    color: '#dc2626',
-                    padding: '12px 24px',
-                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
-                    border: 'none',
-                    fontWeight: 'normal',
-                    fontFamily: 'Manga, serif',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    animation: 'fadeIn 1s ease-out 0.9s both'
-                  }}
-                  onMouseEnter={(e) => {
-                    const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#ef4444';
-                  }}
-                  onMouseLeave={(e) => {
-                    const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1)';
-                    btn.style.color = '#dc2626';
-                  }}
-                >
-                  LOCATIONS
-                </button>
-                <button
-                  className="hero-nav-button"
-                  onClick={() => scrollToSection('youtube')}
-                  style={{
-                    backgroundColor: 'transparent',
-                    color: '#dc2626',
-                    padding: '12px 24px',
-                    fontSize: 'clamp(1.2rem, 3.2vw, 1.5rem)',
-                    border: 'none',
-                    fontWeight: 'normal',
-                    fontFamily: 'Manga, serif',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    animation: 'fadeIn 1s ease-out 1.1s both'
-                  }}
-                  onMouseEnter={(e) => {
-                    const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1.1)';
-                    btn.style.color = '#ef4444';
-                  }}
-                  onMouseLeave={(e) => {
-                    const btn = e.target as HTMLElement;
-                    btn.style.transform = 'scale(1)';
-                    btn.style.color = '#dc2626';
-                  }}
-                >
-                  CAMPS
-                </button>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        {/* About Our Team Section */}
-        <section id="about" style={{
-          padding: 'clamp(100px, 15vw, 180px) clamp(20px, 5vw, 40px)',
-          position: 'relative',
-          width: '100%',
-          margin: 0,
-          background: 'rgba(26, 26, 46, 0.3)',
-          backdropFilter: 'blur(5px)'
-        }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-              <div style={{
-                textAlign: 'center',
-                marginBottom: '100px',
-                animation: 'fadeInUp 1.2s ease-out'
-              }}>
-                <h2 style={{
-                fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-                  fontWeight: '700',
-                  marginBottom: '40px',
-                color: '#f5f5dc',
-                                      fontFamily: 'Manga, serif',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                  animation: 'slideInDown 1.5s ease-out',
-                letterSpacing: 'clamp(1px, 0.3vw, 2px)'
-                }}>{getContent(siteContent, 'about', 'section_title')}</h2>
-                <p style={{
-                fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
-                color: '#e8e8d0',
-                  maxWidth: '900px',
-                  margin: '0 auto',
-                                      fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-                  lineHeight: '1.9',
-                  animation: 'slideInUp 1.5s ease-out 0.3s both',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
-                letterSpacing: '1px',
-                padding: '0 20px'
-                }}>
-{getContent(siteContent, 'about', 'intro_text')}
-                </p>
-              </div>
-
-              <div style={{
-                display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: 'clamp(30px, 6vw, 60px)',
-                marginTop: '80px'
-              }}>
-              {/* Philosophy Section */}
-                <div style={{
-                padding: 'clamp(30px, 6vw, 50px)',
-                background: 'transparent',
-                  animation: 'scaleIn 1.2s ease-out 0.2s both',
-                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  position: 'relative'
-                }}
-                >
-
-                  <h3 style={{
-                  fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
-                    fontWeight: '700',
-                    marginBottom: '25px',
-                    color: 'white',
-                                        fontFamily: 'Go3v2, serif',
-                    textAlign: 'center',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                    letterSpacing: '1px'
-                  }}>{getContent(siteContent, 'about', 'philosophy_title')}</h3>
-                  <p style={{
-                  fontSize: 'clamp(1rem, 3vw, 1.2rem)',
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    lineHeight: '1.9',
-                                        fontFamily: 'JMH Typewriter, serif',
-                    textAlign: 'center',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-                  }}>
-                  {getContent(siteContent, 'about', 'philosophy_text')}
-                  </p>
-                </div>
-
-              {/* Training Style Section */}
-                <div style={{
-                padding: 'clamp(30px, 6vw, 50px)',
-                background: 'transparent',
-                  animation: 'scaleIn 1.2s ease-out 0.4s both',
-                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  position: 'relative'
-                }}
-                >
-
-                  <h3 style={{
-                  fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
-                    fontWeight: '700',
-                    marginBottom: '25px',
-                    color: 'white',
-                                        fontFamily: 'Go3v2, serif',
-                    textAlign: 'center',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                    letterSpacing: '1px'
-                  }}>{getContent(siteContent, 'about', 'training_title')}</h3>
-                  <p style={{
-                  fontSize: 'clamp(1rem, 3vw, 1.2rem)',
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    lineHeight: '1.9',
-                                        fontFamily: 'JMH Typewriter, serif',
-                    textAlign: 'center',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-                  }}>
-                  {getContent(siteContent, 'about', 'training_text')}
-                  </p>
-                </div>
-
-              {/* Community Section */}
-                <div style={{
-                padding: 'clamp(30px, 6vw, 50px)',
-                background: 'transparent',
-                  animation: 'fadeIn 1.2s ease-out 0.6s both',
-                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  position: 'relative'
-                }}
-                >
-
-                  <h3 style={{
-                  fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
-                    fontWeight: '700',
-                    marginBottom: '25px',
-                    color: 'white',
-                                        fontFamily: 'Go3v2, serif',
-                    textAlign: 'center',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                    letterSpacing: '1px'
-                  }}>{getContent(siteContent, 'about', 'community_title')}</h3>
-                  <p style={{
-                  fontSize: 'clamp(1rem, 3vw, 1.2rem)',
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    lineHeight: '1.9',
-                                        fontFamily: 'JMH Typewriter, serif',
-                    textAlign: 'center',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-                  }}>
-                    {getContent(siteContent, 'about', 'community_text')}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-        {/* YouTube Section - Now comes after About Us */}
-        <section id="youtube" style={{
-          padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
-          position: 'relative',
-          width: '100%',
-          margin: 0,
-          background: 'rgba(0, 0, 0, 0.2)',
-          backdropFilter: 'blur(5px)'
-        }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-            <div style={{
-              textAlign: 'center',
-              marginBottom: '100px',
-              animation: 'fadeInUp 1.2s ease-out'
-            }}>
-              <h2 style={{
-                fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-                fontWeight: '700',
-                marginBottom: '40px',
-                color: '#f5f5dc',
-                                    fontFamily: 'Go3v2, serif',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                animation: 'slideInDown 1.5s ease-out',
-                letterSpacing: 'clamp(1px, 0.3vw, 2px)'
-              }}>Follow Our Journey</h2>
-              <p style={{
-                fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
-                color: '#e8e8d0',
-                maxWidth: '900px',
-                margin: '0 auto',
-                                    fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-                lineHeight: '1.9',
-                animation: 'slideInUp 1.5s ease-out 0.3s both',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
-                letterSpacing: '1px',
-                padding: '0 20px'
-              }}>
-                Stay connected with our outdoor BJJ adventures
-              </p>
-            </div>
-
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginTop: '80px'
-            }}>
-              {/* YouTube Section */}
-                          <div style={{
-              background: 'transparent',
-              padding: 'clamp(40px, 8vw, 60px)',
-              animation: 'fadeIn 1.2s ease-out 0.2s both',
-              transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-              position: 'relative',
-              width: '100%',
-              maxWidth: '800px'
-            }}
+            {[
+              {
+                num: '01',
+                title: getContent(siteContent, 'about', 'philosophy_title') || 'Philosophy',
+                body: getContent(siteContent, 'about', 'philosophy_text') || 'Jiu-jitsu teaches you to be comfortable in uncomfortable positions. That mindset extends beyond the mat.',
+              },
+              {
+                num: '02',
+                title: getContent(siteContent, 'about', 'training_title') || 'Training',
+                body: getContent(siteContent, 'about', 'training_text') || 'We train outdoors — in parks, on beaches — because the art was born in open air. No mats, no problem.',
+              },
+              {
+                num: '03',
+                title: getContent(siteContent, 'about', 'community_title') || 'Community',
+                body: getContent(siteContent, 'about', 'community_text') || 'A team that rolls together, grows together. We welcome every level — white belt to black belt.',
+              },
+            ].map(({ num, title, body }) => (
+              <div key={num} style={{
+                background: '#111111',
+                padding: 'clamp(32px, 5vw, 56px)',
+                borderTop: '2px solid #1E1E1E',
+                transition: 'border-color 0.25s ease',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.borderTopColor = '#C4922A')}
+              onMouseLeave={e => (e.currentTarget.style.borderTopColor = '#1E1E1E')}
               >
-                <div style={{
-                  textAlign: 'center',
-                  marginBottom: '40px'
-                }}>
-                  <h3 style={{
-                    fontSize: 'clamp(2rem, 6vw, 2.5rem)',
-                    fontWeight: '700',
-                    color: 'white',
-                  fontFamily: 'Go3v2, serif',
-                    marginBottom: '15px',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                    letterSpacing: '1px'
-                  }}>YouTube Channel</h3>
-                  <p style={{
-                    fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                    color: 'rgba(255, 255, 255, 0.9)',
-                  fontFamily: 'Go3v2, serif',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                    letterSpacing: '1px',
-                    marginBottom: '20px'
-                  }}>Latest Vlog</p>
-                  <p style={{
-                    fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
-                    color: 'rgba(255, 255, 255, 0.8)',
-                  fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                    maxWidth: '600px',
-                    margin: '0 auto',
-                    lineHeight: '1.6'
-                  }}>
-                    Join us on our latest outdoor BJJ adventure! Watch as we train in Antalya's beautiful landscapes, 
-                    share techniques, and build our nomadic community. Experience the freedom of outdoor martial arts.
-                  </p>
-                </div>
-
-                                  <div style={{
-                    position: 'relative',
-                    overflow: 'hidden',
-                    marginBottom: '40px',
-                    animation: 'fadeIn 1.5s ease-out 0.5s both'
-                  }}>
-                  <img 
-                    src="https://img.youtube.com/vi/PoCnx58dYZk/maxresdefault.jpg" 
-                    alt="YouTube Video Thumbnail" 
-                    loading="lazy"
-                    style={{
-                      width: '100%',
-                      height: 'clamp(250px, 50vw, 350px)',
-                      objectFit: 'cover',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                    }}
-                  />
-                </div>
-
-                <div style={{
-                  textAlign: 'center'
-                }}>
-                  <a href="https://www.youtube.com/watch?v=PoCnx58dYZk&t=1s" 
-                     target="_blank" 
-                     rel="noopener noreferrer"
-                     style={{
-                       backgroundColor: 'rgba(139, 69, 19, 0.9)',
-                       color: 'white',
-                       padding: 'clamp(15px, 4vw, 20px) clamp(30px, 6vw, 45px)',
-                       fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
-                       textDecoration: 'none',
-                       fontWeight: 'normal',
-                 fontFamily: 'Go3v2, serif',
-                       display: 'inline-block',
-                       transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                       textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                     }}
-                     onMouseEnter={(e) => {
-                       const link = e.target as HTMLElement;
-                       link.style.transform = 'scale(1.05)';
-                       link.style.backgroundColor = 'rgba(139, 69, 19, 1)';
-                     }}
-                     onMouseLeave={(e) => {
-                       const link = e.target as HTMLElement;
-                       link.style.transform = 'scale(1)';
-                       link.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
-                     }}
-                     >
-                    Watch Latest Vlog
-                  </a>
-                </div>
+                <span style={{
+                  display: 'block',
+                  fontFamily: 'Cormorant Garamond, serif',
+                  fontSize: '3.5rem',
+                  fontWeight: 400,
+                  color: '#C4922A',
+                  lineHeight: 1,
+                  marginBottom: '20px',
+                  opacity: 0.5,
+                }}>{num}</span>
+                <h3 style={{
+                  fontFamily: 'Cormorant Garamond, serif',
+                  fontSize: 'clamp(1.6rem, 3vw, 2rem)',
+                  fontWeight: 600,
+                  color: '#EDE9E0',
+                  marginBottom: '16px',
+                  lineHeight: 1.1,
+                }}>{title}</h3>
+                <p style={S.body()}>{body}</p>
               </div>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Training Images Gallery Section */}
-        <section id="gallery" style={{
-          padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
-          position: 'relative',
-          width: '100%',
-          margin: 0,
-          background: 'rgba(0, 0, 0, 0.2)',
-          backdropFilter: 'blur(5px)'
-        }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-            <div style={{
-              textAlign: 'center',
-              marginBottom: '100px',
-              animation: 'fadeInUp 1.2s ease-out'
-            }}>
-              <h2 style={{
-                fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-                fontWeight: '700',
-                marginBottom: '40px',
-                color: '#f5f5dc',
-                                    fontFamily: 'Go3v2, serif',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                animation: 'slideInDown 1.5s ease-out',
-                letterSpacing: 'clamp(1px, 0.3vw, 2px)'
-              }}>Training Moments</h2>
-              <p style={{
-                fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
-                color: '#e8e8d0',
-                maxWidth: '900px',
-                margin: '0 auto',
-                                    fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-                lineHeight: '1.9',
-                animation: 'slideInUp 1.5s ease-out 0.3s both',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
-                letterSpacing: '1px',
-                padding: '0 20px'
-              }}>
-                Capturing the spirit of outdoor BJJ training in Antalya
-              </p>
+      {/* ═══ GALLERY ═══ */}
+      <section id="gallery" style={S.section('#0C0C0C')}>
+        <div style={S.container()}>
+          <div style={{ marginBottom: 'clamp(48px, 8vw, 80px)', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
+            <div>
+              <span style={S.sectionLabel()}>— Training Moments</span>
+              <h2 style={{ ...S.h2('clamp(2.4rem, 5vw, 3.5rem)'), marginBottom: 0 }}>
+                On the Mat. On the Shore.
+              </h2>
             </div>
+            <a
+              href="https://www.instagram.com/loremartialarts/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline"
+            >
+              Instagram
+            </a>
+          </div>
 
+          {loadingGallery ? (
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-              gap: 'clamp(30px, 6vw, 60px)',
-              marginTop: '80px'
+              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+              gap: '2px',
             }}>
-              {loadingGallery ? (
-                // Loading state
-                Array.from({ length: 6 }).map((_, index) => (
-                  <div key={index} style={{
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    borderRadius: '12px',
-                    height: '280px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    animation: 'fadeIn 1.2s ease-out'
-                  }}>
-                    <div style={{
-                      width: '50px',
-                      height: '50px',
-                      border: '3px solid rgba(245, 245, 220, 0.3)',
-                      borderTop: '3px solid #dc2626',
-                      borderRadius: '50%',
-                      animation: 'spin 1s linear infinite'
-                    }}></div>
-                  </div>
-                ))
-              ) : galleryImages.length === 0 ? (
-                // No images state
-                <div style={{
-                  gridColumn: '1 / -1',
-                  textAlign: 'center',
-                  padding: '60px 20px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
-                }}>
-                  <h3 style={{
-                    fontSize: '1.5rem',
-                    marginBottom: '15px',
-                    opacity: 0.8,
-                    fontFamily: 'Go3v2, serif'
-                  }}>
-                    Training Gallery Coming Soon
-                  </h3>
-                  <p style={{
-                    fontSize: '1rem',
-                    opacity: 0.6,
-                    fontFamily: 'Manga, Crimson Text, Chakra Petch, serif'
-                  }}>
-                    Check back soon for our latest training moments!
-                  </p>
-                </div>
-              ) : (
-                galleryImages.map((image, index) => (
-                <div key={index} style={{
-                  overflow: 'hidden',
-                  animation: `fadeIn 1.2s ease-out ${0.2 + index * 0.2}s both`,
-                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  background: 'transparent',
-                  position: 'relative'
-                }}
-                onMouseEnter={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  const card = e.currentTarget as HTMLElement;
-                  card.style.transform = 'scale(1)';
-                }}
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} style={{
+                  height: '280px',
+                  background: '#161616',
+                  animation: 'fadeIn 0.5s ease both',
+                }} />
+              ))}
+            </div>
+          ) : galleryImages.length === 0 ? (
+            <div style={{
+              textAlign: 'center',
+              padding: '80px 20px',
+              borderTop: '1px solid #1E1E1E',
+            }}>
+              <p style={S.body()}>Gallery coming soon — check our Instagram for the latest.</p>
+            </div>
+          ) : (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+              gap: '2px',
+            }}>
+              {galleryImages.map((image, index) => (
+                <div
+                  key={image.id}
+                  style={{
+                    position: 'relative',
+                    overflow: 'hidden',
+                    aspectRatio: '4/3',
+                    background: '#161616',
+                  }}
+                  onMouseEnter={e => {
+                    const overlay = e.currentTarget.querySelector('.gallery-overlay') as HTMLElement;
+                    if (overlay) overlay.style.opacity = '1';
+                    const img = e.currentTarget.querySelector('img') as HTMLElement;
+                    if (img) img.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={e => {
+                    const overlay = e.currentTarget.querySelector('.gallery-overlay') as HTMLElement;
+                    if (overlay) overlay.style.opacity = '0';
+                    const img = e.currentTarget.querySelector('img') as HTMLElement;
+                    if (img) img.style.transform = 'scale(1)';
+                  }}
                 >
-                  <img 
+                  <img
                     src={image.image_url}
-                    alt={image.title} 
+                    alt={image.title}
                     loading="lazy"
                     style={{
                       width: '100%',
-                      height: '280px',
+                      height: '100%',
                       objectFit: 'cover',
-                      transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
-                    }}
-                    onError={(e) => {
-                      const img = e.target as HTMLImageElement;
-                      img.style.display = 'none';
-                      const parent = img.parentElement;
-                      if (parent) {
-                        parent.style.minHeight = '200px';
-                        parent.style.display = 'flex';
-                        parent.style.alignItems = 'center';
-                        parent.style.justifyContent = 'center';
-                        parent.innerHTML = `<div style="color: white; text-align: center; padding: 20px;">
-                          <h3>${image.title}</h3>
-                          <p style="opacity: 0.8; margin-top: 10px;">${image.description}</p>
-                        </div>`;
-                      }
+                      display: 'block',
+                      transition: 'transform 0.5s ease',
                     }}
                   />
-                  <div style={{
+                  <div className="gallery-overlay" style={{
                     position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    background: 'linear-gradient(transparent, rgba(0,0,0,0.8))',
-                    padding: '25px',
-                    color: 'white'
+                    inset: 0,
+                    background: 'rgba(12,12,12,0.75)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    padding: '24px',
+                    opacity: 0,
+                    transition: 'opacity 0.3s ease',
                   }}>
                     <h3 style={{
-                      fontSize: 'clamp(1.3rem, 4vw, 1.5rem)',
-                      fontWeight: '700',
-                      marginBottom: '10px',
-                      textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                      fontFamily: 'Go3v2, serif'
+                      fontFamily: 'Cormorant Garamond, serif',
+                      fontSize: '1.3rem',
+                      fontWeight: 600,
+                      color: '#EDE9E0',
+                      marginBottom: '6px',
                     }}>{image.title}</h3>
-                    <p style={{
-                      fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-                      opacity: 0.9,
-                      textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-                      fontFamily: 'Go3v2, serif'
-                    }}>{image.description}</p>
+                    {image.description && (
+                      <p style={{
+                        fontFamily: 'Space Grotesk, sans-serif',
+                        fontSize: '0.8rem',
+                        color: '#8A857D',
+                      }}>{image.description}</p>
+                    )}
                   </div>
                 </div>
-                ))
-              )}
+              ))}
             </div>
+          )}
+        </div>
+      </section>
 
-            {/* Follow Us Button */}
-            <div style={{
-              textAlign: 'center',
-              marginTop: '80px',
-              animation: 'fadeIn 1.5s ease-out 1.5s both'
-            }}>
-              <a href="https://www.instagram.com/loremartialarts/" 
-                 target="_blank" 
-                 rel="noopener noreferrer"
-                 style={{
-                   backgroundColor: 'rgba(139, 69, 19, 0.9)',
-                   color: '#f5f5dc',
-                   padding: 'clamp(15px, 4vw, 20px) clamp(30px, 8vw, 50px)',
-                   fontSize: 'clamp(1.2rem, 3vw, 1.4rem)',
-                   textDecoration: 'none',
-                   fontWeight: '700',
-                 fontFamily: 'Go3v2, serif',
-                   display: 'inline-block',
-                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                   textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                 }}
-                 onMouseEnter={(e) => {
-                   const link = e.target as HTMLElement;
-                   link.style.transform = 'translateY(-3px) scale(1.05)';
-                   link.style.backgroundColor = 'rgba(139, 69, 19, 1)';
-                 }}
-                 onMouseLeave={(e) => {
-                   const link = e.target as HTMLElement;
-                   link.style.transform = 'translateY(0) scale(1)';
-                   link.style.backgroundColor = 'rgba(139, 69, 19, 0.9)';
-                 }}
-                 >
-                Follow Us on Instagram
-              </a>
-            </div>
+      {/* ═══ YOUTUBE ═══ */}
+      <section id="youtube" style={S.section('#111111')}>
+        <div style={{ ...S.container(), maxWidth: '800px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <span style={S.sectionLabel()}>— Follow Our Journey</span>
+            <h2 style={{ ...S.h2('clamp(2.4rem, 5vw, 3.5rem)'), marginBottom: '16px' }}>
+              Latest Vlog
+            </h2>
+            <p style={{ ...S.body(), maxWidth: '520px', margin: '0 auto' }}>
+              Watch us train in the open air, travel to camps, and build the community.
+            </p>
           </div>
-        </section>
 
-        {/* Training Locations Section */}
-          <section id="locations" style={{
-          padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
-          position: 'relative',
-          width: '100%',
-          margin: 0,
-          background: 'rgba(26, 26, 46, 0.3)',
-          backdropFilter: 'blur(5px)'
-        }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-              <div style={{
-                textAlign: 'center',
-                marginBottom: '100px',
-                animation: 'fadeInUp 1.2s ease-out'
+          <div style={{
+            position: 'relative',
+            overflow: 'hidden',
+            marginBottom: '32px',
+            border: '1px solid #1E1E1E',
+          }}>
+            <img
+              src="https://img.youtube.com/vi/PoCnx58dYZk/maxresdefault.jpg"
+              alt="Latest vlog thumbnail"
+              loading="lazy"
+              style={{ width: '100%', display: 'block', objectFit: 'cover' }}
+            />
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <a
+              href="https://www.youtube.com/watch?v=PoCnx58dYZk&t=1s"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold"
+            >
+              Watch Latest Vlog
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ LOCATIONS ═══ */}
+      <section id="locations" style={S.section('#0C0C0C')}>
+        <div style={S.container()}>
+          <div style={{ marginBottom: 'clamp(48px, 8vw, 80px)' }}>
+            <span style={S.sectionLabel()}>— Where We Train</span>
+            <h2 style={S.h2()}>
+              {getContent(siteContent, 'locations', 'section_title') || 'Training Grounds'}
+            </h2>
+            <p style={{ ...S.body(), maxWidth: '560px' }}>
+              {getContent(siteContent, 'locations', 'subtitle') || 'We take the mat to Antalya\'s most iconic outdoor spaces. No gym fees. Just jiu-jitsu.'}
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gap: '2px',
+          }}>
+            {locations.map((loc, index) => (
+              <div key={index} style={{
+                background: '#111111',
+                borderTop: '2px solid #C4922A',
+                padding: 'clamp(28px, 4vw, 48px)',
               }}>
-                <h2 style={{
-                fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-                  fontWeight: '700',
-                  marginBottom: '40px',
-                color: '#f5f5dc',
-                                      fontFamily: 'Go3v2, serif',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                  animation: 'slideInDown 1.5s ease-out',
-                letterSpacing: 'clamp(1px, 0.3vw, 2px)'
-                }}>{getContent(siteContent, 'locations', 'section_title')}</h2>
+                <h3 style={{
+                  fontFamily: 'Cormorant Garamond, serif',
+                  fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)',
+                  fontWeight: 600,
+                  color: '#EDE9E0',
+                  marginBottom: '8px',
+                  lineHeight: 1.1,
+                }}>{loc.name}</h3>
                 <p style={{
-                fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
-                color: '#e8e8d0',
-                  maxWidth: '900px',
-                  margin: '0 auto',
-                                      fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-                  lineHeight: '1.9',
-                  animation: 'slideInUp 1.5s ease-out 0.3s both',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
-                letterSpacing: '1px',
-                padding: '0 20px'
+                  fontFamily: 'Space Grotesk, sans-serif',
+                  fontSize: '0.8rem',
+                  color: '#8A857D',
+                  letterSpacing: '0.04em',
+                  marginBottom: '24px',
+                }}>{loc.address}</p>
+
+                <div style={{
+                  paddingTop: '20px',
+                  borderTop: '1px solid #1E1E1E',
+                  marginBottom: '24px',
                 }}>
-{getContent(siteContent, 'locations', 'subtitle')}
-                </p>
+                  <span style={{
+                    display: 'block',
+                    fontFamily: 'Space Grotesk, sans-serif',
+                    fontSize: '0.65rem',
+                    fontWeight: 500,
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: '#4A4540',
+                    marginBottom: '8px',
+                  }}>Schedule</span>
+                  <p style={{
+                    fontFamily: 'Space Grotesk, sans-serif',
+                    fontSize: '0.9rem',
+                    color: '#EDE9E0',
+                  }}>{loc.time}</p>
+                </div>
+
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
+                  {loc.features.map(f => (
+                    <span key={f} style={{
+                      fontFamily: 'Space Grotesk, sans-serif',
+                      fontSize: '0.7rem',
+                      fontWeight: 400,
+                      letterSpacing: '0.08em',
+                      color: '#C4922A',
+                      background: 'rgba(196,146,42,0.08)',
+                      border: '1px solid rgba(196,146,42,0.2)',
+                      padding: '5px 12px',
+                    }}>{f}</span>
+                  ))}
+                </div>
+
+                <div style={{ overflow: 'hidden', border: '1px solid #1E1E1E' }}>
+                  <iframe
+                    src={loc.mapEmbed}
+                    width="100%"
+                    height="260"
+                    style={{ border: 0, display: 'block', filter: 'grayscale(30%) contrast(1.1)' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                gap: 'clamp(30px, 6vw, 60px)',
-                marginTop: '80px',
-                justifyItems: 'center'
-              }}>
-                {locations.map((location, index) => (
-                  <div key={index} style={{
-                    background: 'transparent',
-                    padding: 'clamp(30px, 6vw, 50px)',
-                    animation: `fadeIn 1.2s ease-out ${0.2 + index * 0.2}s both`,
-                    transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                    position: 'relative',
-                    width: '100%',
-                    maxWidth: '500px'
-                  }}
-                  onMouseEnter={(e) => {
-                    const card = e.currentTarget as HTMLElement;
-                    card.style.transform = 'scale(1.02)';
-                  }}
-                  onMouseLeave={(e) => {
-                    const card = e.currentTarget as HTMLElement;
-                    card.style.transform = 'scale(1)';
-                  }}
-                  >
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      marginBottom: '30px',
-                      gap: '20px'
-                    }}>
-                      <div style={{
-                      fontSize: 'clamp(3rem, 8vw, 4rem)',
-                        animation: 'softPulse 3s ease-in-out infinite'
-                      }}>{location.icon}</div>
-                      <div>
-                        <h3 style={{
-                        fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
-                          fontWeight: '700',
-                          color: '#e8e8d0',
-                    fontFamily: 'Go3v2, serif',
-                          marginBottom: '10px',
-                          textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                          letterSpacing: '1px'
-                        }}>{location.name}</h3>
-                        <p style={{
-                        fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                          color: '#e8e8d0',
-                    fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-                          textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
-                        }}>{location.address}</p>
-                      </div>
-                    </div>
-                    
-                    <div style={{
-                      marginBottom: '30px'
-                    }}>
-                      <h4 style={{
-                      fontSize: 'clamp(1.3rem, 4vw, 1.5rem)',
-                        fontWeight: '700',
-                        color: '#e8e8d0',
-                        marginBottom: '15px',
-                  fontFamily: 'Go3v2, serif',
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-                      }}>Training Schedule</h4>
-                      <p style={{
-                      fontSize: 'clamp(1rem, 3vw, 1.2rem)',
-                        color: '#e8e8d0',
-                  fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
-                      }}>{location.time}</p>
-                    </div>
+      {/* ═══ BLOG ═══ */}
+      <section style={S.section('#111111')}>
+        <div style={{ ...S.container(), textAlign: 'center', maxWidth: '680px' }}>
+          <span style={S.sectionLabel()}>— Knowledge</span>
+          <h2 style={S.h2()}>Latest Stories</h2>
+          <p style={{ ...S.body(), marginBottom: '40px' }}>
+            Technique breakdowns, training insights, and community stories from the mat.
+          </p>
+          <a href="/blog" className="btn-gold">Read the Blog</a>
+        </div>
+      </section>
 
-                    <div style={{
-                      marginBottom: '30px'
-                    }}>
-                      <h4 style={{
-                      fontSize: 'clamp(1.3rem, 4vw, 1.5rem)',
-                        fontWeight: '700',
-                        color: '#e8e8d0',
-                        marginBottom: '15px',
-                  fontFamily: 'Go3v2, serif',
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-                      }}>Features</h4>
-                      <div style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: '10px'
-                      }}>
-                        {location.features.map((feature, featureIndex) => (
-                          <span key={featureIndex} style={{
-                            backgroundColor: 'rgba(139, 69, 19, 0.2)',
-                            color: '#e8e8d0',
-                            padding: '8px 16px',
-                          fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-                      fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-                            textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
-                          }}>
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+      {/* ═══ CONTACT / FOOTER ═══ */}
+      <section id="contact" style={{
+        padding: 'clamp(80px, 12vw, 140px) clamp(24px, 6vw, 80px) clamp(48px, 6vw, 80px)',
+        background: '#0C0C0C',
+        borderTop: '1px solid #1E1E1E',
+      }}>
+        <div style={S.container()}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: 'clamp(48px, 8vw, 80px)',
+            marginBottom: 'clamp(60px, 8vw, 80px)',
+          }}>
+            {/* Brand col */}
+            <div>
+              <h2 style={{
+                fontFamily: 'Cormorant Garamond, serif',
+                fontSize: 'clamp(2.2rem, 4vw, 3rem)',
+                fontWeight: 600,
+                color: '#EDE9E0',
+                lineHeight: 1.0,
+                marginBottom: '12px',
+              }}>LORE BJJ</h2>
+              <p style={{
+                fontFamily: 'Space Grotesk, sans-serif',
+                fontSize: '0.68rem',
+                fontWeight: 400,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: '#C4922A',
+                marginBottom: '20px',
+              }}>Antalya, Turkey</p>
+              <p style={{ ...S.body(), maxWidth: '320px' }}>
+                {getContent(siteContent, 'contact', 'main_text') || 'Open mats, open minds. Come train with us — no experience needed, just the will to learn.'}
+              </p>
+            </div>
 
-                    <div style={{
-                      overflow: 'hidden',
-                      animation: 'mapReveal 1.5s ease-out 0.5s both'
-                    }}>
-                      <iframe
-                        src={location.mapEmbed}
-                        width="100%"
-                        height="300"
-                        style={{ border: 0 }}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                      />
-                    </div>
+            {/* Contact col */}
+            <div>
+              <span style={{
+                display: 'block',
+                fontFamily: 'Space Grotesk, sans-serif',
+                fontSize: '0.65rem',
+                fontWeight: 500,
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: '#4A4540',
+                marginBottom: '24px',
+              }}>Contact</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {[
+                  { label: 'Phone', href: 'tel:05069770077', text: '0506 977 00 77' },
+                  { label: 'Email', href: 'mailto:contact@lorebjj.com', text: 'contact@lorebjj.com' },
+                  { label: 'Instagram', href: 'https://www.instagram.com/loremartialarts/', text: '@loremartialarts' },
+                ].map(({ label, href, text }) => (
+                  <div key={label}>
+                    <span style={{
+                      display: 'block',
+                      fontFamily: 'Space Grotesk, sans-serif',
+                      fontSize: '0.62rem',
+                      letterSpacing: '0.15em',
+                      textTransform: 'uppercase',
+                      color: '#4A4540',
+                      marginBottom: '4px',
+                    }}>{label}</span>
+                    <a
+                      href={href}
+                      target={href.startsWith('http') ? '_blank' : undefined}
+                      rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      style={{
+                        fontFamily: 'Space Grotesk, sans-serif',
+                        fontSize: '0.92rem',
+                        fontWeight: 400,
+                        color: '#EDE9E0',
+                        textDecoration: 'none',
+                        transition: 'color 0.2s ease',
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#C4922A')}
+                      onMouseLeave={e => (e.currentTarget.style.color = '#EDE9E0')}
+                    >
+                      {text}
+                    </a>
                   </div>
                 ))}
               </div>
             </div>
-          </section>
 
-        {/* Blog Section */}
-        <section style={{
-          padding: 'clamp(60px, 12vw, 140px) clamp(20px, 5vw, 40px)',
-          position: 'relative',
-          width: '100%',
-          margin: 0,
-          background: 'rgba(0, 0, 0, 0.2)',
-          backdropFilter: 'blur(5px)',
-          textAlign: 'center'
-        }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-            <div style={{
-              textAlign: 'center',
-              marginBottom: 'clamp(60px, 10vw, 100px)'
-            }}>
-              <h2 style={{
-                fontSize: 'clamp(2.5rem, 8vw, 4rem)',
-                fontWeight: '700',
-                marginBottom: 'clamp(20px, 4vw, 30px)',
-                color: '#f5f5dc',
-                fontFamily: 'Go3v2, serif',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                animation: 'slideInDown 1.5s ease-out',
-                letterSpacing: 'clamp(1px, 0.3vw, 2px)'
-              }}>
-                Latest Stories
-              </h2>
-              <p style={{
-                fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
-                color: '#e8e8d0',
-                maxWidth: '900px',
-                margin: '0 auto',
-                lineHeight: '1.8',
-                fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-                animation: 'slideInUp 1.5s ease-out 0.3s both',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
-                letterSpacing: '1px',
-                padding: '0 20px'
-              }}>
-                Discover our training insights, techniques, and community stories
+            {/* CTA col */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '16px' }}>
+              <span style={{
+                display: 'block',
+                fontFamily: 'Space Grotesk, sans-serif',
+                fontSize: '0.65rem',
+                fontWeight: 500,
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: '#4A4540',
+                marginBottom: '8px',
+              }}>Get Started</span>
+              <p style={{ ...S.body(), marginBottom: '24px' }}>
+                Show up to any session. The first class is always free. Gi or no-gi, beginner or experienced — you are welcome.
               </p>
-            </div>
-            
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginTop: '60px'
-            }}>
               <a
-                href="/blog"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.8) 0%, rgba(160, 82, 45, 0.9) 100%)',
-                  color: '#f5f5dc',
-                  padding: '20px 40px',
-                  borderRadius: '12px',
-                  textDecoration: 'none',
-                  fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                  fontWeight: '600',
-                  fontFamily: 'Manga, serif',
-                  textTransform: 'uppercase',
-                  letterSpacing: '2px',
-                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  border: '2px solid rgba(139, 69, 19, 0.3)',
-                  backdropFilter: 'blur(10px)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-                  display: 'inline-block',
-                  animation: 'fadeIn 1.5s ease-out 0.5s both'
-                }}
-                onMouseEnter={(e) => {
-                  const link = e.target as HTMLElement;
-                  link.style.transform = 'translateY(-3px) scale(1.05)';
-                  link.style.background = 'linear-gradient(135deg, rgba(139, 69, 19, 1) 0%, rgba(160, 82, 45, 1) 100%)';
-                  link.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  const link = e.target as HTMLElement;
-                  link.style.transform = 'translateY(0) scale(1)';
-                  link.style.background = 'linear-gradient(135deg, rgba(139, 69, 19, 0.8) 0%, rgba(160, 82, 45, 0.9) 100%)';
-                  link.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
-                }}
+                href="https://wa.me/905069770077"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gold"
+                style={{ alignSelf: 'flex-start' }}
               >
-                📖 Read Our Blog
+                Message on WhatsApp
               </a>
             </div>
           </div>
-        </section>
 
-        {/* Contact & Footer */}
-          <section style={{
-          padding: 'clamp(60px, 10vw, 80px) clamp(20px, 5vw, 40px)',
-            textAlign: 'center',
-          position: 'relative',
-          width: '100%',
-          margin: 0,
-          background: 'rgba(26, 26, 46, 0.4)',
-          backdropFilter: 'blur(5px)'
-        }}>
-          <div style={{ maxWidth: '800px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-              <h2 style={{
-              fontSize: 'clamp(2rem, 6vw, 3rem)',
-                fontWeight: '700',
-                marginBottom: '30px',
-              color: '#f5f5dc',
-                                    fontFamily: 'Go3v2, serif',
-                animation: 'fadeInUp 1s ease-out',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
-              }}>Join Our Nomadic Journey</h2>
-              <p style={{
-              fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-              color: '#e8e8d0',
-                marginBottom: '40px',
-                fontFamily: 'Manga, Crimson Text, Chakra Petch, serif',
-                lineHeight: '1.8',
-                animation: 'fadeIn 1.5s ease-out 0.3s both',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-              }}>
-                {getContent(siteContent, 'contact', 'main_text')}
-              </p>
-              
-              {/* Phone Number */}
-              <div style={{
-                marginBottom: '40px',
-                animation: 'fadeIn 1.5s ease-out 0.4s both'
-              }}>
-                <a href="tel:05069770077" style={{
-                  color: '#f5f5dc',
-                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
-                  textDecoration: 'none',
-                  fontFamily: 'Go3v2, serif',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  const link = e.currentTarget;
-                  link.style.color = '#dc2626';
-                  link.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  const link = e.currentTarget;
-                  link.style.color = '#f5f5dc';
-                  link.style.transform = 'scale(1)';
-                }}
-                >
-                  <span style={{ fontSize: '1.4em' }}>📞</span> 0506 977 00 77
-                </a>
-              </div>
-              <div style={{
-                display: 'flex',
-                gap: '20px',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-                animation: 'fadeIn 1.8s ease-out 0.6s both'
-              }}>
-                <a href="mailto:contact@lorebjj.com" style={{
-                backgroundColor: 'rgba(245, 245, 220, 0.9)',
-                  color: '#2c1810',
-                padding: 'clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)',
-                fontSize: 'clamp(1.1rem, 3vw, 1.2rem)',
-                  textDecoration: 'none',
-                  fontWeight: 'normal',
-                                      fontFamily: 'Go3v2, serif',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
-                }}
-                onMouseEnter={(e) => {
-                  const link = e.target as HTMLElement;
-                link.style.transform = 'translateY(-3px) scale(1.05)';
-                link.style.backgroundColor = 'rgba(245, 245, 220, 1)';
-                }}
-                onMouseLeave={(e) => {
-                  const link = e.target as HTMLElement;
-                link.style.transform = 'translateY(0) scale(1)';
-                link.style.backgroundColor = 'rgba(245, 245, 220, 0.9)';
-                }}
-                >
-                  Contact Us
-                </a>
-                <a href="#locations" style={{
-                backgroundColor: 'rgba(26, 26, 46, 0.8)',
-                color: '#f5f5dc',
-                padding: 'clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px)',
-                fontSize: 'clamp(1.1rem, 3vw, 1.2rem)',
-                  textDecoration: 'none',
-                  fontWeight: 'normal',
-                                      fontFamily: 'Go3v2, serif',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-                }}
-                onMouseEnter={(e) => {
-                  const link = e.target as HTMLElement;
-                link.style.transform = 'translateY(-3px) scale(1.05)';
-                link.style.backgroundColor = 'rgba(26, 26, 46, 1)';
-                }}
-                onMouseLeave={(e) => {
-                  const link = e.target as HTMLElement;
-                link.style.transform = 'translateY(0) scale(1)';
-                link.style.backgroundColor = 'rgba(26, 26, 46, 0.8)';
-                }}
-                >
-                  View Locations
-                </a>
-              </div>
-            </div>
-          </section>
+          {/* Footer bar */}
+          <div style={{
+            borderTop: '1px solid #1E1E1E',
+            paddingTop: '28px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '12px',
+          }}>
+            <p style={{
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: '0.72rem',
+              color: '#4A4540',
+            }}>
+              © {new Date().getFullYear()} LORE BJJ · Antalya, Turkey
+            </p>
+            <p style={{
+              fontFamily: 'Cormorant Garamond, serif',
+              fontSize: '0.9rem',
+              fontStyle: 'italic',
+              color: '#4A4540',
+            }}>
+              The art lives on the mat.
+            </p>
+          </div>
         </div>
+      </section>
     </div>
   );
 }

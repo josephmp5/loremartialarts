@@ -1,218 +1,172 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useAuth } from '@/contexts/AuthContext'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const { signIn } = useAuth()
-  const router = useRouter()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const { signIn } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
-
-    const { error } = await signIn(email, password)
-    
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    const { error } = await signIn(email, password);
     if (error) {
-      setError(error.message)
+      setError(error.message);
     } else {
-      router.push('/admin')
+      router.push('/admin');
     }
-    
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div style={{
       minHeight: '100vh',
+      background: '#0C0C0C',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+      padding: '24px',
     }}>
+      {/* Gi weave texture */}
       <div style={{
-        background: 'rgba(255, 255, 255, 0.1)',
-        backdropFilter: 'blur(10px)',
-        padding: '40px',
-        borderRadius: '20px',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
+        position: 'fixed',
+        inset: 0,
+        backgroundImage: `
+          repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(196,146,42,0.018) 3px, rgba(196,146,42,0.018) 4px),
+          repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(196,146,42,0.018) 3px, rgba(196,146,42,0.018) 4px)
+        `,
+        pointerEvents: 'none',
+      }} />
+
+      <div style={{
+        position: 'relative',
         width: '100%',
-        maxWidth: '400px',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+        maxWidth: '380px',
+        animation: 'fadeUp 0.6s ease both',
       }}>
-        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-          <h1 style={{
-            color: '#f5f5dc',
-            fontSize: '2rem',
-            fontWeight: '700',
-            marginBottom: '10px',
-            fontFamily: 'Go3v2, serif',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
-          }}>
-            LORE BJJ Admin
-          </h1>
-          <p style={{
-            color: '#e8e8d0',
-            opacity: 0.8,
-            fontSize: '1rem'
-          }}>
-            Sign in to manage content
-          </p>
+        {/* Brand */}
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <div style={{
+            fontFamily: 'Cormorant Garamond, serif',
+            fontSize: '3rem',
+            fontWeight: 700,
+            color: '#EDE9E0',
+            letterSpacing: '0.05em',
+            lineHeight: 1,
+            marginBottom: '8px',
+          }}>LORE</div>
+          <div style={{
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontSize: '0.62rem',
+            fontWeight: 400,
+            letterSpacing: '0.25em',
+            textTransform: 'uppercase',
+            color: '#C4922A',
+          }}>Admin Access</div>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{
-              display: 'block',
-              color: '#f5f5dc',
-              marginBottom: '8px',
-              fontSize: '0.9rem',
-              fontWeight: '500'
-            }}>
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                background: 'rgba(255, 255, 255, 0.1)',
-                color: '#f5f5dc',
-                fontSize: '1rem',
-                outline: 'none',
-                transition: 'all 0.3s ease'
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = '#dc2626'
-                e.target.style.background = 'rgba(255, 255, 255, 0.15)'
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                e.target.style.background = 'rgba(255, 255, 255, 0.1)'
-              }}
-            />
-          </div>
-
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{
-              display: 'block',
-              color: '#f5f5dc',
-              marginBottom: '8px',
-              fontSize: '0.9rem',
-              fontWeight: '500'
-            }}>
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                background: 'rgba(255, 255, 255, 0.1)',
-                color: '#f5f5dc',
-                fontSize: '1rem',
-                outline: 'none',
-                transition: 'all 0.3s ease'
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = '#dc2626'
-                e.target.style.background = 'rgba(255, 255, 255, 0.15)'
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                e.target.style.background = 'rgba(255, 255, 255, 0.1)'
-              }}
-            />
-          </div>
-
-          {error && (
-            <div style={{
-              background: 'rgba(220, 38, 38, 0.2)',
-              border: '1px solid rgba(220, 38, 38, 0.5)',
-              color: '#fca5a5',
-              padding: '12px',
-              borderRadius: '8px',
-              marginBottom: '20px',
-              fontSize: '0.9rem'
-            }}>
-              {error}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              width: '100%',
-              padding: '12px',
-              background: loading ? 'rgba(139, 69, 19, 0.5)' : 'rgba(139, 69, 19, 0.9)',
-              color: '#f5f5dc',
-              border: 'none',
-              borderRadius: '8px',
-              fontSize: '1rem',
-              fontWeight: '600',
-              cursor: loading ? 'not-allowed' : 'pointer',
-              transition: 'all 0.3s ease',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-            }}
-            onMouseEnter={(e) => {
-              if (!loading) {
-                e.currentTarget.style.background = 'rgba(139, 69, 19, 1)'
-                e.currentTarget.style.transform = 'translateY(-2px)'
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (!loading) {
-                e.currentTarget.style.background = 'rgba(139, 69, 19, 0.9)'
-                e.currentTarget.style.transform = 'translateY(0)'
-              }
-            }}
-          >
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
-
+        {/* Form */}
         <div style={{
-          textAlign: 'center',
-          marginTop: '20px'
+          background: '#111111',
+          border: '1px solid #1E1E1E',
+          padding: '36px',
         }}>
+          <form onSubmit={handleSubmit}>
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{
+                display: 'block',
+                fontFamily: 'Space Grotesk, sans-serif',
+                fontSize: '0.65rem',
+                fontWeight: 500,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: '#4A4540',
+                marginBottom: '8px',
+              }}>Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                className="input"
+                placeholder="your@email.com"
+              />
+            </div>
+
+            <div style={{ marginBottom: '28px' }}>
+              <label style={{
+                display: 'block',
+                fontFamily: 'Space Grotesk, sans-serif',
+                fontSize: '0.65rem',
+                fontWeight: 500,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: '#4A4540',
+                marginBottom: '8px',
+              }}>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+                className="input"
+                placeholder="••••••••"
+              />
+            </div>
+
+            {error && (
+              <div style={{
+                background: 'rgba(220,38,38,0.08)',
+                border: '1px solid rgba(220,38,38,0.2)',
+                color: '#f87171',
+                padding: '12px 14px',
+                marginBottom: '20px',
+                fontFamily: 'Space Grotesk, sans-serif',
+                fontSize: '0.82rem',
+              }}>{error}</div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-gold"
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                opacity: loading ? 0.6 : 1,
+                cursor: loading ? 'not-allowed' : 'pointer',
+              }}
+            >
+              {loading ? 'Signing in…' : 'Sign In'}
+            </button>
+          </form>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: '24px' }}>
           <a
             href="/"
             style={{
-              color: '#e8e8d0',
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: '0.75rem',
+              color: '#4A4540',
               textDecoration: 'none',
-              fontSize: '0.9rem',
-              opacity: 0.8,
-              transition: 'opacity 0.3s ease'
+              letterSpacing: '0.05em',
+              transition: 'color 0.2s ease',
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '1'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '0.8'
-            }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#8A857D')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#4A4540')}
           >
-            ← Back to Website
+            ← Back to site
           </a>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -28,7 +28,11 @@ export const metadata: Metadata = {
     canonical: "https://loremartialarts.com",
   },
   icons: {
-    icon: '/sitelogo.jpg',
+    icon: [
+      { url: '/sitelogo.jpg', type: 'image/jpeg' },
+    ],
+    apple: '/sitelogo.jpg',
+    shortcut: '/sitelogo.jpg',
   },
 };
 
@@ -41,6 +45,8 @@ export default function RootLayout({
     <html lang="en" style={{ margin: 0, padding: 0, width: '100%', height: '100%' }}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link rel="icon" href="/sitelogo.jpg" type="image/jpeg" />
+        <link rel="apple-touch-icon" href="/sitelogo.jpg" />
         
         {/* Google Ads Conversion Tracking */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17727161867"></script>
@@ -113,12 +119,7 @@ export default function RootLayout({
         
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet" />
-        
-        {/* Chakra Petch Font - Authentic Blocky, Distressed Style */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
       </head>
       <body className={inter.className} style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
         <BackgroundImage />

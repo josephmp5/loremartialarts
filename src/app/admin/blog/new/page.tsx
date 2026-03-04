@@ -194,9 +194,9 @@ export default function NewBlogPost() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-      color: '#f5f5dc',
-      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+      background: '#0C0C0C',
+      color: '#EDE9E0',
+      fontFamily: 'Space Grotesk, sans-serif'
     }}>
       {/* Header */}
       <header style={{

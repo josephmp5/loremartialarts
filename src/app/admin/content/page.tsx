@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
+import AdminLayout from '@/components/AdminLayout'
 
 interface SiteContent {
   id: string
@@ -213,629 +214,171 @@ export default function ContentManagement() {
     }
   }
 
-  if (loading || loadingContent) {
+  if (loading || loadingContent || !user) {
     return (
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-        color: '#f5f5dc',
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-      }}>
-        Loading...
+      <div style={{ minHeight: '100vh', background: '#0C0C0C', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.8rem', color: '#4A4540', letterSpacing: '0.1em' }}>Loading…</span>
       </div>
     )
-  }
-
-  if (!user) {
-    return null
   }
 
   const filteredContent = selectedSection === 'all' 
     ? content 
     : { [selectedSection]: content[selectedSection] || [] }
 
+  const lbl: React.CSSProperties = {
+    display: 'block',
+    fontFamily: 'Space Grotesk, sans-serif',
+    fontSize: '0.62rem',
+    fontWeight: 500,
+    letterSpacing: '0.15em',
+    textTransform: 'uppercase',
+    color: '#4A4540',
+    marginBottom: '8px',
+  }
+
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-      color: '#f5f5dc',
-      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-    }}>
+    <AdminLayout active="Content">
+    <div>
       {/* Header */}
-      <header style={{
-        background: 'rgba(0, 0, 0, 0.3)',
-        backdropFilter: 'blur(10px)',
-        padding: '20px 40px',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
+      <div style={{ marginBottom: '36px', paddingBottom: '28px', borderBottom: '1px solid #1E1E1E', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
         <div>
-          <h1 style={{
-            fontSize: '2rem',
-            fontWeight: '700',
-            margin: 0,
-            textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
-          }}>
-            Content Management
+          <span style={lbl}>Content Management</span>
+          <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', fontWeight: 600, color: '#EDE9E0', lineHeight: 1.1, margin: 0 }}>
+            Site Content
           </h1>
-          <p style={{
-            margin: '5px 0 0 0',
-            opacity: 0.8,
-            fontSize: '1rem'
-          }}>
-            Manage all text content on your website
-          </p>
         </div>
-        <div style={{ display: 'flex', gap: '15px' }}>
-          <select
-            value={selectedSection}
-            onChange={(e) => setSelectedSection(e.target.value)}
-            style={{
-              background: 'rgba(255, 255, 255, 0.1)',
-              color: '#f5f5dc',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              padding: '8px 12px',
-              borderRadius: '6px',
-              fontSize: '0.9rem',
-              outline: 'none'
-            }}
-          >
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <select value={selectedSection} onChange={(e) => setSelectedSection(e.target.value)} className="input" style={{ width: 'auto', padding: '8px 12px' }}>
             <option value="all">All Sections</option>
             {Object.keys(content).map(section => (
-              <option key={section} value={section}>
-                {sectionNames[section] || section}
-              </option>
+              <option key={section} value={section}>{sectionNames[section] || section}</option>
             ))}
           </select>
-          <button
-            onClick={() => setShowAddForm(true)}
-            style={{
-              background: 'rgba(139, 69, 19, 0.8)',
-              color: '#f5f5dc',
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(139, 69, 19, 1)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(139, 69, 19, 0.8)'
-            }}
-          >
+          <button onClick={() => setShowAddForm(true)} className="btn-gold" style={{ fontSize: '0.72rem' }}>
             + Add Content
           </button>
-          <a
-            href="/admin"
-            style={{
-              color: '#e8e8d0',
-              textDecoration: 'none',
-              padding: '8px 16px',
-              borderRadius: '6px',
-              background: 'rgba(255, 255, 255, 0.1)',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-            }}
-          >
-            ← Back to Admin
-          </a>
         </div>
-      </header>
+      </div>
 
-      <div style={{ padding: '40px' }}>
+      <div>
         {/* Add/Edit Form */}
+        {/* Add / Edit Form */}
         {showAddForm && (
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.1)',
-            backdropFilter: 'blur(10px)',
-            padding: '30px',
-            borderRadius: '12px',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            marginBottom: '40px'
-          }}>
-            <h2 style={{
-              fontSize: '1.5rem',
-              marginBottom: '20px',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-            }}>
-              {editingContent ? 'Edit Content' : 'Add New Content'}
+          <div style={{ background: '#111111', border: '1px solid #1E1E1E', borderTop: '2px solid #C4922A', padding: '28px', marginBottom: '36px' }}>
+            <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.5rem', fontWeight: 600, color: '#EDE9E0', marginBottom: '24px' }}>
+              {editingContent ? 'Edit Content' : 'Add Content'}
             </h2>
-            
             <form onSubmit={handleSubmit}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', marginBottom: '16px' }}>
                 <div>
-                  <label style={{
-                    display: 'block',
-                    color: '#f5f5dc',
-                    marginBottom: '8px',
-                    fontSize: '1rem',
-                    fontWeight: '600'
-                  }}>
-                    Section *
-                  </label>
-                  <select
-                    value={formData.section}
-                    onChange={(e) => setFormData(prev => ({ ...prev, section: e.target.value }))}
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '10px 12px',
-                      borderRadius: '6px',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      color: '#f5f5dc',
-                      fontSize: '0.9rem',
-                      outline: 'none'
-                    }}
-                  >
-                    <option value="">Select Section</option>
-                    {Object.keys(sectionNames).map(section => (
-                      <option key={section} value={section}>
-                        {sectionNames[section]}
-                      </option>
-                    ))}
+                  <label style={lbl}>Section *</label>
+                  <select value={formData.section} onChange={(e) => setFormData(prev => ({ ...prev, section: e.target.value }))} required className="input">
+                    <option value="">Select section</option>
+                    {Object.keys(sectionNames).map(s => <option key={s} value={s}>{sectionNames[s]}</option>)}
                   </select>
                 </div>
-                
                 <div>
-                  <label style={{
-                    display: 'block',
-                    color: '#f5f5dc',
-                    marginBottom: '8px',
-                    fontSize: '1rem',
-                    fontWeight: '600'
-                  }}>
-                    Key *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.key}
-                    onChange={(e) => setFormData(prev => ({ ...prev, key: e.target.value }))}
-                    placeholder="unique_key"
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '10px 12px',
-                      borderRadius: '6px',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      color: '#f5f5dc',
-                      fontSize: '0.9rem',
-                      outline: 'none'
-                    }}
-                  />
+                  <label style={lbl}>Key *</label>
+                  <input type="text" value={formData.key} onChange={(e) => setFormData(prev => ({ ...prev, key: e.target.value }))} placeholder="unique_key" required className="input" />
                 </div>
-                
                 <div>
-                  <label style={{
-                    display: 'block',
-                    color: '#f5f5dc',
-                    marginBottom: '8px',
-                    fontSize: '1rem',
-                    fontWeight: '600'
-                  }}>
-                    Content Type
-                  </label>
-                  <select
-                    value={formData.content_type}
-                    onChange={(e) => setFormData(prev => ({ ...prev, content_type: e.target.value }))}
-                    style={{
-                      width: '100%',
-                      padding: '10px 12px',
-                      borderRadius: '6px',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      color: '#f5f5dc',
-                      fontSize: '0.9rem',
-                      outline: 'none'
-                    }}
-                  >
+                  <label style={lbl}>Type</label>
+                  <select value={formData.content_type} onChange={(e) => setFormData(prev => ({ ...prev, content_type: e.target.value }))} className="input">
                     <option value="text">Text</option>
                     <option value="html">HTML</option>
                     <option value="url">URL</option>
                   </select>
                 </div>
               </div>
-
-              <div style={{ marginBottom: '20px' }}>
-                <label style={{
-                  display: 'block',
-                  color: '#f5f5dc',
-                  marginBottom: '8px',
-                  fontSize: '1rem',
-                  fontWeight: '600'
-                }}>
-                  Title
-                </label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                  placeholder="Display title"
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '6px',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    color: '#f5f5dc',
-                    fontSize: '0.9rem',
-                    outline: 'none'
-                  }}
-                />
+              <div style={{ marginBottom: '16px' }}>
+                <label style={lbl}>Title</label>
+                <input type="text" value={formData.title} onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))} placeholder="Display title" className="input" />
               </div>
-
-              <div style={{ marginBottom: '20px' }}>
-                <label style={{
-                  display: 'block',
-                  color: '#f5f5dc',
-                  marginBottom: '8px',
-                  fontSize: '1rem',
-                  fontWeight: '600'
-                }}>
-                  Content *
-                </label>
-                <textarea
-                  value={formData.content}
-                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  placeholder="Enter your content..."
-                  required
-                  rows={formData.content_type === 'url' ? 2 : 5}
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '6px',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    color: '#f5f5dc',
-                    fontSize: '0.9rem',
-                    outline: 'none',
-                    resize: 'vertical'
-                  }}
-                />
+              <div style={{ marginBottom: '16px' }}>
+                <label style={lbl}>Content *</label>
+                <textarea value={formData.content} onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))} placeholder="Enter content…" required rows={formData.content_type === 'url' ? 2 : 5} className="input" style={{ resize: 'vertical' }} />
               </div>
-
-              <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', gap: '20px', marginBottom: '20px', alignItems: 'center' }}>
                 <div>
-                  <label style={{
-                    display: 'block',
-                    color: '#f5f5dc',
-                    marginBottom: '8px',
-                    fontSize: '1rem',
-                    fontWeight: '600'
-                  }}>
-                    Display Order
-                  </label>
-                  <input
-                    type="number"
-                    value={formData.display_order}
-                    onChange={(e) => setFormData(prev => ({ ...prev, display_order: parseInt(e.target.value) || 0 }))}
-                    style={{
-                      width: '120px',
-                      padding: '10px 12px',
-                      borderRadius: '6px',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      color: '#f5f5dc',
-                      fontSize: '0.9rem',
-                      outline: 'none'
-                    }}
-                  />
+                  <label style={lbl}>Order</label>
+                  <input type="number" value={formData.display_order} onChange={(e) => setFormData(prev => ({ ...prev, display_order: parseInt(e.target.value) || 0 }))} className="input" style={{ width: '100px' }} />
                 </div>
-
-                <div>
-                  <label style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    cursor: 'pointer',
-                    marginTop: '32px'
-                  }}>
-                    <input
-                      type="checkbox"
-                      checked={formData.active}
-                      onChange={(e) => setFormData(prev => ({ ...prev, active: e.target.checked }))}
-                      style={{ margin: 0 }}
-                    />
-                    <span style={{ fontSize: '0.9rem' }}>Active (show on website)</span>
-                  </label>
-                </div>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.8rem', color: '#8A857D', marginTop: '20px' }}>
+                  <input type="checkbox" checked={formData.active} onChange={(e) => setFormData(prev => ({ ...prev, active: e.target.checked }))} />
+                  Active
+                </label>
               </div>
-
               {error && (
-                <div style={{
-                  background: 'rgba(220, 38, 38, 0.2)',
-                  border: '1px solid rgba(220, 38, 38, 0.5)',
-                  color: '#fca5a5',
-                  padding: '10px',
-                  borderRadius: '6px',
-                  marginBottom: '15px',
-                  fontSize: '0.9rem'
-                }}>
+                <div style={{ background: 'rgba(220,38,38,0.08)', border: '1px solid rgba(220,38,38,0.2)', color: '#f87171', padding: '10px 14px', marginBottom: '16px', fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.82rem' }}>
                   {error}
                 </div>
               )}
-
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <button
-                  type="submit"
-                  disabled={saving}
-                  style={{
-                    background: saving ? 'rgba(139, 69, 19, 0.5)' : 'rgba(139, 69, 19, 0.8)',
-                    color: '#f5f5dc',
-                    border: 'none',
-                    padding: '10px 20px',
-                    borderRadius: '6px',
-                    cursor: saving ? 'not-allowed' : 'pointer',
-                    fontSize: '0.9rem'
-                  }}
-                >
-                  {saving ? 'Saving...' : (editingContent ? 'Update' : 'Add Content')}
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button type="submit" disabled={saving} className="btn-gold" style={{ opacity: saving ? 0.6 : 1, cursor: saving ? 'not-allowed' : 'pointer', fontSize: '0.72rem' }}>
+                  {saving ? 'Saving…' : (editingContent ? 'Update' : 'Add Content')}
                 </button>
-                <button
-                  type="button"
-                  onClick={resetForm}
-                  style={{
-                    background: 'rgba(107, 114, 128, 0.8)',
-                    color: '#f5f5dc',
-                    border: 'none',
-                    padding: '10px 20px',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    fontSize: '0.9rem'
-                  }}
-                >
-                  Cancel
-                </button>
+                <button type="button" onClick={resetForm} className="btn-outline" style={{ fontSize: '0.72rem' }}>Cancel</button>
               </div>
             </form>
           </div>
         )}
 
-        {/* Content Sections */}
+        {/* Content sections */}
         {Object.keys(filteredContent).length === 0 ? (
-          <div style={{
-            textAlign: 'center',
-            padding: '60px 20px',
-            background: 'rgba(255, 255, 255, 0.05)',
-            borderRadius: '12px',
-            border: '1px solid rgba(255, 255, 255, 0.1)'
-          }}>
-            <h3 style={{
-              fontSize: '1.5rem',
-              marginBottom: '15px',
-              opacity: 0.8
-            }}>
-              No content found
-            </h3>
-            <p style={{
-              fontSize: '1rem',
-              opacity: 0.6,
-              marginBottom: '20px'
-            }}>
-              You need to run the SQL schema to populate the content database
+          <div style={{ textAlign: 'center', padding: '60px 20px', background: '#111111', border: '1px solid #1E1E1E' }}>
+            <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.9rem', color: '#4A4540', marginBottom: '20px' }}>
+              No content found. Run the SQL schema in Supabase or add manually.
             </p>
-            <div style={{
-              background: 'rgba(59, 130, 246, 0.1)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              borderRadius: '8px',
-              padding: '20px',
-              marginBottom: '20px',
-              textAlign: 'left'
-            }}>
-              <h4 style={{ fontSize: '1.1rem', marginBottom: '10px' }}>📋 To fix this:</h4>
-              <ol style={{ fontSize: '0.9rem', lineHeight: '1.6', paddingLeft: '20px' }}>
-                <li>Go to your <strong>Supabase project dashboard</strong></li>
-                <li>Click <strong>"SQL Editor"</strong> in the left sidebar</li>
-                <li>Copy and paste the entire <strong>supabase-schema.sql</strong> file content</li>
-                <li>Click <strong>"Run"</strong></li>
-                <li>Refresh this page</li>
-              </ol>
-            </div>
-            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-              <button
-                onClick={() => setShowAddForm(true)}
-                style={{
-                  background: 'rgba(139, 69, 19, 0.8)',
-                  color: '#f5f5dc',
-                  border: 'none',
-                  padding: '12px 24px',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '1rem'
-                }}
-              >
-                Add Content Manually
-              </button>
-              <button
-                onClick={() => window.location.reload()}
-                style={{
-                  background: 'rgba(34, 197, 94, 0.8)',
-                  color: '#f5f5dc',
-                  border: 'none',
-                  padding: '12px 24px',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '1rem'
-                }}
-              >
-                Refresh Page
-              </button>
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+              <button onClick={() => setShowAddForm(true)} className="btn-gold" style={{ fontSize: '0.72rem' }}>Add Manually</button>
+              <button onClick={() => window.location.reload()} className="btn-outline" style={{ fontSize: '0.72rem' }}>Refresh</button>
             </div>
           </div>
         ) : (
           Object.keys(filteredContent).map(section => (
-            <div key={section} style={{
-              marginBottom: '40px',
-              background: 'rgba(255, 255, 255, 0.05)',
-              borderRadius: '12px',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              overflow: 'hidden'
-            }}>
-              <div style={{
-                background: 'rgba(139, 69, 19, 0.3)',
-                padding: '15px 25px',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
-              }}>
-                <h3 style={{
-                  fontSize: '1.3rem',
-                  margin: 0,
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                }}>
-                  {sectionNames[section] || section} ({filteredContent[section].length} items)
+            <div key={section} style={{ marginBottom: '32px', background: '#111111', border: '1px solid #1E1E1E' }}>
+              <div style={{ padding: '12px 20px', borderBottom: '1px solid #1E1E1E', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.1rem', fontWeight: 600, color: '#EDE9E0', margin: 0 }}>
+                  {sectionNames[section] || section}
                 </h3>
+                <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.7rem', color: '#4A4540' }}>
+                  {filteredContent[section].length} items
+                </span>
               </div>
-              
-              <div style={{ padding: '20px' }}>
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                  gap: '20px'
-                }}>
-                  {filteredContent[section].map((item) => (
-                    <div key={item.id} style={{
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      borderRadius: '8px',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      padding: '20px',
-                      transition: 'all 0.3s ease'
-                    }}>
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                        marginBottom: '15px'
-                      }}>
-                        <div>
-                          <h4 style={{
-                            fontSize: '1.1rem',
-                            fontWeight: '600',
-                            marginBottom: '5px',
-                            color: '#f5f5dc'
-                          }}>
-                            {item.title || item.key}
-                          </h4>
-                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                            <span style={{
-                              fontSize: '0.8rem',
-                              background: 'rgba(59, 130, 246, 0.2)',
-                              color: '#60a5fa',
-                              padding: '2px 6px',
-                              borderRadius: '3px'
-                            }}>
-                              {item.key}
-                            </span>
-                            <span style={{
-                              fontSize: '0.8rem',
-                              background: 'rgba(16, 185, 129, 0.2)',
-                              color: '#34d399',
-                              padding: '2px 6px',
-                              borderRadius: '3px'
-                            }}>
-                              {item.content_type}
-                            </span>
-                            <span style={{
-                              padding: '2px 6px',
-                              borderRadius: '3px',
-                              fontSize: '0.8rem',
-                              background: item.active ? 'rgba(16, 185, 129, 0.2)' : 'rgba(245, 158, 11, 0.2)',
-                              color: item.active ? '#10b981' : '#f59e0b'
-                            }}>
-                              {item.active ? 'Active' : 'Inactive'}
-                            </span>
-                          </div>
+              <div style={{ padding: '16px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2px', background: '#1E1E1E' }}>
+                {filteredContent[section].map((item) => (
+                  <div key={item.id} style={{ background: '#111111', padding: '16px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                      <div>
+                        <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.88rem', color: '#EDE9E0', marginBottom: '6px', fontWeight: 500 }}>
+                          {item.title || item.key}
+                        </p>
+                        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                          <span className="badge badge-gray">{item.key}</span>
+                          <span className="badge badge-gray">{item.content_type}</span>
+                          <span className={item.active ? 'badge badge-green' : 'badge badge-amber'}>{item.active ? 'Active' : 'Inactive'}</span>
                         </div>
-                      </div>
-                      
-                      <div style={{ marginBottom: '15px' }}>
-                        <div style={{
-                          background: 'rgba(0, 0, 0, 0.2)',
-                          padding: '10px',
-                          borderRadius: '4px',
-                          fontSize: '0.9rem',
-                          maxHeight: '100px',
-                          overflowY: 'auto',
-                          wordBreak: 'break-word'
-                        }}>
-                          {item.content_type === 'url' ? (
-                            <a href={item.content} target="_blank" rel="noopener noreferrer" style={{
-                              color: '#60a5fa',
-                              textDecoration: 'none'
-                            }}>
-                              {item.content}
-                            </a>
-                          ) : (
-                            item.content
-                          )}
-                        </div>
-                      </div>
-                      
-                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        <button
-                          onClick={() => handleEdit(item)}
-                          style={{
-                            background: 'rgba(59, 130, 246, 0.8)',
-                            color: '#f5f5dc',
-                            border: 'none',
-                            padding: '6px 12px',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontSize: '0.8rem'
-                          }}
-                        >
-                          Edit
-                        </button>
-                        
-                        <button
-                          onClick={() => toggleActive(item.id, item.active)}
-                          style={{
-                            background: item.active ? 'rgba(245, 158, 11, 0.8)' : 'rgba(16, 185, 129, 0.8)',
-                            color: '#f5f5dc',
-                            border: 'none',
-                            padding: '6px 12px',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontSize: '0.8rem'
-                          }}
-                        >
-                          {item.active ? 'Hide' : 'Show'}
-                        </button>
-                        
-                        <button
-                          onClick={() => handleDelete(item.id)}
-                          style={{
-                            background: 'rgba(220, 38, 38, 0.8)',
-                            color: '#f5f5dc',
-                            border: 'none',
-                            padding: '6px 12px',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontSize: '0.8rem'
-                          }}
-                        >
-                          Delete
-                        </button>
                       </div>
                     </div>
-                  ))}
-                </div>
+                    <div style={{ background: '#0C0C0C', padding: '10px', marginBottom: '12px', maxHeight: '80px', overflowY: 'auto', wordBreak: 'break-word', fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.78rem', color: '#8A857D', lineHeight: 1.5 }}>
+                      {item.content_type === 'url'
+                        ? <a href={item.content} target="_blank" rel="noopener noreferrer" style={{ color: '#C4922A', textDecoration: 'none' }}>{item.content}</a>
+                        : item.content}
+                    </div>
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                      <button onClick={() => handleEdit(item)} className="btn-outline" style={{ fontSize: '0.68rem', padding: '5px 12px' }}>Edit</button>
+                      <button onClick={() => toggleActive(item.id, item.active)} className="btn-outline" style={{ fontSize: '0.68rem', padding: '5px 12px' }}>{item.active ? 'Hide' : 'Show'}</button>
+                      <button onClick={() => handleDelete(item.id)} className="btn-outline" style={{ fontSize: '0.68rem', padding: '5px 12px', color: '#f87171', borderColor: 'rgba(248,113,113,0.3)' }}>Delete</button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))
         )}
       </div>
     </div>
+    </AdminLayout>
   )
 }
