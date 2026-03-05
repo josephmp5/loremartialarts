@@ -361,10 +361,11 @@ select.input option {
 .animate-fade-in  { animation: fadeIn 0.5s ease both; }
 
 /* ---- Page Container ---- */
+/* Note: NO overflow-x: hidden here — it breaks position:sticky on children.
+   Horizontal overflow is handled by html/body instead. */
 .page-container {
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
   position: relative;
 }
 

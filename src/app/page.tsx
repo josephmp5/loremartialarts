@@ -137,18 +137,33 @@ export default function Home() {
     fetchGalleryImages();
   }, []);
 
-  // Manifesto scroll — cosine crossfade so there is NEVER a gap
+  // Manifesto scroll — cosine crossfade, always something visible
   useEffect(() => {
-    const onScroll = () => {
+    // Use absolute document position so it's not affected by CSS stacking
+    let sectionDocTop = 0;
+    let sectionScrollLength = 0;
+
+    const measure = () => {
       const el = manifestoRef.current;
       if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const total = el.offsetHeight - window.innerHeight;
-      if (total <= 0) return;
-      setMProgress(Math.max(0, Math.min(1, -rect.top / total)));
+      sectionDocTop = el.getBoundingClientRect().top + window.scrollY;
+      sectionScrollLength = el.offsetHeight - window.innerHeight;
     };
+
+    const onScroll = () => {
+      if (sectionScrollLength <= 0) { measure(); return; }
+      const p = (window.scrollY - sectionDocTop) / sectionScrollLength;
+      setMProgress(Math.max(0, Math.min(1, p)));
+    };
+
+    measure();
+    onScroll(); // initialise on mount
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('resize', measure);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', measure);
+    };
   }, []);
 
   // Scroll reveal (IntersectionObserver)
@@ -186,10 +201,11 @@ export default function Home() {
     }
   };
 
-  // Cosine crossfade — statement i is always visible near its center progress
+  // Cosine crossfade — always something visible, no gaps between statements
+  // 350vh section = 250vh effective scroll. centers spread across 0→1 with wide hw.
   const mOpacity = (i: number) => {
     const centers = [0, 0.5, 1.0];
-    const hw = 0.38;
+    const hw = 0.42; // wide overlap = no empty space between statements
     const dist = Math.abs(mProgress - centers[i]);
     if (dist >= hw) return 0;
     return (Math.cos((dist / hw) * Math.PI) + 1) / 2;
@@ -197,7 +213,7 @@ export default function Home() {
 
   const mY = (i: number) => {
     const centers = [0, 0.5, 1.0];
-    return (mProgress - centers[i]) * -22;
+    return Math.max(-24, Math.min(24, (mProgress - centers[i]) * -28));
   };
 
   const videoId = getContent(siteContent, 'youtube', 'video_id') || 'PoCnx58dYZk';
@@ -365,11 +381,11 @@ export default function Home() {
       </div>
 
       {/* ════════════════════════════════════════════
-          MANIFESTO — 200vh pinned, cosine crossfade
+          MANIFESTO — 350vh pinned, cosine crossfade
       ════════════════════════════════════════════ */}
       <section
         ref={manifestoRef}
-        style={{ height: '200vh', background: '#000', position: 'relative' }}
+        style={{ height: '350vh', background: '#000', position: 'relative' }}
       >
         <div
           style={{
@@ -1068,13 +1084,13 @@ export default function Home() {
           </p>
 
           <a
-            href="https://wa.me/905069770077"
+            href={instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold"
             style={{ fontSize: '0.78rem', padding: '16px 40px' }}
           >
-            Message on WhatsApp
+            DM us on Instagram
           </a>
         </div>
       </section>
@@ -1144,9 +1160,7 @@ export default function Home() {
               </span>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {[
-                  { label: 'Phone',     href: 'tel:05069770077',                                text: '0506 977 00 77' },
-                  { label: 'Email',     href: 'mailto:contact@lorebjj.com',                    text: 'contact@lorebjj.com' },
-                  { label: 'Instagram', href: instagramUrl,                                     text: '@loremartialarts' },
+                  { label: 'Instagram', href: instagramUrl, text: '@loremartialarts' },
                 ].map(({ label, href, text }) => (
                   <div key={label}>
                     <span
