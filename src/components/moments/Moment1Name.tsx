@@ -3,7 +3,6 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useImmersiveStore } from '@/store/immersive';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,51 +14,31 @@ export default function Moment1Name() {
   const subRef     = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const { setHeroPhase, setConvergenceProgress } = useImmersiveStore.getState();
+    // Logo fades in on load
+    gsap.to(logoRef.current, {
+      opacity: 1, scale: 1, duration: 2.0, ease: 'power3.out', delay: 0.6,
+    });
 
-    // Initial logo entrance on page load
-    gsap.to(logoRef.current, { opacity: 1, scale: 1, duration: 1.8, ease: 'power3.out', delay: 0.8 });
-
+    // Scroll: logo + sub fade out as user scrolls away
     const st = ScrollTrigger.create({
-      trigger: el,
+      trigger: sectionRef.current,
       start: 'top top',
       end: 'bottom top',
       pin: true,
       scrub: 1.2,
       onUpdate(self) {
         const p = self.progress;
+        if (!logoRef.current || !subRef.current) return;
 
-        // Drive particle convergence toward logo shape
-        if (p < 0.35) {
-          setHeroPhase('converging');
-          setConvergenceProgress(p / 0.35);
-        } else if (p < 0.65) {
-          setHeroPhase('holding');
-          setConvergenceProgress(1);
-        } else {
-          setHeroPhase('dispersing');
-          setConvergenceProgress((p - 0.65) / 0.35);
-        }
+        // Logo glow intensifies slightly then fades out near end
+        const logoFade = 1 - Math.min(Math.max((p - 0.65) / 0.25, 0), 1);
+        logoRef.current.style.opacity = String(logoFade);
 
-        // Logo: fade out as particles start dispersing
-        if (logoRef.current) {
-          const fade = 1 - Math.min(Math.max((p - 0.62) / 0.20, 0), 1);
-          logoRef.current.style.opacity = String(fade);
-        }
-
-        // Sub text: in during hold, out during dispersion
-        if (subRef.current) {
-          const fadeIn  = Math.min(Math.max((p - 0.38) / 0.12, 0), 1);
-          const fadeOut = Math.min(Math.max((p - 0.60) / 0.08, 0), 1);
-          subRef.current.style.opacity  = String(Math.min(fadeIn, 1 - fadeOut));
-          subRef.current.style.transform = `translateY(${(1 - Math.min(fadeIn, 1)) * 16}px)`;
-        }
-      },
-      onLeaveBack() {
-        setHeroPhase('idle');
-        setConvergenceProgress(0);
+        // Sub text: in 0.15–0.30, hold, out 0.65–0.80
+        const subIn  = Math.min(Math.max((p - 0.15) / 0.15, 0), 1);
+        const subOut = Math.min(Math.max((p - 0.65) / 0.15, 0), 1);
+        subRef.current.style.opacity = String(Math.min(subIn, 1 - subOut));
+        subRef.current.style.transform = `translateY(${(1 - subIn) * 14}px)`;
       },
     });
 
@@ -69,32 +48,33 @@ export default function Moment1Name() {
   return (
     <section
       ref={sectionRef}
-      style={{ height: '95vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', gap: 32 }}
+      style={{ height: '95vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 36 }}
     >
-      {/* Logo — particles converge to form its shape, logo image displayed on top */}
+      {/* Logo with gold glow */}
       <div
         ref={logoRef}
-        style={{ opacity: 0, transform: 'scale(0.92)', transformOrigin: 'center', transition: 'filter 0.5s' }}
+        style={{ opacity: 0, transform: 'scale(0.94)', willChange: 'opacity, transform' }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={LOGO}
           alt="LORE Martial Arts"
           style={{
-            width: 'clamp(120px, 18vw, 220px)',
+            width: 'clamp(110px, 16vw, 200px)',
             height: 'auto',
-            filter: 'invert(1) drop-shadow(0 0 20px rgba(196,163,90,0.4)) drop-shadow(0 0 60px rgba(196,163,90,0.15))',
             display: 'block',
+            // Invert to white, then add gold glow
+            filter: 'invert(1) drop-shadow(0 0 18px rgba(196,163,90,0.5)) drop-shadow(0 0 50px rgba(196,163,90,0.18))',
           }}
         />
       </div>
 
-      {/* Sub text — appears during hold phase */}
-      <div ref={subRef} style={{ textAlign: 'center', opacity: 0, transform: 'translateY(16px)' }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1rem', letterSpacing: '0.5em', color: 'rgba(196,163,90,0.75)', textTransform: 'uppercase', marginBottom: 10 }}>
+      {/* Subtitle */}
+      <div ref={subRef} style={{ textAlign: 'center', opacity: 0, transform: 'translateY(14px)', willChange: 'opacity, transform' }}>
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.95rem', letterSpacing: '0.5em', color: 'rgba(196,163,90,0.72)', textTransform: 'uppercase', marginBottom: 10 }}>
           Martial Arts · Antalya
         </div>
-        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '1.15rem', letterSpacing: '0.22em', color: 'rgba(237,228,211,0.5)' }}>
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '1.1rem', letterSpacing: '0.22em', color: 'rgba(237,228,211,0.45)' }}>
           Train · Grow · Belong
         </div>
       </div>
