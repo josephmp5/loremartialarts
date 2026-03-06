@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LORE Martial Arts — Antalya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{
+  background:#000;
+  color:#EDE4D3;
+  font-family:'Cormorant Garamond',serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+/* Custom cursor */
+#cursor{
+  position:fixed;
+  width:8px;height:8px;
+  background:rgba(196,163,90,0.8);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s;
+  mix-blend-mode:screen;
+}
+#cursor-ring{
+  position:fixed;
+  width:32px;height:32px;
+  border:1px solid rgba(196,163,90,0.3);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width 0.3s,height 0.3s,border-color 0.3s;
+}
+
+/* Three.js Canvas */
+#bg-canvas{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  z-index:0;
+}
+
+/* Film grain overlay */
+#grain{
+  position:fixed;
+  top:-50%;left:-50%;
+  width:200%;height:200%;
+  z-index:200;
+  pointer-events:none;
+  opacity:0.04;
+  animation:grain 0.8s steps(1) infinite;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}
+  10%{transform:translate(-2%,-3%)}
+  20%{transform:translate(3%,2%)}
+  30%{transform:translate(-1%,4%)}
+  40%{transform:translate(4%,-1%)}
+  50%{transform:translate(-3%,3%)}
+  60%{transform:translate(2%,-4%)}
+  70%{transform:translate(-4%,2%)}
+  80%{transform:translate(3%,-2%)}
+  90%{transform:translate(-2%,4%)}
+  100%{transform:translate(1%,-1%)}
+}
+
+/* Navigation */
+#nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:24px 48px;
+  transition:background 0.5s, backdrop-filter 0.5s;
+}
+#nav.scrolled{
+  background:rgba(0,0,0,0.82);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  padding:16px 48px;
+}
+#nav-logo{
+  font-family:'Anton',sans-serif;
+  font-size:1.1rem;
+  letter-spacing:0.15em;
+  color:#EDE4D3;
+  text-decoration:none;
+}
+#nav-links{
+  display:flex;
+  gap:40px;
+  list-style:none;
+}
+#nav-links a{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:rgba(237,228,211,0.6);
+  text-decoration:none;
+  transition:color 0.3s;
+}
+#nav-links a:hover{color:#C4A35A}
+#nav-hamburger{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  cursor:pointer;
+  padding:4px;
+}
+#nav-hamburger span{
+  display:block;
+  width:22px;height:1px;
+  background:#EDE4D3;
+  transition:all 0.3s;
+}
+#mobile-menu{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:500;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:48px;
+}
+#mobile-menu.open{display:flex}
+#mobile-menu a{
+  font-family:'Anton',sans-serif;
+  font-size:10vw;
+  letter-spacing:0.1em;
+  color:#EDE4D3;
+  text-decoration:none;
+  transition:color 0.3s;
+}
+#mobile-menu a:hover{color:#C4A35A}
+#mobile-close{
+  position:absolute;
+  top:28px;right:48px;
+  font-family:'Space Mono',monospace;
+  font-size:0.7rem;
+  letter-spacing:0.2em;
+  color:rgba(237,228,211,0.5);
+  cursor:pointer;
+  text-transform:uppercase;
+}
+
+/* Scroll container */
+#scroll-container{
+  position:relative;
+  z-index:1;
+  height:600vh;
+}
+
+/* Content sections */
+.section{
+  position:relative;
+}
+
+/* MOMENT 0: VOID */
+#void-section{
+  height:5vh;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding-bottom:24px;
+}
+#scroll-hint{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  opacity:0;
+  animation:breathe 3s ease-in-out infinite 1.5s forwards;
+}
+#scroll-hint span{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:0.75rem;
+  letter-spacing:0.3em;
+  color:rgba(196,163,90,0.5);
+  text-transform:lowercase;
+}
+#scroll-line{
+  width:1px;
+  height:0;
+  background:linear-gradient(to bottom, rgba(196,163,90,0.5), transparent);
+  animation:line-grow 2s ease-out 2s forwards;
+}
+@keyframes breathe{
+  0%,100%{opacity:0.3}
+  50%{opacity:0.7}
+}
+@keyframes line-grow{
+  from{height:0}
+  to{height:40px}
+}
+
+/* MOMENT 1: THE NAME */
+#name-section{
+  height:95vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#name-content{
+  text-align:center;
+  opacity:0;
+}
+#name-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;
+  letter-spacing:0.5em;
+  color:rgba(196,163,90,0.7);
+  text-transform:uppercase;
+  margin-bottom:12px;
+  opacity:0;
+  transform:translateY(20px);
+}
+#name-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.2rem;
+  letter-spacing:0.2em;
+  color:rgba(237,228,211,0.5);
+  opacity:0;
+  transform:translateY(20px);
+}
+
+/* MOMENT 2: PHILOSOPHY */
+#philosophy-outer{
+  height:180vh;
+  position:relative;
+}
+#philosophy-inner{
+  position:sticky;
+  top:0;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.quote-slide{
+  position:absolute;
+  text-align:center;
+  max-width:900px;
+  padding:0 40px;
+  opacity:0;
+}
+.quote-number{
+  position:absolute;
+  top:40px;right:40px;
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:0.3em;
+  color:rgba(196,163,90,0.3);
+}
+.quote-main{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(2.5rem, 7vw, 7rem);
+  line-height:1;
+  color:#EDE4D3;
+  text-shadow:0 0 40px rgba(196,163,90,0.08);
+  margin-bottom:24px;
+}
+.quote-main .word{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(40px) scale(0.97);
+  margin-right:0.25em;
+}
+.quote-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.1rem;
+  letter-spacing:0.1em;
+  color:#C4A35A;
+  opacity:0;
+  transform:translateY(16px);
+}
+
+/* MOMENT 3: STORY */
+#story-section{
+  padding:120px 0 80px;
+  max-width:700px;
+  margin:0 auto;
+  text-align:center;
+}
+#story-line{
+  width:0;
+  height:1px;
+  background:linear-gradient(to right, transparent, #C4A35A, transparent);
+  margin:0 auto 60px;
+  transition:width 1.5s ease;
+}
+#story-label{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;
+  letter-spacing:0.4em;
+  color:#C4A35A;
+  text-transform:uppercase;
+  margin-bottom:40px;
+  opacity:0;
+  transform:translateY(20px);
+}
+#story-headline{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(2.5rem, 6vw, 5.5rem);
+  line-height:1;
+  color:#EDE4D3;
+  margin-bottom:60px;
+  opacity:0;
+  transform:translateY(30px);
+}
+.story-para{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem;
+  line-height:2;
+  color:rgba(237,228,211,0.75);
+  margin-bottom:40px;
+  opacity:0;
+  transform:translateY(30px);
+  padding:0 40px;
+}
+#story-stats{
+  display:flex;
+  justify-content:center;
+  gap:80px;
+  margin-top:80px;
+  padding:0 20px;
+  flex-wrap:wrap;
+}
+.stat-item{
+  text-align:center;
+  opacity:0;
+  transform:translateY(30px);
+}
+.stat-number{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(3rem, 7vw, 7rem);
+  color:#C4A35A;
+  line-height:1;
+  display:block;
+}
+.stat-label{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;
+  letter-spacing:0.25em;
+  color:rgba(237,228,211,0.4);
+  text-transform:uppercase;
+  margin-top:8px;
+  display:block;
+}
+.infinity-glow{
+  text-shadow:0 0 20px rgba(196,163,90,0.6), 0 0 40px rgba(196,163,90,0.3);
+  animation:glow-pulse 2s ease-in-out infinite;
+}
+@keyframes glow-pulse{
+  0%,100%{text-shadow:0 0 20px rgba(196,163,90,0.6), 0 0 40px rgba(196,163,90,0.3)}
+  50%{text-shadow:0 0 30px rgba(196,163,90,0.9), 0 0 60px rgba(196,163,90,0.5)}
+}
+
+/* MOMENT 4: THE GYM */
+#gym-outer{
+  height:100vh;
+  position:relative;
+}
+#gym-inner{
+  position:sticky;
+  top:0;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+#gym-content{
+  text-align:center;
+  max-width:600px;
+  padding:0 40px;
+}
+#gym-label{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;
+  letter-spacing:0.4em;
+  color:#C4A35A;
+  text-transform:uppercase;
+  margin-bottom:32px;
+  opacity:0;
+}
+#gym-headline{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(2.5rem, 8vw, 7rem);
+  line-height:1;
+  color:#EDE4D3;
+  margin-bottom:12px;
+  opacity:0;
+  transform:translateY(40px);
+}
+#gym-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;
+  letter-spacing:0.3em;
+  color:rgba(196,163,90,0.6);
+  margin-bottom:60px;
+  opacity:0;
+}
+#gym-details{
+  opacity:0;
+  transform:translateY(20px);
+}
+.gym-location{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.2rem;
+  color:rgba(237,228,211,0.6);
+  margin-bottom:32px;
+  letter-spacing:0.05em;
+}
+.schedule-block{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:32px;
+}
+.schedule-line{
+  font-family:'Space Mono',monospace;
+  font-size:0.8rem;
+  letter-spacing:0.15em;
+  color:#C4A35A;
+  opacity:0;
+  transform:translateX(-20px);
+}
+.gym-membership{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:0.95rem;
+  color:rgba(237,228,211,0.35);
+  margin-bottom:48px;
+}
+#map-container{
+  opacity:0;
+  transform:translateY(20px);
+  border:1px solid rgba(196,163,90,0.15);
+  border-radius:4px;
+  overflow:hidden;
+  max-width:480px;
+  margin:0 auto;
+}
+#map-container iframe{
+  display:block;
+  width:100%;
+  height:220px;
+  border:0;
+  filter:grayscale(1) invert(1) contrast(0.8) brightness(0.55) sepia(0.35);
+}
+
+/* MOMENT 5: THE CALL */
+#call-section{
+  height:70vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:0 40px;
+}
+#call-headline{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(3rem, 14vw, 14rem);
+  line-height:0.9;
+  color:#EDE4D3;
+  opacity:0;
+  transform:translateY(60px);
+  text-shadow:0 0 60px rgba(196,163,90,0.05);
+}
+#call-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.15rem;
+  color:#C4A35A;
+  max-width:480px;
+  line-height:1.8;
+  margin:32px auto 48px;
+  opacity:0;
+  transform:translateY(20px);
+}
+.cta-btn{
+  display:inline-block;
+  font-family:'Space Mono',monospace;
+  font-size:0.7rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:#C4A35A;
+  border:1px solid #C4A35A;
+  padding:18px 52px;
+  text-decoration:none;
+  transition:background 0.4s, color 0.4s;
+  opacity:0;
+  transform:translateY(20px);
+}
+.cta-btn:hover{
+  background:#C4A35A;
+  color:#000;
+}
+#call-links{
+  display:flex;
+  gap:40px;
+  margin-top:28px;
+  opacity:0;
+}
+#call-links a{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;
+  letter-spacing:0.2em;
+  color:rgba(237,228,211,0.35);
+  text-decoration:none;
+  text-transform:uppercase;
+  border-bottom:1px solid transparent;
+  transition:color 0.3s, border-color 0.3s;
+}
+#call-links a:hover{
+  color:#C4A35A;
+  border-color:rgba(196,163,90,0.4);
+}
+
+/* MOMENT 6: FOOTER */
+#footer{
+  padding:100px 40px 80px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:32px;
+}
+#footer-logo{
+  width:60px;
+  height:60px;
+  object-fit:contain;
+  opacity:0.7;
+  filter:drop-shadow(0 0 10px rgba(196,163,90,0.3));
+}
+.footer-divider{
+  width:120px;
+  height:1px;
+  background:linear-gradient(to right, transparent, rgba(196,163,90,0.3), transparent);
+}
+.footer-contact{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.footer-contact a,
+.footer-contact span{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:0.2em;
+  color:rgba(237,228,211,0.3);
+  text-decoration:none;
+  text-transform:uppercase;
+  transition:color 0.3s;
+}
+.footer-contact a:hover{color:#C4A35A}
+.footer-schedule{
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.95rem;
+  letter-spacing:0.2em;
+  color:rgba(237,228,211,0.25);
+}
+.footer-copyright{
+  font-family:'Space Mono',monospace;
+  font-size:0.55rem;
+  letter-spacing:0.2em;
+  color:rgba(237,228,211,0.2);
+  text-transform:uppercase;
+}
+.footer-final{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:0.85rem;
+  color:rgba(237,228,211,0.15);
+  letter-spacing:0.1em;
+}
+
+/* Mobile */
+@media(max-width:768px){
+  #nav{padding:20px 24px}
+  #nav.scrolled{padding:14px 24px}
+  #nav-links{display:none}
+  #nav-hamburger{display:flex}
+  #story-section{padding:80px 0 60px}
+  .story-para{padding:0 24px;font-size:1.1rem}
+  #story-stats{gap:40px}
+  #gym-inner{align-items:flex-start;padding-top:80px;overflow-y:auto}
+  #call-section{height:auto;min-height:60vh;padding:80px 24px}
+  #footer{padding:80px 24px 60px}
+  #cursor,#cursor-ring{display:none}
+  body{cursor:auto}
+  #mobile-menu a{font-size:14vw}
+  #nav-mobile-close{cursor:pointer}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #grain{display:none}
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor (desktop only) -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Film grain -->
+<div id="grain"></div>
+
+<!-- Three.js canvas -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Navigation -->
+<nav id="nav">
+  <a href="#" id="nav-logo">LORE</a>
+  <ul id="nav-links">
+    <li><a href="#philosophy-anchor">Philosophy</a></li>
+    <li><a href="#gym-anchor">The Gym</a></li>
+    <li><a href="#join-anchor">Join</a></li>
+  </ul>
+  <div id="nav-hamburger" onclick="openMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu">
+  <span id="mobile-close" onclick="closeMenu()">CLOSE</span>
+  <a href="#philosophy-anchor" onclick="closeMenu()">Philosophy</a>
+  <a href="#gym-anchor" onclick="closeMenu()">The Gym</a>
+  <a href="#join-anchor" onclick="closeMenu()">Join</a>
+</div>
+
+<!-- Main scroll container -->
+<div id="scroll-container">
+
+  <!-- MOMENT 0: VOID -->
+  <section id="void-section" class="section">
+    <div id="scroll-hint">
+      <span>scroll</span>
+      <div id="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MOMENT 1: THE NAME -->
+  <section id="name-section" class="section">
+    <div id="name-content">
+      <div id="name-subtitle">Martial Arts · Antalya</div>
+      <div id="name-tagline">Train · Grow · Belong</div>
+    </div>
+  </section>
+
+  <!-- Anchor -->
+  <span id="philosophy-anchor" style="position:absolute;top:100vh"></span>
+
+  <!-- MOMENT 2: PHILOSOPHY -->
+  <section id="philosophy-outer" class="section">
+    <div id="philosophy-inner">
+
+      <div class="quote-slide" id="quote-1">
+        <div class="quote-number">01</div>
+        <div class="quote-main" id="q1-text"></div>
+        <div class="quote-sub">Everyone starts at zero.</div>
+      </div>
+
+      <div class="quote-slide" id="quote-2">
+        <div class="quote-number">02</div>
+        <div class="quote-main" id="q2-text"></div>
+        <div class="quote-sub">It is the weapon of the patient.</div>
+      </div>
+
+      <div class="quote-slide" id="quote-3">
+        <div class="quote-number">03</div>
+        <div class="quote-main" id="q3-text"></div>
+        <div class="quote-sub">The belt is earned on the floor.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MOMENT 3: STORY -->
+  <section id="story-section" class="section">
+    <div id="story-label">Our Story</div>
+    <div id="story-line"></div>
+    <h2 id="story-headline">Built from the<br>ground up.</h2>
+    <p class="story-para" id="sp1">What started in early 2025 as an idea became a home. LORE Martial Arts is Antalya's dedicated Brazilian Jiu-Jitsu gym.</p>
+    <p class="story-para" id="sp2">We built this from nothing — no franchise, no backing, just belief in the art and the community around it.</p>
+    <p class="story-para" id="sp3">Over a year later, we're still growing. Every class, every roll, every new face through the door proves this was worth building.</p>
+    <div id="story-stats">
+      <div class="stat-item" id="stat1">
+        <span class="stat-number" data-target="1" data-suffix="+">0</span>
+        <span class="stat-label">Year Strong</span>
+      </div>
+      <div class="stat-item" id="stat2">
+        <span class="stat-number" data-target="3">0</span>
+        <span class="stat-label">Days a Week</span>
+      </div>
+      <div class="stat-item" id="stat3">
+        <span class="stat-number infinity-glow">&#8734;</span>
+        <span class="stat-label">Potential</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Anchor -->
+  <span id="gym-anchor" style="position:absolute;top:400vh"></span>
+
+  <!-- MOMENT 4: THE GYM -->
+  <section id="gym-outer" class="section">
+    <div id="gym-inner">
+      <div id="gym-content">
+        <div id="gym-label">The Gym</div>
+        <h2 id="gym-headline">Your new<br>home mat.</h2>
+        <div id="gym-name">LORE Martial Arts</div>
+        <div id="gym-details">
+          <div class="gym-location">Lara, Antalya</div>
+          <div class="schedule-block">
+            <div class="schedule-line" id="sl1">Monday — 20:30</div>
+            <div class="schedule-line" id="sl2">Wednesday — 20:30</div>
+            <div class="schedule-line" id="sl3">Friday — 20:30</div>
+          </div>
+          <div class="gym-membership">Monthly membership · Message us for details</div>
+          <div id="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3192.566579779895!2d30.752719710375196!3d36.85285497211635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39bf22fcc6ee3%3A0xbe8f56c9580354f0!2sLara%20Judo%20Academy!5e0!3m2!1str!2str!4v1772750789697!5m2!1str!2str" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Anchor -->
+  <span id="join-anchor" style="position:absolute;top:500vh"></span>
+
+  <!-- MOMENT 5: THE CALL -->
+  <section id="call-section" class="section">
+    <div id="call-headline">Ready<br>to roll?</div>
+    <p id="call-sub">Step onto the mat. The first class is the hardest — after that, you belong.</p>
+    <a href="https://wa.me/905069770077" class="cta-btn" id="cta-btn" target="_blank" rel="noopener">Message on WhatsApp</a>
+    <div id="call-links">
+      <a href="https://www.instagram.com/loremartialarts/" target="_blank" rel="noopener">@loremartialarts</a>
+      <a href="mailto:contact@lorebjj.com">contact@lorebjj.com</a>
+    </div>
+  </section>
+
+  <!-- MOMENT 6: FOOTER -->
+  <footer id="footer">
+    <img src="https://fmkglpsfszlkubobcmhg.supabase.co/storage/v1/object/public/site-assets/logo.png" alt="LORE" id="footer-logo">
+    <div class="footer-divider"></div>
+    <div class="footer-contact">
+      <a href="tel:+905069770077">0506 977 00 77</a>
+      <a href="mailto:contact@lorebjj.com">contact@lorebjj.com</a>
+      <a href="https://www.instagram.com/loremartialarts/" target="_blank" rel="noopener">@loremartialarts</a>
+    </div>
+    <div class="footer-schedule">Monday · Wednesday · Friday — 20:30</div>
+    <span style="font-family:'Cormorant Garamond',serif;font-size:0.9rem;letter-spacing:0.15em;color:rgba(237,228,211,0.25)">Lara, Antalya</span>
+    <div class="footer-divider"></div>
+    <div class="footer-copyright">© 2026 LORE Martial Arts · Antalya, Turkey</div>
+    <div class="footer-final">The art lives on the mat.</div>
+  </footer>
+
+</div><!-- /scroll-container -->
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+// ─── UTILITY ──────────────────────────────────────────────────────────────────
+const isMobile = /Android|iPhone|iPad|iPod|Touch/i.test(navigator.userAgent) || window.innerWidth < 768;
+const PARTICLE_COUNT = isMobile ? 800 : 2200;
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ─── THREE.JS SETUP ───────────────────────────────────────────────────────────
+const canvas = document.getElementById('bg-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x000000, 1);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x000000, 0.012);
+
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
+camera.position.set(0, 2, 50);
+
+// ─── GET LORE TEXT PIXEL POSITIONS ────────────────────────────────────────────
+function getLoreTargetPositions(count) {
+  const offCanvas = document.createElement('canvas');
+  offCanvas.width = 512;
+  offCanvas.height = 128;
+  const ctx = offCanvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 96px Anton, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('LORE', 256, 64);
+  const imageData = ctx.getImageData(0, 0, 512, 128).data;
+  const pts = [];
+  for (let y = 0; y < 128; y += 2) {
+    for (let x = 0; x < 512; x += 2) {
+      const idx = (y * 512 + x) * 4;
+      if (imageData[idx + 3] > 100) {
+        pts.push({
+          x: (x - 256) * 0.055,
+          y: -(y - 64) * 0.055,
+          z: 0
+        });
+      }
+    }
+  }
+  // Evenly sample 'count' points
+  const result = [];
+  if (pts.length === 0) return result;
+  const step = pts.length / count;
+  for (let i = 0; i < count; i++) {
+    const pt = pts[Math.floor(i * step) % pts.length];
+    result.push({ x: pt.x, y: pt.y, z: pt.z });
+  }
+  return result;
+}
+
+const loreTargets = getLoreTargetPositions(PARTICLE_COUNT);
+
+// ─── PARTICLES ────────────────────────────────────────────────────────────────
+const geometry = new THREE.BufferGeometry();
+const positions = new Float32Array(PARTICLE_COUNT * 3);
+const velocities = [];       // current velocity for spring physics
+const naturalPositions = []; // home positions for floating
+const naturalOffsets = [];   // phase offsets for sinusoidal drift
+
+const goldColors = [
+  new THREE.Color(0xC4A35A),
+  new THREE.Color(0xB8963E),
+  new THREE.Color(0xD4C5A0),
+  new THREE.Color(0xE2D4A8),
+  new THREE.Color(0x9A7D32),
+];
+const colors = new Float32Array(PARTICLE_COUNT * 3);
+const sizes = new Float32Array(PARTICLE_COUNT);
+
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const x = (Math.random() - 0.5) * 80;
+  const y = (Math.random() - 0.5) * 40;
+  const z = (Math.random() - 0.5) * 120;
+  positions[i * 3]     = x;
+  positions[i * 3 + 1] = y;
+  positions[i * 3 + 2] = z;
+  naturalPositions.push({ x, y, z });
+  velocities.push({ x: 0, y: 0, z: 0 });
+  naturalOffsets.push({
+    x: Math.random() * Math.PI * 2,
+    y: Math.random() * Math.PI * 2,
+    speed: 0.2 + Math.random() * 0.4,
+    amp: 0.5 + Math.random() * 1.5
+  });
+  const col = goldColors[Math.floor(Math.random() * goldColors.length)];
+  colors[i * 3]     = col.r;
+  colors[i * 3 + 1] = col.g;
+  colors[i * 3 + 2] = col.b;
+  sizes[i] = 1.5 + Math.random() * 1.5;
+}
+geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+const particleMaterial = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime: { value: 0 },
+    uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) }
+  },
+  vertexShader: `
+    attribute float size;
+    attribute vec3 color;
+    varying vec3 vColor;
+    uniform float uPixelRatio;
+    void main() {
+      vColor = color;
+      vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+      gl_PointSize = size * uPixelRatio * (200.0 / -mvPosition.z);
+      gl_PointSize = clamp(gl_PointSize, 0.5, 8.0);
+      gl_Position = projectionMatrix * mvPosition;
+    }
+  `,
+  fragmentShader: `
+    varying vec3 vColor;
+    void main() {
+      float d = length(gl_PointCoord - vec2(0.5));
+      if (d > 0.5) discard;
+      float alpha = 1.0 - smoothstep(0.2, 0.5, d);
+      gl_FragColor = vec4(vColor, alpha * 0.85);
+    }
+  `,
+  transparent: true,
+  depthWrite: false,
+  vertexColors: true,
+  blending: THREE.AdditiveBlending
+});
+
+const particles = new THREE.Points(geometry, particleMaterial);
+scene.add(particles);
+
+// ─── CURSOR LIGHT ─────────────────────────────────────────────────────────────
+let cursorLight = null;
+if (!isMobile) {
+  cursorLight = new THREE.PointLight(0xC4A35A, 0.9, 18);
+  cursorLight.position.set(0, 0, 12);
+  scene.add(cursorLight);
+}
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let mouseX = 0, mouseY = 0;
+let targetMouseX = 0, targetMouseY = 0;
+let scrollProgress = 0; // 0..1 over full page
+let loreProgress = 0;   // 0..1 for particle convergence
+let dispersionProgress = 0; // 0..1 for particle explosion after lore
+let cursorX3D = 0, cursorY3D = 0;
+let cameraTargetX = 0, cameraTargetY = 2, cameraTargetZ = 50;
+let cameraActualX = 0, cameraActualY = 2, cameraActualZ = 50;
+let particleBreathScale = 1;
+let touchRippleX = 0, touchRippleY = 0, touchRippleActive = false, touchRippleAge = 0;
+
+// ─── MOUSE / TOUCH ────────────────────────────────────────────────────────────
+if (!isMobile) {
+  document.addEventListener('mousemove', e => {
+    targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    targetMouseY = -((e.clientY / window.innerHeight) * 2 - 1);
+    // Update cursor element
+    const cur = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    if (cur) { cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; }
+    if (ring) { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }
+    // 3D cursor position (plane at Z=10)
+    cursorX3D = targetMouseX * 14;
+    cursorY3D = targetMouseY * 8;
+  });
+} else {
+  document.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    const nx = (t.clientX / window.innerWidth) * 2 - 1;
+    const ny = -((t.clientY / window.innerHeight) * 2 - 1);
+    touchRippleX = nx * 14;
+    touchRippleY = ny * 8;
+    touchRippleActive = true;
+    touchRippleAge = 0;
+  });
+}
+
+// ─── SCROLL ───────────────────────────────────────────────────────────────────
+let rawScroll = 0;
+window.addEventListener('scroll', () => {
+  rawScroll = window.scrollY;
+  const maxScroll = document.body.scrollHeight - window.innerHeight;
+  scrollProgress = maxScroll > 0 ? rawScroll / maxScroll : 0;
+  updateFromScroll();
+}, { passive: true });
+
+function updateFromScroll() {
+  const vh = window.innerHeight;
+  const totalH = document.documentElement.scrollHeight - vh;
+  const scrollPx = rawScroll;
+
+  // Lore convergence: scroll 5vh → 40vh into the document (absolute pixel values)
+  const loreStart = 5 * vh;
+  const loreEnd   = 38 * vh;
+  loreProgress = clamp((scrollPx - loreStart) / (loreEnd - loreStart), 0, 1);
+
+  // Lore dispersion: 68vh → 95vh scroll
+  const dispStart = 68 * vh;
+  const dispEnd   = 95 * vh;
+  dispersionProgress = clamp((scrollPx - dispStart) / (dispEnd - dispStart), 0, 1);
+
+  // Camera Z: 50 → -50 across full scroll
+  cameraTargetZ = 50 - scrollProgress * 100;
+  cameraTargetY = 2 - scrollProgress * 4;
+
+  // Philosophy breath: 100vh-280vh (absolute scroll positions)
+  const philoStart = 100 * vh;
+  const philoEnd   = 280 * vh;
+  if (scrollPx > philoStart && scrollPx < philoEnd) {
+    particleBreathScale = 1 + 0.04 * Math.sin((scrollPx - philoStart) / (philoEnd - philoStart) * Math.PI * 6);
+  } else {
+    particleBreathScale = 1;
+  }
+
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  if (rawScroll > 80) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+}
+
+function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+// ─── RESIZE ───────────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ─── ANIMATION LOOP ───────────────────────────────────────────────────────────
+let lastTime = 0;
+function animate(time) {
+  requestAnimationFrame(animate);
+  if (prefersReducedMotion) { renderer.render(scene, camera); return; }
+  const dt = Math.min((time - lastTime) / 1000, 0.05);
+  lastTime = time;
+  const t = time * 0.001;
+  particleMaterial.uniforms.uTime.value = t;
+
+  // Smooth mouse
+  mouseX = lerp(mouseX, targetMouseX, 0.08);
+  mouseY = lerp(mouseY, targetMouseY, 0.08);
+
+  // Camera lerp
+  cameraTargetX = mouseX * 0.5;
+  cameraActualX = lerp(cameraActualX, cameraTargetX, 0.05);
+  cameraActualY = lerp(cameraActualY, cameraTargetY, 0.04);
+  cameraActualZ = lerp(cameraActualZ, cameraTargetZ, 0.04);
+  camera.position.set(cameraActualX, cameraActualY, cameraActualZ);
+  camera.lookAt(cameraActualX * 0.1, cameraActualY * 0.1, 0);
+
+  // Cursor light
+  if (cursorLight) {
+    cursorLight.position.x = lerp(cursorLight.position.x, cursorX3D, 0.15);
+    cursorLight.position.y = lerp(cursorLight.position.y, cursorY3D, 0.15);
+    cursorLight.position.z = 12;
+  }
+
+  // Update particles
+  const pos = geometry.attributes.position.array;
+  const repelRadius = 3.5;
+  const repelStrength = 0.5;
+  const springK = 0.03;
+  const damping = 0.88;
+
+  // Touch ripple
+  if (touchRippleActive) {
+    touchRippleAge += dt;
+    if (touchRippleAge > 1.2) touchRippleActive = false;
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const ix = i * 3, iy = ix + 1, iz = ix + 2;
+    const off = naturalOffsets[i];
+    const nat = naturalPositions[i];
+
+    // Natural floating home (with gentle drift)
+    const homeX = nat.x + Math.sin(t * off.speed + off.x) * off.amp;
+    const homeY = nat.y + Math.cos(t * off.speed * 0.7 + off.y) * off.amp * 0.5;
+    const homeZ = nat.z;
+
+    let targetX, targetY, targetZ;
+
+    // Determine target based on scroll state
+    if (loreProgress > 0 && loreProgress < 1 && dispersionProgress === 0) {
+      // Converging to LORE
+      const lt = loreTargets[i] || { x: 0, y: 0, z: 0 };
+      const eased = easeInOut(loreProgress);
+      targetX = lerp(homeX, lt.x, eased);
+      targetY = lerp(homeY, lt.y, eased);
+      targetZ = lerp(homeZ, lt.z * 0.1, eased);
+    } else if (loreProgress >= 1 && dispersionProgress < 1) {
+      // Holding LORE
+      const lt = loreTargets[i] || { x: 0, y: 0, z: 0 };
+      targetX = lt.x;
+      targetY = lt.y;
+      targetZ = lt.z * 0.1;
+    } else if (dispersionProgress > 0) {
+      // Dispersing
+      const lt = loreTargets[i] || { x: 0, y: 0, z: 0 };
+      const eased = easeOut(dispersionProgress);
+      targetX = lerp(lt.x, homeX, eased);
+      targetY = lerp(lt.y, homeY, eased);
+      targetZ = lerp(lt.z * 0.1, homeZ, eased);
+    } else {
+      // Just floating
+      targetX = homeX;
+      targetY = homeY;
+      targetZ = homeZ;
+    }
+
+    // Apply breath scale during philosophy
+    targetX *= particleBreathScale;
+    targetY *= particleBreathScale;
+
+    // Spring to target
+    const dx = targetX - pos[ix];
+    const dy = targetY - pos[iy];
+    const dz = targetZ - pos[iz];
+    velocities[i].x = velocities[i].x * damping + dx * springK;
+    velocities[i].y = velocities[i].y * damping + dy * springK;
+    velocities[i].z = velocities[i].z * damping + dz * springK;
+
+    // Cursor repulsion (desktop only)
+    if (!isMobile && cursorLight) {
+      const cx = cursorX3D - pos[ix];
+      const cy = cursorY3D - pos[iy];
+      const cz = 12 - pos[iz];
+      const dist = Math.sqrt(cx * cx + cy * cy + cz * cz);
+      if (dist < repelRadius && dist > 0.01) {
+        const force = ((repelRadius - dist) / repelRadius) * repelStrength;
+        velocities[i].x -= (cx / dist) * force;
+        velocities[i].y -= (cy / dist) * force;
+        velocities[i].z -= (cz / dist) * force;
+      }
+    }
+
+    // Touch ripple
+    if (touchRippleActive && isMobile) {
+      const rx = touchRippleX - pos[ix];
+      const ry = touchRippleY - pos[iy];
+      const dist = Math.sqrt(rx * rx + ry * ry);
+      const rippleR = 5;
+      if (dist < rippleR && dist > 0.01) {
+        const force = ((rippleR - dist) / rippleR) * 1.5 * (1 - touchRippleAge / 1.2);
+        velocities[i].x -= (rx / dist) * force;
+        velocities[i].y -= (ry / dist) * force;
+      }
+    }
+
+    pos[ix] += velocities[i].x;
+    pos[iy] += velocities[i].y;
+    pos[iz] += velocities[i].z;
+  }
+
+  geometry.attributes.position.needsUpdate = true;
+  renderer.render(scene, camera);
+}
+
+function easeInOut(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+requestAnimationFrame(animate);
+
+// ─── GSAP SCROLL TRIGGERS ─────────────────────────────────────────────────────
+gsap.registerPlugin(ScrollTrigger);
+
+// Build quote words
+function buildWords(id, text) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = text.split(' ').map(w => `<span class="word">${w}</span>`).join('');
+  // Ensure initial GSAP state matches CSS
+  gsap.set(`#${id} .word`, { opacity: 0, y: 40, scale: 0.97 });
+}
+buildWords('q1-text', 'The mat does not care about your past.');
+buildWords('q2-text', 'Technique outlasts strength.');
+buildWords('q3-text', 'Show up. Every time.');
+gsap.set('.quote-sub', { opacity: 0, y: 16 });
+
+// Name reveal
+ScrollTrigger.create({
+  trigger: '#name-section',
+  start: 'top 60%',
+  onEnter: () => {
+    gsap.to('#name-subtitle', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.3 });
+    gsap.to('#name-tagline', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.7 });
+    gsap.to('#name-content', { opacity: 1, duration: 0.5 });
+  }
+});
+
+// Quote 1
+const q1tl = gsap.timeline({ paused: true });
+q1tl.to('#quote-1', { opacity: 1, duration: 0.4 })
+    .to('#q1-text .word', { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.12, ease: 'power3.out' })
+    .to('#quote-1 .quote-sub', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.2');
+
+ScrollTrigger.create({
+  trigger: '#philosophy-outer',
+  start: 'top bottom',
+  end: 'top top',
+  scrub: false,
+  onEnter: () => q1tl.play()
+});
+
+// Quote transitions
+ScrollTrigger.create({
+  trigger: '#philosophy-outer',
+  start: 'top top',
+  end: 'bottom bottom',
+  scrub: true,
+  onUpdate: self => {
+    const p = self.progress;
+    // p: 0 = quote1 fully shown, 0.33 = transition to 2, 0.66 = transition to 3
+    // Quote 1: visible 0 - 0.4, fade out 0.3 - 0.4
+    const q1 = document.getElementById('quote-1');
+    const q2 = document.getElementById('quote-2');
+    const q3 = document.getElementById('quote-3');
+
+    // Q1 fade out 0.28..0.38
+    const q1o = 1 - clamp((p - 0.28) / 0.10, 0, 1);
+    gsap.set(q1, { opacity: q1o, y: (1 - q1o) * -30 });
+
+    // Q2 in: 0.33..0.46, out: 0.60..0.70
+    const q2inP = clamp((p - 0.33) / 0.13, 0, 1);
+    const q2outP = clamp((p - 0.60) / 0.10, 0, 1);
+    const q2o = Math.min(q2inP, 1 - q2outP);
+    if (q2inP > 0.01 && q2o > 0) {
+      q2.style.opacity = q2o;
+      q2.style.transform = `translateY(${(1 - clamp(q2inP, 0, 1)) * 30}px)`;
+      // Animate words
+      const words2 = q2.querySelectorAll('.word');
+      words2.forEach((w, i) => {
+        const wProgress = clamp((q2inP * 1.5) - i * 0.12, 0, 1);
+        gsap.set(w, { opacity: wProgress, y: (1 - wProgress) * 40, scale: 0.97 + wProgress * 0.03 });
+      });
+      const sub2 = q2.querySelector('.quote-sub');
+      gsap.set(sub2, { opacity: clamp(q2inP * 2 - 1, 0, 1) * (1 - q2outP), y: (1 - Math.min(q2inP, 1 - q2outP)) * 16 });
+    } else {
+      q2.style.opacity = 0;
+    }
+
+    // Q3 in: 0.66..0.80, holds
+    const q3inP = clamp((p - 0.66) / 0.14, 0, 1);
+    q3.style.opacity = q3inP;
+    q3.style.transform = `translateY(${(1 - q3inP) * 30}px)`;
+    if (q3inP > 0.01) {
+      const words3 = q3.querySelectorAll('.word');
+      words3.forEach((w, i) => {
+        const wProgress = clamp((q3inP * 1.8) - i * 0.15, 0, 1);
+        gsap.set(w, { opacity: wProgress, y: (1 - wProgress) * 40, scale: 0.97 + wProgress * 0.03 });
+      });
+      const sub3 = q3.querySelector('.quote-sub');
+      gsap.set(sub3, { opacity: clamp(q3inP * 2 - 1, 0, 1) });
+    }
+  }
+});
+
+// Story section
+function addScrollReveal(selector, delay = 0) {
+  ScrollTrigger.create({
+    trigger: selector,
+    start: 'top 80%',
+    onEnter: () => gsap.to(selector, {
+      opacity: 1, y: 0, duration: 1.0, ease: 'power3.out', delay
+    })
+  });
+}
+
+ScrollTrigger.create({
+  trigger: '#story-section',
+  start: 'top 75%',
+  onEnter: () => {
+    gsap.to('#story-line', { width: '80%', duration: 1.8, ease: 'power2.out' });
+    gsap.to('#story-label', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.3 });
+    gsap.to('#story-headline', { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out', delay: 0.5 });
+  }
+});
+
+addScrollReveal('#sp1', 0);
+addScrollReveal('#sp2', 0.1);
+addScrollReveal('#sp3', 0.2);
+
+// Stats with count-up
+function countUp(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const dur = 1200;
+  const start = performance.now();
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / dur, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target) + (progress >= 1 ? suffix : '');
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+ScrollTrigger.create({
+  trigger: '#story-stats',
+  start: 'top 80%',
+  onEnter: () => {
+    ['#stat1','#stat2','#stat3'].forEach((sel, i) => {
+      gsap.to(sel, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: i * 0.15 });
+    });
+    document.querySelectorAll('#story-stats .stat-number[data-target]').forEach(el => {
+      setTimeout(() => countUp(el), 200);
+    });
+  }
+});
+
+// Gym section
+ScrollTrigger.create({
+  trigger: '#gym-outer',
+  start: 'top 80%',
+  onEnter: () => {
+    gsap.to('#gym-label', { opacity: 1, duration: 0.6, ease: 'power2.out' });
+    gsap.to('#gym-headline', { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out', delay: 0.2 });
+    gsap.to('#gym-name', { opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.5 });
+    gsap.to('#gym-details', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.7 });
+    ['#sl1','#sl2','#sl3'].forEach((sel, i) => {
+      gsap.to(sel, { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out', delay: 0.9 + i * 0.15 });
+    });
+    gsap.to('#map-container', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 1.4 });
+  }
+});
+
+// Call section
+ScrollTrigger.create({
+  trigger: '#call-section',
+  start: 'top 75%',
+  onEnter: () => {
+    gsap.to('#call-headline', { opacity: 1, y: 0, duration: 1.2, ease: 'back.out(1.7)', delay: 0 });
+    gsap.to('#call-sub', { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out', delay: 0.5 });
+    gsap.to('#cta-btn', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.9 });
+    gsap.to('#call-links', { opacity: 1, duration: 0.8, ease: 'power2.out', delay: 1.2 });
+  }
+});
+
+// ─── MOBILE MENU ──────────────────────────────────────────────────────────────
+function openMenu() { document.getElementById('mobile-menu').classList.add('open'); }
+function closeMenu() { document.getElementById('mobile-menu').classList.remove('open'); }
+
+// ─── SMOOTH ANCHOR SCROLL ─────────────────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) {
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
+// ─── VOID PULSE ───────────────────────────────────────────────────────────────
+// Pulse the scene background with a gold heartbeat
+setTimeout(() => {
+  let pulsePhase = 0;
+  const pulseInterval = setInterval(() => {
+    pulsePhase++;
+    if (pulsePhase > 3) clearInterval(pulseInterval);
+    gsap.to({}, {
+      duration: 0.6,
+      onUpdate: function() {
+        const p = this.progress();
+        const intensity = Math.sin(p * Math.PI) * 0.02;
+        scene.fog.density = 0.012 - intensity;
+      }
+    });
+  }, 1200);
+}, 800);
+
+// Initial state tweaks
+gsap.set('#scroll-hint', { opacity: 0 });
+gsap.to('#scroll-hint', { opacity: 1, duration: 1.5, delay: 1.0 });
+</script>
+</body>
+</html>

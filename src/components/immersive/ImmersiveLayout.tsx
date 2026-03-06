@@ -81,6 +81,7 @@ export default function ImmersiveLayout() {
         html { scroll-behavior: auto !important; }
         body { background: #000 !important; overflow-x: hidden; cursor: none !important; }
         body::before { display: none !important; }
+        body::after  { display: none !important; }
         #lore-cursor {
           position: fixed; width: 8px; height: 8px;
           background: rgba(196,163,90,0.9); border-radius: 50%;
@@ -104,6 +105,9 @@ export default function ImmersiveLayout() {
           * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
       `}</style>
+
+      {/* Guaranteed black background — visible on mobile where Canvas is skipped */}
+      <div style={{ position: 'fixed', inset: 0, background: '#000000', zIndex: 0, pointerEvents: 'none' }} />
 
       <div id="lore-cursor" />
       <div id="lore-cursor-ring" />
