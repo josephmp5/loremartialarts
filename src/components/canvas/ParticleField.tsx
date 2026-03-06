@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useImmersiveStore } from '@/store/immersive';
@@ -32,33 +32,7 @@ const FRAGMENT_SHADER = `
   }
 `;
 
-function getLoreTargets(count: number): Float32Array {
-  const targets = new Float32Array(count * 3);
-  if (typeof window === 'undefined') return targets;
-  const oc = document.createElement('canvas');
-  oc.width = 512; oc.height = 128;
-  const ctx = oc.getContext('2d')!;
-  ctx.fillStyle = '#fff';
-  ctx.font = 'bold 90px Arial Black, Arial, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('LORE', 256, 64);
-  const data = ctx.getImageData(0, 0, 512, 128).data;
-  const pts: [number, number][] = [];
-  for (let y = 0; y < 128; y += 2) {
-    for (let x = 0; x < 512; x += 2) {
-      if (data[(y * 512 + x) * 4 + 3] > 120) pts.push([x, y]);
-    }
-  }
-  const step = Math.max(1, Math.floor(pts.length / count));
-  for (let i = 0; i < count; i++) {
-    const [px, py] = pts[(i * step) % pts.length] ?? [256, 64];
-    targets[i * 3]     = (px - 256) * 0.056;
-    targets[i * 3 + 1] = -(py - 64) * 0.056;
-    targets[i * 3 + 2] = 0;
-  }
-  return targets;
-}
+const LOGO_URL = 'https://fmkglpsfszlkubobcmhg.supabase.co/storage/v1/object/public/site-assets/logo.png';
 
 const GOLD = [
   new THREE.Color(0xC4A35A), new THREE.Color(0xB8963E),
@@ -68,15 +42,93 @@ const GOLD = [
 
 export default function ParticleField() {
   const N = PARTICLE_COUNT;
-  const pointsRef = useRef<THREE.Points>(null);
-  const posRef = useRef<THREE.BufferAttribute>(null);
+  const posAttrRef = useRef<THREE.BufferAttribute>(null);
+  const logoTargetsRef = useRef<Float32Array>(new Float32Array(N * 3));
 
-  const loreTargets = useMemo(() => getLoreTargets(N), [N]);
+  // Load logo and sample its pixels for particle targets
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const maxDim = 220;
+      const scale = maxDim / Math.max(img.width, img.height);
+      const w = Math.round(img.width * scale);
+      const h = Math.round(img.height * scale);
+      const oc = document.createElement('canvas');
+      oc.width = w; oc.height = h;
+      const ctx = oc.getContext('2d')!;
+      ctx.drawImage(img, 0, 0, w, h);
+      let data: Uint8ClampedArray;
+      try {
+        data = ctx.getImageData(0, 0, w, h).data;
+      } catch {
+        // CORS blocked — leave targets at zero (particles float freely)
+        return;
+      }
+      const pts: [number, number][] = [];
+      for (let y = 0; y < h; y += 2) {
+        for (let x = 0; x < w; x += 2) {
+          const i = (y * w + x) * 4;
+          const a = data[i + 3];
+          const r = data[i], g = data[i + 1], b = data[i + 2];
+          // Sample dark (logo ink) or bright pixels depending on logo style
+          if (a > 80 && (r < 180 || g < 180 || b < 180)) {
+            pts.push([x, y]);
+          }
+        }
+      }
+      // Fallback: sample any non-transparent pixel
+      if (pts.length < 50) {
+        for (let y = 0; y < h; y += 2) {
+          for (let x = 0; x < w; x += 2) {
+            const i = (y * w + x) * 4;
+            if (data[i + 3] > 80) pts.push([x, y]);
+          }
+        }
+      }
+      if (pts.length === 0) return;
+      const targets = new Float32Array(N * 3);
+      const step = Math.max(1, Math.floor(pts.length / N));
+      const aspectRatio = h / w;
+      for (let i = 0; i < N; i++) {
+        const [px, py] = pts[(i * step) % pts.length];
+        targets[i * 3]     = (px - w / 2) / w * 13;
+        targets[i * 3 + 1] = -(py - h / 2) / w * 13;  // use w for both to preserve aspect
+        targets[i * 3 + 2] = 0;
+      }
+      logoTargetsRef.current = targets;
+    };
+    img.onerror = () => {
+      // CORS or network failure — use text fallback
+      const oc = document.createElement('canvas');
+      oc.width = 512; oc.height = 128;
+      const ctx = oc.getContext('2d')!;
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 90px Arial Black, Arial, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('LORE', 256, 64);
+      const data = ctx.getImageData(0, 0, 512, 128).data;
+      const pts: [number, number][] = [];
+      for (let y = 0; y < 128; y += 2)
+        for (let x = 0; x < 512; x += 2)
+          if (data[(y * 512 + x) * 4 + 3] > 120) pts.push([x, y]);
+      const targets = new Float32Array(N * 3);
+      const step = Math.max(1, Math.floor(pts.length / N));
+      for (let i = 0; i < N; i++) {
+        const [px, py] = pts[(i * step) % pts.length] ?? [256, 64];
+        targets[i * 3]     = (px - 256) * 0.056;
+        targets[i * 3 + 1] = -(py - 64) * 0.056;
+        targets[i * 3 + 2] = 0;
+      }
+      logoTargetsRef.current = targets;
+    };
+    img.src = LOGO_URL;
+  }, [N]);
 
-  // Particle data stored in refs (mutable, no re-render)
   const naturalPos  = useMemo(() => new Float32Array(N * 3), [N]);
   const velocities  = useMemo(() => new Float32Array(N * 3), [N]);
-  const phases      = useMemo(() => new Float32Array(N * 4), [N]); // px, py, speed, amp
+  const phases      = useMemo(() => new Float32Array(N * 4), [N]);
 
   const { positions, colors, sizes } = useMemo(() => {
     const positions = new Float32Array(N * 3);
@@ -86,10 +138,10 @@ export default function ParticleField() {
       const x = (Math.random() - 0.5) * 80;
       const y = (Math.random() - 0.5) * 40;
       const z = (Math.random() - 0.5) * 120;
-      positions[i*3]   = x; positions[i*3+1] = y; positions[i*3+2] = z;
-      naturalPos[i*3]  = x; naturalPos[i*3+1] = y; naturalPos[i*3+2] = z;
+      positions[i*3]=x; positions[i*3+1]=y; positions[i*3+2]=z;
+      naturalPos[i*3]=x; naturalPos[i*3+1]=y; naturalPos[i*3+2]=z;
       const c = GOLD[Math.floor(Math.random() * GOLD.length)];
-      colors[i*3] = c.r; colors[i*3+1] = c.g; colors[i*3+2] = c.b;
+      colors[i*3]=c.r; colors[i*3+1]=c.g; colors[i*3+2]=c.b;
       sizes[i] = 1.5 + Math.random() * 1.5;
       phases[i*4]   = Math.random() * Math.PI * 2;
       phases[i*4+1] = Math.random() * Math.PI * 2;
@@ -104,32 +156,25 @@ export default function ParticleField() {
   }), []);
 
   useFrame(({ clock }) => {
-    const pa = posRef.current;
+    const pa = posAttrRef.current;
     if (!pa) return;
     const pos = pa.array as Float32Array;
-    const t = clock.getElapsedTime();
-    const { convergenceProgress, heroPhase, cursor, particleMode } = useImmersiveStore.getState();
+    const t   = clock.getElapsedTime();
+    const { convergenceProgress, heroPhase, cursor, particleMode, scrollProgress } = useImmersiveStore.getState();
+    const loreTargets = logoTargetsRef.current;
 
     const hasPointer = typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches;
-    const cx3D = cursor.x * 14;
-    const cy3D = cursor.y * 8;
-    const repR = 3.5, repStr = 0.5;
-    const spring = 0.028, damp = 0.88;
+    const cx3D = cursor.x * 14, cy3D = cursor.y * 8;
+    const repR = 3.5, repStr = 0.5, spring = 0.028, damp = 0.88;
 
-    // Breathing multiplier during philosophy
-    const scrollProgress = useImmersiveStore.getState().scrollProgress;
     const philoProgress = Math.max(0, Math.min(1, (scrollProgress - 1/6) / (1.8/6)));
     const breathe = 1 + 0.04 * Math.sin(philoProgress * Math.PI * 6 + t * 0.5);
-
-    // Condensing for CTA section
-    const condenseFactor = particleMode === 'condensing' ? 0.25 : 1;
+    const condenseFactor = particleMode === 'condensing' ? 0.22 : 1;
 
     for (let i = 0; i < N; i++) {
       const ix = i*3, iy = ix+1, iz = ix+2;
-      const ph = phases;
-      const px = ph[i*4], py = ph[i*4+1], spd = ph[i*4+2], amp = ph[i*4+3];
+      const px = phases[i*4], py = phases[i*4+1], spd = phases[i*4+2], amp = phases[i*4+3];
 
-      // Natural home position (with floating drift)
       const hx = naturalPos[ix]   + Math.sin(t * spd + px) * amp * condenseFactor;
       const hy = naturalPos[iy]   + Math.cos(t * spd * 0.7 + py) * amp * 0.5 * condenseFactor;
       const hz = naturalPos[iz];
@@ -138,13 +183,13 @@ export default function ParticleField() {
 
       if (heroPhase === 'converging' || heroPhase === 'holding') {
         const cp = Math.min(convergenceProgress, 1);
-        const e  = cp < 0.5 ? 2*cp*cp : -1+(4-2*cp)*cp; // easeInOut
+        const e  = cp < 0.5 ? 2*cp*cp : -1+(4-2*cp)*cp;
         tx = hx + (loreTargets[ix] - hx) * e;
         ty = hy + (loreTargets[iy] - hy) * e;
         tz = hz + (loreTargets[iz] - hz) * e;
       } else if (heroPhase === 'dispersing') {
         const dp = Math.min(convergenceProgress, 1);
-        const e  = 1 - Math.pow(1 - dp, 3); // easeOut
+        const e  = 1 - Math.pow(1 - dp, 3);
         tx = loreTargets[ix] + (hx - loreTargets[ix]) * e;
         ty = loreTargets[iy] + (hy - loreTargets[iy]) * e;
         tz = loreTargets[iz] + (hz - loreTargets[iz]) * e;
@@ -152,43 +197,32 @@ export default function ParticleField() {
         tx = hx; ty = hy; tz = hz;
       }
 
-      // Apply breathing scale
       tx *= breathe; ty *= breathe;
 
-      // Spring toward target
-      velocities[ix] = velocities[ix] * damp + (tx - pos[ix]) * spring;
-      velocities[iy] = velocities[iy] * damp + (ty - pos[iy]) * spring;
-      velocities[iz] = velocities[iz] * damp + (tz - pos[iz]) * spring;
+      velocities[ix] = velocities[ix]*damp + (tx - pos[ix])*spring;
+      velocities[iy] = velocities[iy]*damp + (ty - pos[iy])*spring;
+      velocities[iz] = velocities[iz]*damp + (tz - pos[iz])*spring;
 
-      // Cursor repulsion (desktop only)
       if (hasPointer) {
-        const dx = cx3D - pos[ix];
-        const dy = cy3D - pos[iy];
-        const dz = 12   - pos[iz];
-        const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+        const dx=cx3D-pos[ix], dy=cy3D-pos[iy], dz=12-pos[iz];
+        const dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
         if (dist < repR && dist > 0.01) {
-          const f = ((repR - dist) / repR) * repStr;
-          velocities[ix] -= (dx/dist) * f;
-          velocities[iy] -= (dy/dist) * f;
-          velocities[iz] -= (dz/dist) * f;
+          const f = ((repR-dist)/repR)*repStr;
+          velocities[ix] -= (dx/dist)*f;
+          velocities[iy] -= (dy/dist)*f;
+          velocities[iz] -= (dz/dist)*f;
         }
       }
 
-      pos[ix] += velocities[ix];
-      pos[iy] += velocities[iy];
-      pos[iz] += velocities[iz];
+      pos[ix] += velocities[ix]; pos[iy] += velocities[iy]; pos[iz] += velocities[iz];
     }
     pa.needsUpdate = true;
   });
 
   return (
-    <points ref={pointsRef}>
+    <points>
       <bufferGeometry>
-        <bufferAttribute
-          ref={posRef}
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
+        <bufferAttribute ref={posAttrRef} attach="attributes-position" args={[positions, 3]} />
         <bufferAttribute attach="attributes-aColor" args={[colors, 3]} />
         <bufferAttribute attach="attributes-aSize"  args={[sizes,  1]} />
       </bufferGeometry>
@@ -196,10 +230,8 @@ export default function ParticleField() {
         uniforms={uniforms}
         vertexShader={VERTEX_SHADER}
         fragmentShader={FRAGMENT_SHADER}
-        transparent
-        depthWrite={false}
+        transparent depthWrite={false}
         blending={THREE.AdditiveBlending}
-        vertexColors
       />
     </points>
   );
