@@ -103,7 +103,7 @@ export default function Moment2Philosophy() {
 
   return (
     // 300vh total — each quote gets roughly 100vh of scroll real-estate
-    <section id="moment-philosophy" ref={outerRef} style={{ height: '300vh', position: 'relative' }}>
+    <section id="moment-philosophy" ref={outerRef} style={{ height: '220vh', position: 'relative' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
         {QUOTES.map((q, idx) => (
           <div key={idx} ref={refs[idx]} style={{ position: 'absolute', textAlign: 'center', maxWidth: 900, padding: '0 40px', opacity: 0, willChange: 'opacity, transform' }}>
