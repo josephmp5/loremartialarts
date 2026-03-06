@@ -64,14 +64,14 @@ export default function Moment5Call() {
 
       <a
         ref={ctaRef}
-        href="https://wa.me/905069770077"
+        href="https://www.instagram.com/loremartialarts/"
         target="_blank"
         rel="noopener noreferrer"
         style={{ display: 'inline-block', fontFamily: mono, fontSize: '0.68rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: gold, border: `1px solid ${gold}`, padding: '18px 52px', textDecoration: 'none', transition: 'background 0.4s, color 0.4s', opacity: 0, transform: 'translateY(20px)' }}
         onMouseEnter={e => { e.currentTarget.style.background = gold; e.currentTarget.style.color = '#000'; }}
         onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = gold; }}
       >
-        Message on WhatsApp
+        DM us on Instagram
       </a>
 
       <div ref={linksRef} style={{ display: 'flex', gap: 40, marginTop: 28, opacity: 0 }}>
