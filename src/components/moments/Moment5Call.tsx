@@ -18,14 +18,12 @@ export default function Moment5Call() {
     const el = sectionRef.current;
     if (!el) return;
 
-    // Signal particle field to condense
     const entryST = ScrollTrigger.create({
       trigger: el, start: 'top 80%',
-      onEnter: () => useImmersiveStore.getState().setParticleMode('condensing'),
+      onEnter:     () => useImmersiveStore.getState().setParticleMode('condensing'),
       onLeaveBack: () => useImmersiveStore.getState().setParticleMode('normal'),
     });
 
-    // Content reveals
     const revealST = ScrollTrigger.create({
       trigger: el, start: 'top 72%',
       onEnter: () => {
@@ -43,7 +41,6 @@ export default function Moment5Call() {
   const serif = "'Cormorant Garamond', serif";
   const anton = "'Anton', sans-serif";
   const gold  = '#C4A35A';
-  const cream = 'rgba(237,228,211,';
 
   return (
     <section
@@ -53,7 +50,7 @@ export default function Moment5Call() {
     >
       <div
         ref={headRef}
-        style={{ fontFamily: anton, fontSize: 'clamp(3.5rem, 14vw, 14rem)', lineHeight: 0.9, color: '#EDE4D3', textShadow: '0 0 80px rgba(196,163,90,0.04)', opacity: 0, transform: 'translateY(60px)' }}
+        style={{ fontFamily: anton, fontSize: 'clamp(3.5rem, 14vw, 14rem)', lineHeight: 0.9, color: '#EDE4D3', textShadow: '0 0 80px rgba(196,163,90,0.04)', opacity: 0, transform: 'translateY(60px)', willChange: 'transform, opacity' }}
       >
         Ready<br />to roll?
       </div>
@@ -85,9 +82,9 @@ export default function Moment5Call() {
           <a key={href} href={href}
             target={href.startsWith('http') ? '_blank' : undefined}
             rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-            style={{ fontFamily: mono, fontSize: '0.6rem', letterSpacing: '0.2em', color: `${cream}0.3)`, textDecoration: 'none', textTransform: 'uppercase', borderBottom: '1px solid transparent', transition: 'color 0.3s, border-color 0.3s' }}
+            style={{ fontFamily: mono, fontSize: '0.6rem', letterSpacing: '0.2em', color: 'rgba(237,228,211,0.35)', textDecoration: 'none', textTransform: 'uppercase', borderBottom: '1px solid transparent', transition: 'color 0.3s, border-color 0.3s' }}
             onMouseEnter={e => { e.currentTarget.style.color = gold; e.currentTarget.style.borderBottomColor = 'rgba(196,163,90,0.4)'; }}
-            onMouseLeave={e => { e.currentTarget.style.color = `${cream}0.3)`; e.currentTarget.style.borderBottomColor = 'transparent'; }}
+            onMouseLeave={e => { e.currentTarget.style.color = 'rgba(237,228,211,0.35)'; e.currentTarget.style.borderBottomColor = 'transparent'; }}
           >
             {label}
           </a>
