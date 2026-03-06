@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { getSiteAssetUrl } from "@/lib/supabase";
-import BackgroundImage from "@/components/BackgroundImage";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -112,8 +111,6 @@ export default function RootLayout({
         
         {/* Preload critical images for faster loading */}
         <link rel="preload" href={getSiteAssetUrl('logo.png')} as="image" type="image/png" fetchPriority="high" />
-        <link rel="preload" href={getSiteAssetUrl('background.jpg')} as="image" type="image/jpeg" fetchPriority="high" />
-        
         {/* DNS prefetch for Supabase CDN */}
         <link rel="dns-prefetch" href="https://fmkglpsfszlkubobcmhg.supabase.co" />
         
@@ -122,7 +119,6 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body className={inter.className} style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
-        <BackgroundImage />
         <AuthProvider>
           <div id="__next" style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
             {children}
