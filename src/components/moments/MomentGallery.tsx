@@ -30,7 +30,7 @@ function GalleryCard({ img, index }: { img: GalleryImage; index: number }) {
     const st = ScrollTrigger.create({
       trigger: el, start: 'top 88%',
       onEnter: () => gsap.to(el, {
-        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: (index % 2) * 0.12,
+        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: (index % 3) * 0.12,
       }),
     });
     return () => st.kill();
@@ -140,12 +140,11 @@ export default function MomentGallery() {
           The work<br />in progress.
         </h2>
 
-        {/* Masonry-style grid: 2 cols desktop, 1 col mobile */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 420px), 1fr))',
-          gap: 20,
-        }}>
+        <style>{`
+          #gallery-grid { grid-template-columns: repeat(3, 1fr); }
+          @media (max-width: 640px) { #gallery-grid { grid-template-columns: 1fr; } }
+        `}</style>
+        <div id="gallery-grid" style={{ display: 'grid', gap: 20 }}>
           {images.map((img, i) => (
             <GalleryCard key={img.id} img={img} index={i} />
           ))}
