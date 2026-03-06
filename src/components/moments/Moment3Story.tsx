@@ -96,7 +96,7 @@ export default function Moment3Story() {
   const cream = 'rgba(237,228,211,';
 
   return (
-    <section style={{ padding: '120px 0 80px', maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
+    <section style={{ padding: '60px 0 80px', maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
       {/* Label */}
       <div ref={labelRef} style={{ fontFamily: mono, fontSize: '0.6rem', letterSpacing: '0.4em', color: gold, textTransform: 'uppercase', marginBottom: 44, opacity: 0, transform: 'translateY(20px)' }}>
         Our Story
